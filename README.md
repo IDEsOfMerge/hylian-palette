@@ -15,7 +15,7 @@ From this folder:
 
 ```sh
 npx --yes @vscode/vsce package
-positron --install-extension wind-waker-majora-themes-0.1.0.vsix
+positron --install-extension positron-wind-waker-majora-themes-0.1.0.vsix
 ```
 
 Or, for iterating without repackaging each time, launch an Extension Development Host:
