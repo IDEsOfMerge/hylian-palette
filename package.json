@@ -1,0 +1,46 @@
+{
+  "name": "wind-waker-majora-themes",
+  "displayName": "Wind Waker × Majora — Zelda Color Themes",
+  "description": "Two cohesive color themes for VS Code and Positron inspired by The Legend of Zelda: The Wind Waker (Wind Waker Light — warm parchment, Great Sea turquoise, nautical) and Majora's Mask (Majora's Mask Dark — cosmic violet, neon, eerie). Includes a toggle command to switch between them.",
+  "version": "0.1.0",
+  "publisher": "karlmakepeace",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0",
+    "positron": ">=2025.1.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "theme",
+    "color theme",
+    "zelda",
+    "wind waker",
+    "majora's mask",
+    "dark theme",
+    "light theme",
+    "positron"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "themes": [
+      {
+        "label": "Wind Waker Light",
+        "uiTheme": "vs",
+        "path": "./themes/windwaker-light-color-theme.json"
+      },
+      {
+        "label": "Majora's Mask Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/majora-dark-color-theme.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "windwakerMajora.toggleTheme",
+        "title": "Wind Waker × Majora: Toggle Theme"
+      }
+    ]
+  }
+}

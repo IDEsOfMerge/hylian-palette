@@ -1,0 +1,5 @@
+node_modules/
+*.vsix
+.vscode-test/
+Thumbs.db
+.DS_Store
