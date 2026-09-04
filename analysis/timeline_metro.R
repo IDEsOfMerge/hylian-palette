@@ -110,7 +110,7 @@ p <- ggplot() +
   geom_text(data = filter(nodes, tier == "spinoff"), aes(x, label_y, label = name),
             size = 2.8, color = "grey40", fontface = "italic", hjust = 0.5) +
   annotate("text", x = 1, y = -2.3, label = "Spinoffs shown smaller/muted -- not themed individually", hjust = 0, size = 3, color = "grey50", fontface = "italic") +
-  annotate("text", x = 14.8, y = -1.4, label = "(large time skip in-story)", hjust = 0.5, size = 2.8, color = "grey50", fontface = "italic") +
+  annotate("text", x = 14.8, y = -1.75, label = "(large time skip in-story)", hjust = 0.5, size = 3.4, color = "grey30", fontface = "italic") +
   labs(
     title = "The Legend of Zelda -- in-universe story chronology",
     subtitle = "Per Nintendo's official Hyrule Historia timeline (three branches diverge after Ocarina of Time; reconvergence per Nintendo's stated intent, less firmly \"canonical\" than the three-way split). Not release order -- see the release-order timeline above.",
