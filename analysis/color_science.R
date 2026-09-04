@@ -107,20 +107,22 @@ poly_closed$theme_slug <- factor(poly_closed$theme_slug, levels = theme_labels$t
 poly_data$theme_slug <- factor(poly_data$theme_slug, levels = theme_labels$theme_slug)
 
 p_small_multiples <- ggplot() +
-  geom_path(data = poly_closed, aes(a, b, group = theme_slug), color = "grey40", linewidth = 0.4) +
-  geom_point(data = poly_data, aes(a, b, fill = hex), shape = 21, color = "black", size = 2.2, stroke = 0.3) +
+  geom_path(data = poly_closed, aes(a, b, group = theme_slug), color = "grey40", linewidth = 0.5) +
+  geom_point(data = poly_data, aes(a, b, fill = hex), shape = 21, color = "black", size = 3, stroke = 0.35) +
   scale_fill_identity() +
-  facet_wrap(~theme_slug, ncol = 6, labeller = as_labeller(setNames(theme_labels$label, theme_labels$theme_slug))) +
+  facet_wrap(~theme_slug, ncol = 4, labeller = as_labeller(setNames(theme_labels$label, theme_labels$theme_slug))) +
   coord_fixed() +
   labs(
     title = "Each theme's syntax-role colors in the CIE a*-b* (chroma/hue) plane",
     subtitle = "Points connected keyword -> storage -> string -> regex -> function -> type -> interface -> number -> decorator -> namespace -> (closes back to keyword). Point fill = the color itself.",
     x = "a* (green-red axis)", y = "b* (blue-yellow axis)"
   ) +
-  theme_minimal(base_size = 8) +
-  theme(strip.text = element_text(size = 6), axis.text = element_text(size = 5))
+  theme_minimal(base_size = 11) +
+  theme(strip.text = element_text(size = 9.5, face = "bold"), axis.text = element_text(size = 7))
 
-ggsave("analysis/plots/theme_colorspace_grid.png", p_small_multiples, width = 20, height = 20, dpi = 150, limitsize = FALSE)
+# 4 columns (was 6) -- 9 rows for 34 themes -- gives each panel enough room
+# for the bigger fonts above to stay legible, at the cost of a taller image.
+ggsave("analysis/plots/theme_colorspace_grid.png", p_small_multiples, width = 16, height = 32, dpi = 150, limitsize = FALSE)
 cat("Saved analysis/plots/theme_colorspace_grid.png\n")
 
 # One big overlay "family fingerprint" -- all 34 polygons on one set of axes, colored by era.

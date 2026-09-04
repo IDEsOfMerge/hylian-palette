@@ -234,6 +234,18 @@ Each theme's 10 core syntax colors plotted in the CIE a\*-b\* (chroma/hue) plane
 
 A global PCA (all 34 themes' syntax colors at once, unscaled Lab coordinates) shows the roles are largely separable across the *whole family*, not just within any one theme — keywords (green) and functions (orange) each occupy fairly consistent regions of color space regardless of which game's theme they're from.
 
+### Which themes look like each other
+
+The plot above has one point per (theme, role) — 442 points, answering "where do keyword colors sit vs. string colors." This one flips it: one point per **theme**. Each theme's 13 syntax-role colors are converted to Lab and concatenated in a fixed role order into a single 39-dimensional feature vector (`analysis/theme_similarity.R`) — two themes are "close" exactly when their syntax colors, role for role, are close in perceptual color space. A scaled PCA (unlike the unscaled one above — here each of the 39 columns is a different semantic channel, so scaling keeps any one role from dominating just because it has a larger raw range) projects that down to 2D:
+
+<img src="assets/color-science/theme-pca.png" alt="Per-theme PCA: each of the 34 themes as a single point in a 2D projection of its 39-dimensional syntax-color feature vector, colored by era and shaped by mode" width="900">
+
+Link's Awakening Dark is a dramatic outlier (bottom-right, far from every other point) — exactly what you'd expect from the one deliberately near-monochrome theme in the family, and a nice quantitative confirmation of that design choice. A 2D projection compresses everything else together, though, so the same 39-dimensional feature vectors also feed a hierarchical clustering (Ward's method) as a complementary, more precise "nearest neighbor" view:
+
+<img src="assets/color-science/theme-dendrogram.png" alt="Hierarchical clustering dendrogram of all 34 themes based on the same 39-dimensional syntax-color feature vector, colored by era" width="900">
+
+Two things stand out. First, the broad top-level split is mostly light-vs-dark — expected, since a theme's whole syntax palette is tuned as one coherent unit against its own background. Second, and more interesting: **Majora's Mask Light and Majora's Mask Dark cluster with *each other*** rather than with their respective light/dark neighbors — the one pair in the family that breaks the light/dark split. That's a direct, unplanned empirical confirmation of this project's own design rule (keep 1-2 identity colors constant across a game's Light/Dark pair): Majora's Mask keeps *more* of its palette constant between modes than any other game, and the clustering picks that up on its own.
+
 ### Color-vision-deficiency audit
 
 Every syntax-role pair within every theme was checked for CIE76 (ΔE\*ab) distance under simulated protanopia, deuteranopia, and tritanopia. 2,652 role-pairs were checked across all 34 themes; a pair is flagged when it's safely distinguishable under normal vision (≥15 ΔE) but collapses to under 10 ΔE under some CVD type — a real, meaningful loss, not noise.
@@ -246,7 +258,8 @@ The dominant, systematic finding: `accentStorage` was frequently placed too clos
 
 ```sh
 node scripts/export-color-data.js   # regenerate analysis/data/colors.csv from palettes/*.js
-Rscript --vanilla analysis/color_science.R  # regenerate all color-science plots + audit CSVs
+Rscript --vanilla analysis/color_science.R     # regenerate the per-color plots + CVD audit CSVs
+Rscript --vanilla analysis/theme_similarity.R  # regenerate the per-theme PCA + dendrogram
 ```
 
 ## Notes
