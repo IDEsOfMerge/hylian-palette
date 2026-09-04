@@ -2,10 +2,14 @@
   "name": "positron-hylian-palette",
   "displayName": "Hylian Palette — Every Mainline Zelda Game",
   "description": "A Light and Dark color theme for every mainline Legend of Zelda game (17 games, 34 themes) for VS Code and Positron, each with its own rationale-backed palette drawn from that game's art direction. Includes a smart per-game toggle command and a \"Pick Zelda Theme\" quick-pick grouped by game.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "publisher": "karlmakepeace",
   "license": "MIT",
   "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1A1424",
+    "theme": "dark"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/karlmakepeace/positron-hylian-palette.git"
@@ -218,6 +222,66 @@
       {
         "command": "hylianPalette.pickTheme",
         "title": "Hylian Palette: Pick Zelda Theme"
+      },
+      {
+        "command": "hylianPalette.randomTheme",
+        "title": "Hylian Palette: Random Theme"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "windwakerMajora.toggleTheme",
+        "key": "ctrl+k ctrl+z",
+        "mac": "cmd+k cmd+z"
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "hylianPalette.gettingStarted",
+        "title": "Welcome to Hylian Palette",
+        "description": "34 Zelda-inspired themes, one extension — a quick tour.",
+        "steps": [
+          {
+            "id": "pickTheme",
+            "title": "Pick your first theme",
+            "description": "Every mainline Zelda game gets a Light and a Dark theme, each with a rationale-backed palette drawn from that game's own art direction.\n[Pick a Zelda Theme](command:hylianPalette.pickTheme)",
+            "media": {
+              "image": "assets/swatches/C9A227.png",
+              "altText": "Triforce gold swatch"
+            },
+            "completionEvents": [
+              "onCommand:hylianPalette.pickTheme"
+            ]
+          },
+          {
+            "id": "toggle",
+            "title": "Toggle Light and Dark",
+            "description": "A smart, per-game toggle — flips between the Light and Dark variant of whichever game's theme is active. Bound to `ctrl+k ctrl+z` (`cmd+k cmd+z` on Mac), or run it from the Command Palette.\n[Toggle Theme](command:windwakerMajora.toggleTheme)",
+            "media": {
+              "markdown": "assets/walkthrough/toggle.md"
+            },
+            "completionEvents": [
+              "onCommand:windwakerMajora.toggleTheme"
+            ]
+          },
+          {
+            "id": "story",
+            "title": "Every pair tells a story",
+            "description": "Ocarina of Time's syntax colors are the three Spiritual Stones. Twilight Princess Dark desaturates everything except Midna's orange. Link's Awakening Dark uses the real 4-shade Game Boy green ramp. One or two \"identity\" colors stay constant between a game's Light and Dark variant — the rest shifts with the light.",
+            "media": {
+              "image": "assets/swatches/00F5D4.png",
+              "altText": "Fierce Deity cyan swatch"
+            }
+          },
+          {
+            "id": "colorScience",
+            "title": "Explore the color science",
+            "description": "Every palette is checked for WCAG contrast and audited for color-vision-deficiency collisions, and there's a PCA + dendrogram showing which themes look like each other.\n[See the full analysis on GitHub](https://github.com/karlmakepeace/positron-hylian-palette#color-science)",
+            "media": {
+              "markdown": "assets/walkthrough/color-science.md"
+            }
+          }
+        ]
       }
     ]
   }
