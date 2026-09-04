@@ -1,8 +1,8 @@
 {
-  "name": "positron-wind-waker-majora-themes",
-  "displayName": "Wind Waker × Majora — Zelda Color Themes",
-  "description": "Two cohesive color themes for VS Code and Positron inspired by The Legend of Zelda: The Wind Waker (Wind Waker Light — warm parchment, Great Sea turquoise, nautical) and Majora's Mask (Majora's Mask Dark — cosmic violet, neon, eerie). Includes a toggle command to switch between them.",
-  "version": "0.1.0",
+  "name": "positron-hylian-palette",
+  "displayName": "Hylian Palette — Every Mainline Zelda Game",
+  "description": "A Light and Dark color theme for every mainline Legend of Zelda game (17 games, 34 themes) for VS Code and Positron, each with its own rationale-backed palette drawn from that game's art direction. Includes a smart per-game toggle command and a \"Pick Zelda Theme\" quick-pick grouped by game.",
+  "version": "0.2.0",
   "publisher": "karlmakepeace",
   "license": "MIT",
   "engines": {
@@ -16,8 +16,17 @@
     "theme",
     "color theme",
     "zelda",
+    "hylian",
     "wind waker",
     "majora's mask",
+    "ocarina of time",
+    "twilight princess",
+    "breath of the wild",
+    "tears of the kingdom",
+    "skyward sword",
+    "a link between worlds",
+    "a link to the past",
+    "link's awakening",
     "dark theme",
     "light theme",
     "positron"
@@ -199,7 +208,11 @@
     "commands": [
       {
         "command": "windwakerMajora.toggleTheme",
-        "title": "Wind Waker × Majora: Toggle Theme"
+        "title": "Hylian Palette: Toggle Theme"
+      },
+      {
+        "command": "hylianPalette.pickTheme",
+        "title": "Hylian Palette: Pick Zelda Theme"
       }
     ]
   }
