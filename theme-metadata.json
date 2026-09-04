@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Majora's Mask Dark",
+    "game": "Majora's Mask",
+    "mode": "dark",
+    "slug": "majora-dark"
+  },
+  {
+    "label": "Wind Waker Light",
+    "game": "The Wind Waker",
+    "mode": "light",
+    "slug": "windwaker-light"
+  }
+]

@@ -1,3 +1,5 @@
 .vscode/**
 **/*.map
 .gitignore
+scripts/**
+palettes/**
