@@ -2,6 +2,15 @@
 
 All notable changes to the "Hylian Palette" extension are documented here.
 
+## [0.4.0] - 2026-09-04
+
+- Added a status-bar item showing the active theme, clickable to open the same quick-pick as **Hylian Palette: Pick Zelda Theme**.
+- Added **Hylian Palette: Random Theme**, jumping to a random one of the 34 themes.
+- Added a default keybinding for **Hylian Palette: Toggle Theme** (`Ctrl+K Ctrl+Z` / `Cmd+K Cmd+Z`, rebindable like any other command).
+- Added a first-run "Welcome to Hylian Palette" walkthrough (`contributes.walkthroughs`) covering theme selection, toggling, the identity-color design pattern, and the color-science write-up.
+- Added Marketplace-publishing readiness: `galleryBanner`, a CI-status badge, a manual (`workflow_dispatch`-only) `.github/workflows/publish.yml`, and a "Installing from the Marketplace" README section — actual publishing is gated on the maintainer's own Marketplace/Open VSX publisher account and is not done by this release.
+- Ran a second, more careful pass over the color-vision-deficiency audit's remaining 13 severe cases (from 0.3.0's first pass) — this time checking each candidate fix against every neighboring role's actual color, not just the pair being fixed, after the first pass's batch approach turned out to have traded a couple of collisions for new ones. Brought severe cases from 13 down to 3, all three in Link's Awakening Dark and left deliberately unfixed as a disclosed, permanent trade-off (they come from using the real 4-shade DMG Game Boy green ramp, which has almost no hue variation to work with). See the README's Color science section for the full account.
+
 ## [0.3.0] - 2026-09-04
 
 - Added an original extension icon (`icon.png`) — an abstract gold/violet gem, echoing the Hyrule/Lorule light-vs-dark-mirror-world duality through color language only, deliberately not a Triforce or any other game-specific silhouette.

@@ -20,7 +20,7 @@
     "editor.findMatchBorder": "#FF6B2E",
     "editorBracketMatch.background": "#F03A2E2A",
     "editorBracketMatch.border": "#F03A2E",
-    "editorBracketHighlight.foreground1": "#4FA637",
+    "editorBracketHighlight.foreground1": "#66BC4C",
     "editorBracketHighlight.foreground2": "#4F9EE0",
     "editorBracketHighlight.foreground3": "#E0453A",
     "editorBracketHighlight.foreground4": "#E8B93D",
@@ -72,7 +72,7 @@
     "statusBar.background": "#6B1E5C",
     "statusBar.foreground": "#FFFFFF",
     "statusBar.border": "#58194B",
-    "statusBar.noFolderBackground": "#4FA637",
+    "statusBar.noFolderBackground": "#66BC4C",
     "statusBar.debuggingBackground": "#E0453A",
     "statusBar.debuggingForeground": "#000000",
     "statusBarItem.hoverBackground": "#FFFFFF22",
@@ -94,7 +94,7 @@
     "terminalCursor.foreground": "#F03A2E",
     "terminal.ansiBlack": "#200A20",
     "terminal.ansiRed": "#C23B2E",
-    "terminal.ansiGreen": "#4FA637",
+    "terminal.ansiGreen": "#66BC4C",
     "terminal.ansiYellow": "#C99A1E",
     "terminal.ansiBlue": "#4F9EE0",
     "terminal.ansiMagenta": "#C43FA0",
@@ -145,12 +145,12 @@
     "pickerGroup.foreground": "#4F9EE0",
     "pickerGroup.border": "#3A1640",
     "focusBorder": "#F03A2E",
-    "diffEditor.insertedTextBackground": "#4FA63726",
+    "diffEditor.insertedTextBackground": "#66BC4C26",
     "diffEditor.removedTextBackground": "#E0453A26",
-    "diffEditor.insertedLineBackground": "#4FA6371A",
+    "diffEditor.insertedLineBackground": "#66BC4C1A",
     "diffEditor.removedLineBackground": "#E0453A1A",
     "diffEditor.border": "#3A1640",
-    "gitDecoration.addedResourceForeground": "#4FA637",
+    "gitDecoration.addedResourceForeground": "#66BC4C",
     "gitDecoration.modifiedResourceForeground": "#4F9EE0",
     "gitDecoration.deletedResourceForeground": "#E0453A",
     "gitDecoration.untrackedResourceForeground": "#E0449A",
@@ -241,7 +241,7 @@
     "positronConsole.traceBackground": "#7A5C781A",
     "positronConsole.ansiBlack": "#200A20",
     "positronConsole.ansiRed": "#C23B2E",
-    "positronConsole.ansiGreen": "#4FA637",
+    "positronConsole.ansiGreen": "#66BC4C",
     "positronConsole.ansiYellow": "#C99A1E",
     "positronConsole.ansiBlue": "#4F9EE0",
     "positronConsole.ansiMagenta": "#C43FA0",
@@ -255,7 +255,7 @@
     "positronConsole.ansiBrightMagenta": "#F080C0",
     "positronConsole.ansiBrightCyan": "#7FE0D4",
     "positronConsole.ansiBrightWhite": "#E4D0E0",
-    "positronRuntime.stateIconActive": "#4FA637",
+    "positronRuntime.stateIconActive": "#66BC4C",
     "positronRuntime.stateIconDisconnected": "#7A5C78",
     "positronRuntime.stateIconIdle": "#FF6B2E",
     "positronDataGrid.contrastBackground": "#200A22",
@@ -354,7 +354,7 @@
         "keyword.other"
       ],
       "settings": {
-        "foreground": "#4FA637",
+        "foreground": "#66BC4C",
         "fontStyle": "bold"
       }
     },
@@ -621,7 +621,7 @@
         "markup.heading"
       ],
       "settings": {
-        "foreground": "#4FA637",
+        "foreground": "#66BC4C",
         "fontStyle": "bold"
       }
     },
@@ -694,7 +694,7 @@
         "keyword.other.sql"
       ],
       "settings": {
-        "foreground": "#4FA637",
+        "foreground": "#66BC4C",
         "fontStyle": "bold"
       }
     },
@@ -801,7 +801,7 @@
       "fontStyle": "italic"
     },
     "keyword": {
-      "foreground": "#4FA637",
+      "foreground": "#66BC4C",
       "fontStyle": "bold"
     },
     "modifier": {
