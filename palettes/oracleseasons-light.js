@@ -46,7 +46,7 @@ module.exports = {
     borderSubtle: '#CAB9BC',
     borderStrong: '#A39698',
     accentKeyword: '#2E8B3D',
-    accentStorage: '#8A5A2E',
+    accentStorage: '#5A3105',
     accentString: '#D9587A',
     accentRegex: '#C23B5A',
     accentFunction: '#2E8FC4',
