@@ -194,15 +194,15 @@ Run **Hylian Palette: Toggle Theme** from the Command Palette. It's a *smart, pe
 ## How the themes are built
 
 ```mermaid
-flowchart LR
-    P["palettes/*.js<br/>34 files · ~40 story<br/>tokens + rationale each"] --> G["scripts/generate-themes.js"]
-    G --> T["themes/*.json<br/>34 full theme files"]
-    G --> K["package.json<br/>contributes.themes"]
-    G --> M["theme-metadata.json<br/>game · mode · slug · year"]
-    G --> C{"WCAG contrast<br/>check"}
-    C -->|"pass, ≥4.5:1"| OK["build succeeds"]
-    C -->|"fail"| X["build fails —<br/>fix the palette"]
-    M -.-> E["extension.js<br/>smart toggle +<br/>quick pick"]
+graph LR
+    P["palettes/*.js: 34 files, about 40 story tokens plus rationale each"] --> G["scripts/generate-themes.js"]
+    G --> T["themes/*.json: 34 full theme files"]
+    G --> K["package.json: contributes.themes"]
+    G --> M["theme-metadata.json: game, mode, slug, year"]
+    G --> C{"WCAG contrast check"}
+    C -->|"pass, 4.5 to 1 or better"| OK["build succeeds"]
+    C -->|"fail"| X["build fails, fix the palette"]
+    M -.-> E["extension.js: smart toggle plus quick pick"]
 ```
 
 Hand-authoring ~300 color keys × 34 themes doesn't scale, so `scripts/generate-themes.js` (a dev-only build tool, not shipped as a runtime dependency) expands a compact ~40-token "story palette" per game/mode — defined in `palettes/*.js`, each with inline rationale comments — into the full theme JSON, and runs an automated contrast check across all of them. See the comment header in any `palettes/*.js` file for that game's specific design story.
