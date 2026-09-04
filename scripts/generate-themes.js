@@ -548,6 +548,7 @@ function main() {
       uiTheme: p.tokens.mode === 'light' ? 'vs' : 'vs-dark',
       path: `./themes/${fileName}`,
       game: p.game,
+      year: p.year,
       mode: p.tokens.mode,
       slug: p.slug,
       contrast: { fgBg: fgBg.toFixed(2), commentBg: commentBg.toFixed(2), sidebarFgBg: sidebarFgBg.toFixed(2) },
@@ -568,7 +569,10 @@ function main() {
   fs.writeFileSync(
     metaPath,
     JSON.stringify(
-      themeEntries.map(({ label, game, mode, slug }) => ({ label, game, mode, slug })),
+      themeEntries
+        .slice()
+        .sort((a, b) => a.year - b.year || a.mode.localeCompare(b.mode))
+        .map(({ label, game, year, mode, slug }) => ({ label, game, year, mode, slug })),
       null,
       2
     ) + '\n'
