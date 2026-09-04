@@ -376,7 +376,7 @@
         "storage"
       ],
       "settings": {
-        "foreground": "#7A4A22",
+        "foreground": "#5C3008",
         "fontStyle": "bold"
       }
     },
@@ -385,7 +385,7 @@
         "storage.modifier"
       ],
       "settings": {
-        "foreground": "#7A4A22",
+        "foreground": "#5C3008",
         "fontStyle": "italic"
       }
     },
@@ -805,7 +805,7 @@
       "fontStyle": "bold"
     },
     "modifier": {
-      "foreground": "#7A4A22",
+      "foreground": "#5C3008",
       "fontStyle": "italic"
     },
     "comment": {

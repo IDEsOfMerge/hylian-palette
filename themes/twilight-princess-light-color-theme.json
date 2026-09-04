@@ -24,13 +24,13 @@
     "editorBracketHighlight.foreground2": "#2A5E8A",
     "editorBracketHighlight.foreground3": "#A0281C",
     "editorBracketHighlight.foreground4": "#A87A1E",
-    "editorBracketHighlight.foreground5": "#8A5A24",
+    "editorBracketHighlight.foreground5": "#C79057",
     "editorBracketHighlight.foreground6": "#5A7A3E",
     "editorBracketHighlight.unexpectedBracket.foreground": "#A0281C",
     "editorError.foreground": "#A0281C",
     "editorWarning.foreground": "#B8860B",
     "editorInfo.foreground": "#4A80AC",
-    "editorHint.foreground": "#8A5A24",
+    "editorHint.foreground": "#C79057",
     "editorIndentGuide.background1": "#CCC098",
     "editorIndentGuide.activeBackground1": "#ACA078",
     "editorWhitespace.foreground": "#CCC098",
@@ -76,8 +76,8 @@
     "statusBar.debuggingBackground": "#A0281C",
     "statusBar.debuggingForeground": "#FFFFFF",
     "statusBarItem.hoverBackground": "#FFFFFF22",
-    "statusBarItem.remoteBackground": "#8A5A24",
-    "statusBarItem.remoteForeground": "#FFFFFF",
+    "statusBarItem.remoteBackground": "#C79057",
+    "statusBarItem.remoteForeground": "#000000",
     "titleBar.activeBackground": "#D4CAA8",
     "titleBar.activeForeground": "#2A2418",
     "titleBar.inactiveBackground": "#E2DCC0",
@@ -153,7 +153,7 @@
     "gitDecoration.addedResourceForeground": "#4A6E2E",
     "gitDecoration.modifiedResourceForeground": "#2A5E8A",
     "gitDecoration.deletedResourceForeground": "#A0281C",
-    "gitDecoration.untrackedResourceForeground": "#8A5A24",
+    "gitDecoration.untrackedResourceForeground": "#C79057",
     "gitDecoration.ignoredResourceForeground": "#948C68",
     "gitDecoration.conflictingResourceForeground": "#A87A1E",
     "textLink.foreground": "#C2650F",
@@ -340,7 +340,7 @@
         "punctuation.definition.tag.documentation"
       ],
       "settings": {
-        "foreground": "#8A5A24",
+        "foreground": "#C79057",
         "fontStyle": "bold italic"
       }
     },
@@ -376,7 +376,7 @@
         "storage"
       ],
       "settings": {
-        "foreground": "#4A6E2E",
+        "foreground": "#81A662",
         "fontStyle": "bold"
       }
     },
@@ -385,7 +385,7 @@
         "storage.modifier"
       ],
       "settings": {
-        "foreground": "#4A6E2E",
+        "foreground": "#81A662",
         "fontStyle": "italic"
       }
     },
@@ -440,7 +440,7 @@
         "constant.other.enummember"
       ],
       "settings": {
-        "foreground": "#8A5A24"
+        "foreground": "#C79057"
       }
     },
     {
@@ -519,7 +519,7 @@
         "support.class"
       ],
       "settings": {
-        "foreground": "#8A5A24",
+        "foreground": "#C79057",
         "fontStyle": "bold"
       }
     },
@@ -529,7 +529,7 @@
         "support.type"
       ],
       "settings": {
-        "foreground": "#8A5A24"
+        "foreground": "#C79057"
       }
     },
     {
@@ -546,7 +546,7 @@
         "entity.name.type.enum"
       ],
       "settings": {
-        "foreground": "#8A5A24",
+        "foreground": "#C79057",
         "fontStyle": "bold"
       }
     },
@@ -675,7 +675,7 @@
         "markup.raw"
       ],
       "settings": {
-        "foreground": "#8A5A24"
+        "foreground": "#C79057"
       }
     },
     {
@@ -731,7 +731,7 @@
       "foreground": "#6A6248"
     },
     "class": {
-      "foreground": "#8A5A24",
+      "foreground": "#C79057",
       "fontStyle": "bold"
     },
     "class.defaultLibrary": {
@@ -742,14 +742,14 @@
       "fontStyle": "italic"
     },
     "enum": {
-      "foreground": "#8A5A24",
+      "foreground": "#C79057",
       "fontStyle": "bold"
     },
     "enumMember": {
       "foreground": "#A87A1E"
     },
     "struct": {
-      "foreground": "#8A5A24",
+      "foreground": "#C79057",
       "fontStyle": "bold"
     },
     "typeParameter": {
@@ -757,7 +757,7 @@
       "fontStyle": "italic"
     },
     "type": {
-      "foreground": "#8A5A24"
+      "foreground": "#C79057"
     },
     "function": {
       "foreground": "#2A5E8A"
@@ -805,7 +805,7 @@
       "fontStyle": "bold"
     },
     "modifier": {
-      "foreground": "#4A6E2E",
+      "foreground": "#81A662",
       "fontStyle": "italic"
     },
     "comment": {

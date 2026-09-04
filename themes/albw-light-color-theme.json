@@ -24,13 +24,13 @@
     "editorBracketHighlight.foreground2": "#1D7EC2",
     "editorBracketHighlight.foreground3": "#BB4530",
     "editorBracketHighlight.foreground4": "#B8860B",
-    "editorBracketHighlight.foreground5": "#1E8A82",
+    "editorBracketHighlight.foreground5": "#62C3BA",
     "editorBracketHighlight.foreground6": "#D9A954",
     "editorBracketHighlight.unexpectedBracket.foreground": "#C0392B",
     "editorError.foreground": "#C0392B",
     "editorWarning.foreground": "#D9480F",
     "editorInfo.foreground": "#4A90C4",
-    "editorHint.foreground": "#1E8A82",
+    "editorHint.foreground": "#62C3BA",
     "editorIndentGuide.background1": "#C0C7AA",
     "editorIndentGuide.activeBackground1": "#959A84",
     "editorWhitespace.foreground": "#C0C7AA",
@@ -76,7 +76,7 @@
     "statusBar.debuggingBackground": "#C0392B",
     "statusBar.debuggingForeground": "#FFFFFF",
     "statusBarItem.hoverBackground": "#FFFFFF22",
-    "statusBarItem.remoteBackground": "#1E8A82",
+    "statusBarItem.remoteBackground": "#62C3BA",
     "statusBarItem.remoteForeground": "#000000",
     "titleBar.activeBackground": "#DDE1C8",
     "titleBar.activeForeground": "#1C2A18",
@@ -98,7 +98,7 @@
     "terminal.ansiYellow": "#B8860B",
     "terminal.ansiBlue": "#1D7EC2",
     "terminal.ansiMagenta": "#7A45BE",
-    "terminal.ansiCyan": "#1E8A82",
+    "terminal.ansiCyan": "#62C3BA",
     "terminal.ansiWhite": "#3E5A38",
     "terminal.ansiBrightBlack": "#8FA080",
     "terminal.ansiBrightRed": "#C0392B",
@@ -153,7 +153,7 @@
     "gitDecoration.addedResourceForeground": "#1E8A4A",
     "gitDecoration.modifiedResourceForeground": "#1D7EC2",
     "gitDecoration.deletedResourceForeground": "#C0392B",
-    "gitDecoration.untrackedResourceForeground": "#1E8A82",
+    "gitDecoration.untrackedResourceForeground": "#62C3BA",
     "gitDecoration.ignoredResourceForeground": "#8FA080",
     "gitDecoration.conflictingResourceForeground": "#B8860B",
     "textLink.foreground": "#7A45BE",
@@ -245,7 +245,7 @@
     "positronConsole.ansiYellow": "#B8860B",
     "positronConsole.ansiBlue": "#1D7EC2",
     "positronConsole.ansiMagenta": "#7A45BE",
-    "positronConsole.ansiCyan": "#1E8A82",
+    "positronConsole.ansiCyan": "#62C3BA",
     "positronConsole.ansiWhite": "#3E5A38",
     "positronConsole.ansiBrightBlack": "#8FA080",
     "positronConsole.ansiBrightRed": "#C0392B",
@@ -340,7 +340,7 @@
         "punctuation.definition.tag.documentation"
       ],
       "settings": {
-        "foreground": "#1E8A82",
+        "foreground": "#62C3BA",
         "fontStyle": "bold italic"
       }
     },
@@ -376,7 +376,7 @@
         "storage"
       ],
       "settings": {
-        "foreground": "#8A6032",
+        "foreground": "#563305",
         "fontStyle": "bold"
       }
     },
@@ -385,7 +385,7 @@
         "storage.modifier"
       ],
       "settings": {
-        "foreground": "#8A6032",
+        "foreground": "#563305",
         "fontStyle": "italic"
       }
     },
@@ -440,7 +440,7 @@
         "constant.other.enummember"
       ],
       "settings": {
-        "foreground": "#1E8A82"
+        "foreground": "#62C3BA"
       }
     },
     {
@@ -519,7 +519,7 @@
         "support.class"
       ],
       "settings": {
-        "foreground": "#1E8A82",
+        "foreground": "#62C3BA",
         "fontStyle": "bold"
       }
     },
@@ -529,7 +529,7 @@
         "support.type"
       ],
       "settings": {
-        "foreground": "#1E8A82"
+        "foreground": "#62C3BA"
       }
     },
     {
@@ -546,7 +546,7 @@
         "entity.name.type.enum"
       ],
       "settings": {
-        "foreground": "#1E8A82",
+        "foreground": "#62C3BA",
         "fontStyle": "bold"
       }
     },
@@ -675,7 +675,7 @@
         "markup.raw"
       ],
       "settings": {
-        "foreground": "#1E8A82"
+        "foreground": "#62C3BA"
       }
     },
     {
@@ -731,7 +731,7 @@
       "foreground": "#5C7A94"
     },
     "class": {
-      "foreground": "#1E8A82",
+      "foreground": "#62C3BA",
       "fontStyle": "bold"
     },
     "class.defaultLibrary": {
@@ -742,14 +742,14 @@
       "fontStyle": "italic"
     },
     "enum": {
-      "foreground": "#1E8A82",
+      "foreground": "#62C3BA",
       "fontStyle": "bold"
     },
     "enumMember": {
       "foreground": "#B8860B"
     },
     "struct": {
-      "foreground": "#1E8A82",
+      "foreground": "#62C3BA",
       "fontStyle": "bold"
     },
     "typeParameter": {
@@ -757,7 +757,7 @@
       "fontStyle": "italic"
     },
     "type": {
-      "foreground": "#1E8A82"
+      "foreground": "#62C3BA"
     },
     "function": {
       "foreground": "#1D7EC2"
@@ -805,7 +805,7 @@
       "fontStyle": "bold"
     },
     "modifier": {
-      "foreground": "#8A6032",
+      "foreground": "#563305",
       "fontStyle": "italic"
     },
     "comment": {

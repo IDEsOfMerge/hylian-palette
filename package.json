@@ -2,9 +2,10 @@
   "name": "positron-hylian-palette",
   "displayName": "Hylian Palette — Every Mainline Zelda Game",
   "description": "A Light and Dark color theme for every mainline Legend of Zelda game (17 games, 34 themes) for VS Code and Positron, each with its own rationale-backed palette drawn from that game's art direction. Includes a smart per-game toggle command and a \"Pick Zelda Theme\" quick-pick grouped by game.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "idesofmerge",
   "license": "MIT",
+  "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/idesofmerge/positron-hylian-palette.git"

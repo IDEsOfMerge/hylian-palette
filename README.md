@@ -212,10 +212,37 @@ Every theme is checked automatically (WCAG 2.1 relative-luminance formula) befor
 | Wind Waker Dark | 14.59:1 | 5.64:1 |
 | Link's Awakening Dark *(the near-monochrome DMG-green theme)* | 6.02:1 | 5.03:1 — the tightest margin in the family, still comfortably clear |
 
+## Color science
+
+Beyond WCAG contrast, every theme's syntax-relevant colors (the 13 roles that actually sit next to each other in real code: keyword, storage, string, regex, function, function-dim, type, interface, number, decorator, namespace, error, warning) are analyzed in CIE Lab space — `analysis/color_science.R`, a from-scratch pure-R implementation (standard sRGB→Lab conversion and the published Machado/Oliveira/Fernandes (2009) color-vision-deficiency model, the same one `colorspace`'s CVD functions are based on — hand-implemented after `colorspace`/`farver` proved to segfault reproducibly on the dev machine at any real scale, even freshly recompiled from source; validated against textbook Lab reference values for pure red/green/blue before use).
+
+<img src="assets/color-science/theme-colorspace-grid.png" alt="Each theme's syntax colors plotted in the CIE a*-b* plane, connected keyword→storage→string→regex→function→type→interface→number→decorator→namespace" width="900">
+
+Each theme's 10 core syntax colors plotted in the CIE a\*-b\* (chroma/hue) plane and connected in a fixed order — the shape each theme traces is itself informative: Link's Awakening Dark's polygon collapses to a tiny cluster near the origin (the near-monochrome Game Boy palette), while e.g. Majora's Mask Dark's sprawls across the whole plane.
+
+<img src="assets/color-science/pca-global.png" alt="Global PCA of all 34 themes' syntax colors in Lab space, colored by role" width="700">
+
+A global PCA (all 34 themes' syntax colors at once, unscaled Lab coordinates) shows the roles are largely separable across the *whole family*, not just within any one theme — keywords (green) and functions (orange) each occupy fairly consistent regions of color space regardless of which game's theme they're from.
+
+### Color-vision-deficiency audit
+
+Every syntax-role pair within every theme was checked for CIE76 (ΔE\*ab) distance under simulated protanopia, deuteranopia, and tritanopia. 2,652 role-pairs were checked across all 34 themes; a pair is flagged when it's safely distinguishable under normal vision (≥15 ΔE) but collapses to under 10 ΔE under some CVD type — a real, meaningful loss, not noise.
+
+<img src="assets/color-science/cvd-swatch-grid.png" alt="Grid of every theme's syntax colors under normal vision and simulated protanopia, deuteranopia, and tritanopia" width="500">
+
+The dominant, systematic finding: `accentStorage` was frequently placed too close to `accentKeyword`, `accentString`, or `colorError` along the exact axis protanopia/deuteranopia collapses — visually distinct to normal vision (many pairs 30-100+ ΔE apart), but landing under 5 ΔE apart for red-green color blindness in the worst cases. This is a standard, well-known failure mode (categorical colors that differ mainly by hue, not lightness, are exactly what CVD removes) — the fix is increasing **lightness** separation, since luminance survives all three deficiency types even when hue collapses.
+
+35 severe cases (near-total collapse, <5 ΔE under some CVD type) were found across 19 themes; 20 palette token adjustments (`accentStorage` in most cases, `accentType` for a recurring green-vs-teal tritanopia collision in 5 light themes) brought that down to 13 remaining, all lower-priority residual cases documented in `analysis/data/severe-flagged.csv` rather than silently left unaddressed. Every fix was constrained to a "vivid accent" lightness band (25-78) rather than allowed to crush toward muddy near-black just to hit the metric, and re-verified against the WCAG contrast gate afterward — see `analysis/data/computed-fixes.csv` for the full before/after list.
+
+```sh
+node scripts/export-color-data.js   # regenerate analysis/data/colors.csv from palettes/*.js
+Rscript --vanilla analysis/color_science.R  # regenerate all color-science plots + audit CSVs
+```
+
 ## Notes
 
 - `publisher` in `package.json` is a placeholder (`idesofmerge`) — it only needs to be a syntactically valid identifier for local packaging/installation and does not need to be registered on the Marketplace unless you later publish it.
-- No icon is bundled, and no game artwork, logos, or copyrighted assets are included anywhere in this repo — every visual here (including the swatch PNGs) is generated from plain hex color data.
+- No game artwork, logos, or copyrighted assets are included anywhere in this repo — every visual here (the icon, the swatch PNGs, the color-science plots) is generated from plain hex color data or hand-drawn geometry, never copied imagery.
 
 ## License
 

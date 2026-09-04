@@ -1,0 +1,511 @@
+theme_slug,game,year,mode,role,role_kind,hex
+albw-dark,A Link Between Worlds,2013,dark,bg,context,#1D0A1A
+albw-dark,A Link Between Worlds,2013,dark,fg,context,#E0D0DC
+albw-dark,A Link Between Worlds,2013,dark,accentKeyword,syntax,#5ECB78
+albw-dark,A Link Between Worlds,2013,dark,accentStorage,syntax,#9A6088
+albw-dark,A Link Between Worlds,2013,dark,accentString,syntax,#E85A9E
+albw-dark,A Link Between Worlds,2013,dark,accentRegex,syntax,#E8703D
+albw-dark,A Link Between Worlds,2013,dark,accentFunction,syntax,#5FA8E0
+albw-dark,A Link Between Worlds,2013,dark,accentFunctionDim,syntax,#8FC4EE
+albw-dark,A Link Between Worlds,2013,dark,accentType,syntax,#3ECBB0
+albw-dark,A Link Between Worlds,2013,dark,accentInterface,syntax,#7FE0D0
+albw-dark,A Link Between Worlds,2013,dark,accentNumber,syntax,#E0B84A
+albw-dark,A Link Between Worlds,2013,dark,accentDecorator,syntax,#E8C878
+albw-dark,A Link Between Worlds,2013,dark,accentNamespace,syntax,#8A7A9E
+albw-dark,A Link Between Worlds,2013,dark,colorError,syntax,#E0524A
+albw-dark,A Link Between Worlds,2013,dark,colorWarning,syntax,#E8703D
+albw-light,A Link Between Worlds,2013,light,bg,context,#E2EAC8
+albw-light,A Link Between Worlds,2013,light,fg,context,#1C2A18
+albw-light,A Link Between Worlds,2013,light,accentKeyword,syntax,#1E8A4A
+albw-light,A Link Between Worlds,2013,light,accentStorage,syntax,#563305
+albw-light,A Link Between Worlds,2013,light,accentString,syntax,#BB4530
+albw-light,A Link Between Worlds,2013,light,accentRegex,syntax,#C2601C
+albw-light,A Link Between Worlds,2013,light,accentFunction,syntax,#1D7EC2
+albw-light,A Link Between Worlds,2013,light,accentFunctionDim,syntax,#6FB0E0
+albw-light,A Link Between Worlds,2013,light,accentType,syntax,#62C3BA
+albw-light,A Link Between Worlds,2013,light,accentInterface,syntax,#5FC4BC
+albw-light,A Link Between Worlds,2013,light,accentNumber,syntax,#B8860B
+albw-light,A Link Between Worlds,2013,light,accentDecorator,syntax,#D9A954
+albw-light,A Link Between Worlds,2013,light,accentNamespace,syntax,#5C7A94
+albw-light,A Link Between Worlds,2013,light,colorError,syntax,#C0392B
+albw-light,A Link Between Worlds,2013,light,colorWarning,syntax,#D9480F
+alttp-dark,A Link to the Past,1991,dark,bg,context,#1B1030
+alttp-dark,A Link to the Past,1991,dark,fg,context,#D4C4E8
+alttp-dark,A Link to the Past,1991,dark,accentKeyword,syntax,#3FA060
+alttp-dark,A Link to the Past,1991,dark,accentStorage,syntax,#F2B482
+alttp-dark,A Link to the Past,1991,dark,accentString,syntax,#E0453A
+alttp-dark,A Link to the Past,1991,dark,accentRegex,syntax,#F0763A
+alttp-dark,A Link to the Past,1991,dark,accentFunction,syntax,#4F9EE0
+alttp-dark,A Link to the Past,1991,dark,accentFunctionDim,syntax,#8AC0E8
+alttp-dark,A Link to the Past,1991,dark,accentType,syntax,#C060E0
+alttp-dark,A Link to the Past,1991,dark,accentInterface,syntax,#E080D8
+alttp-dark,A Link to the Past,1991,dark,accentNumber,syntax,#E8B93D
+alttp-dark,A Link to the Past,1991,dark,accentDecorator,syntax,#9A5AD4
+alttp-dark,A Link to the Past,1991,dark,accentNamespace,syntax,#8A7AA6
+alttp-dark,A Link to the Past,1991,dark,colorError,syntax,#E0453A
+alttp-dark,A Link to the Past,1991,dark,colorWarning,syntax,#FF6B2E
+alttp-light,A Link to the Past,1991,light,bg,context,#D3E8C0
+alttp-light,A Link to the Past,1991,light,fg,context,#16321A
+alttp-light,A Link to the Past,1991,light,accentKeyword,syntax,#1E7A3A
+alttp-light,A Link to the Past,1991,light,accentStorage,syntax,#7A5A2E
+alttp-light,A Link to the Past,1991,light,accentString,syntax,#B8241A
+alttp-light,A Link to the Past,1991,light,accentRegex,syntax,#C2570C
+alttp-light,A Link to the Past,1991,light,accentFunction,syntax,#1B5EA8
+alttp-light,A Link to the Past,1991,light,accentFunctionDim,syntax,#5B93C4
+alttp-light,A Link to the Past,1991,light,accentType,syntax,#5FB4A7
+alttp-light,A Link to the Past,1991,light,accentInterface,syntax,#4FA394
+alttp-light,A Link to the Past,1991,light,accentNumber,syntax,#B8860B
+alttp-light,A Link to the Past,1991,light,accentDecorator,syntax,#7A4A9A
+alttp-light,A Link to the Past,1991,light,accentNamespace,syntax,#5C7A8A
+alttp-light,A Link to the Past,1991,light,colorError,syntax,#B0281C
+alttp-light,A Link to the Past,1991,light,colorWarning,syntax,#C2570C
+botw-dark,Breath of the Wild,2017,dark,bg,context,#180608
+botw-dark,Breath of the Wild,2017,dark,fg,context,#E6D6D2
+botw-dark,Breath of the Wild,2017,dark,accentKeyword,syntax,#4FA860
+botw-dark,Breath of the Wild,2017,dark,accentStorage,syntax,#9A7268
+botw-dark,Breath of the Wild,2017,dark,accentString,syntax,#C858B0
+botw-dark,Breath of the Wild,2017,dark,accentRegex,syntax,#E8703D
+botw-dark,Breath of the Wild,2017,dark,accentFunction,syntax,#1FBFB8
+botw-dark,Breath of the Wild,2017,dark,accentFunctionDim,syntax,#6FDBD4
+botw-dark,Breath of the Wild,2017,dark,accentType,syntax,#3ED9D4
+botw-dark,Breath of the Wild,2017,dark,accentInterface,syntax,#7FEAE4
+botw-dark,Breath of the Wild,2017,dark,accentNumber,syntax,#E0B84A
+botw-dark,Breath of the Wild,2017,dark,accentDecorator,syntax,#C0E85E
+botw-dark,Breath of the Wild,2017,dark,accentNamespace,syntax,#9A7A7C
+botw-dark,Breath of the Wild,2017,dark,colorError,syntax,#E8433A
+botw-dark,Breath of the Wild,2017,dark,colorWarning,syntax,#E8703D
+botw-light,Breath of the Wild,2017,light,bg,context,#DCE6DC
+botw-light,Breath of the Wild,2017,light,fg,context,#16281F
+botw-light,Breath of the Wild,2017,light,accentKeyword,syntax,#2E8F4A
+botw-light,Breath of the Wild,2017,light,accentStorage,syntax,#7A6A52
+botw-light,Breath of the Wild,2017,light,accentString,syntax,#B8492E
+botw-light,Breath of the Wild,2017,light,accentRegex,syntax,#C2601C
+botw-light,Breath of the Wild,2017,light,accentFunction,syntax,#128F94
+botw-light,Breath of the Wild,2017,light,accentFunctionDim,syntax,#5FC4C0
+botw-light,Breath of the Wild,2017,light,accentType,syntax,#1E7A9C
+botw-light,Breath of the Wild,2017,light,accentInterface,syntax,#5FC4DC
+botw-light,Breath of the Wild,2017,light,accentNumber,syntax,#C08A1E
+botw-light,Breath of the Wild,2017,light,accentDecorator,syntax,#9BC23E
+botw-light,Breath of the Wild,2017,light,accentNamespace,syntax,#5C7A94
+botw-light,Breath of the Wild,2017,light,colorError,syntax,#C0392B
+botw-light,Breath of the Wild,2017,light,colorWarning,syntax,#D9480F
+linksawakening-dark,Link's Awakening,1993,dark,bg,context,#0F380F
+linksawakening-dark,Link's Awakening,1993,dark,fg,context,#9BBC0F
+linksawakening-dark,Link's Awakening,1993,dark,accentKeyword,syntax,#6FCB2A
+linksawakening-dark,Link's Awakening,1993,dark,accentStorage,syntax,#86C457
+linksawakening-dark,Link's Awakening,1993,dark,accentString,syntax,#A9CB3A
+linksawakening-dark,Link's Awakening,1993,dark,accentRegex,syntax,#C9DB5A
+linksawakening-dark,Link's Awakening,1993,dark,accentFunction,syntax,#7FE04A
+linksawakening-dark,Link's Awakening,1993,dark,accentFunctionDim,syntax,#5FAE3A
+linksawakening-dark,Link's Awakening,1993,dark,accentType,syntax,#8FE070
+linksawakening-dark,Link's Awakening,1993,dark,accentInterface,syntax,#A8E0A0
+linksawakening-dark,Link's Awakening,1993,dark,accentNumber,syntax,#C9E06A
+linksawakening-dark,Link's Awakening,1993,dark,accentDecorator,syntax,#D9F080
+linksawakening-dark,Link's Awakening,1993,dark,accentNamespace,syntax,#5C8A4A
+linksawakening-dark,Link's Awakening,1993,dark,colorError,syntax,#B8562A
+linksawakening-dark,Link's Awakening,1993,dark,colorWarning,syntax,#C9A82A
+linksawakening-light,Link's Awakening,1993,light,bg,context,#DCEEE6
+linksawakening-light,Link's Awakening,1993,light,fg,context,#1B3A3E
+linksawakening-light,Link's Awakening,1993,light,accentKeyword,syntax,#2E9E4F
+linksawakening-light,Link's Awakening,1993,light,accentStorage,syntax,#5A3105
+linksawakening-light,Link's Awakening,1993,light,accentString,syntax,#D9432E
+linksawakening-light,Link's Awakening,1993,light,accentRegex,syntax,#E8703D
+linksawakening-light,Link's Awakening,1993,light,accentFunction,syntax,#2E7FC4
+linksawakening-light,Link's Awakening,1993,light,accentFunctionDim,syntax,#6FB0E0
+linksawakening-light,Link's Awakening,1993,light,accentType,syntax,#D9A62E
+linksawakening-light,Link's Awakening,1993,light,accentInterface,syntax,#E8C878
+linksawakening-light,Link's Awakening,1993,light,accentNumber,syntax,#B8791E
+linksawakening-light,Link's Awakening,1993,light,accentDecorator,syntax,#E888B0
+linksawakening-light,Link's Awakening,1993,light,accentNamespace,syntax,#7A7A9E
+linksawakening-light,Link's Awakening,1993,light,colorError,syntax,#C0392B
+linksawakening-light,Link's Awakening,1993,light,colorWarning,syntax,#D9A62E
+majora-light,Majora's Mask,2000,light,bg,context,#F2E4D8
+majora-light,Majora's Mask,2000,light,fg,context,#2A1E38
+majora-light,Majora's Mask,2000,light,accentKeyword,syntax,#C22368
+majora-light,Majora's Mask,2000,light,accentStorage,syntax,#8A6018
+majora-light,Majora's Mask,2000,light,accentString,syntax,#C2650F
+majora-light,Majora's Mask,2000,light,accentRegex,syntax,#D93E8A
+majora-light,Majora's Mask,2000,light,accentFunction,syntax,#7A3EA8
+majora-light,Majora's Mask,2000,light,accentFunctionDim,syntax,#9A5EC4
+majora-light,Majora's Mask,2000,light,accentType,syntax,#0A8A78
+majora-light,Majora's Mask,2000,light,accentInterface,syntax,#1FA894
+majora-light,Majora's Mask,2000,light,accentNumber,syntax,#B8860B
+majora-light,Majora's Mask,2000,light,accentDecorator,syntax,#6A5A80
+majora-light,Majora's Mask,2000,light,accentNamespace,syntax,#6A5878
+majora-light,Majora's Mask,2000,light,colorError,syntax,#C2283A
+majora-light,Majora's Mask,2000,light,colorWarning,syntax,#D9A62E
+majora-dark,Majora's Mask,2000,dark,bg,context,#0D0714
+majora-dark,Majora's Mask,2000,dark,fg,context,#CBBEDC
+majora-dark,Majora's Mask,2000,dark,accentKeyword,syntax,#FF4D8D
+majora-dark,Majora's Mask,2000,dark,accentStorage,syntax,#E8C872
+majora-dark,Majora's Mask,2000,dark,accentString,syntax,#FFB347
+majora-dark,Majora's Mask,2000,dark,accentRegex,syntax,#FF6EC7
+majora-dark,Majora's Mask,2000,dark,accentFunction,syntax,#B47EE5
+majora-dark,Majora's Mask,2000,dark,accentFunctionDim,syntax,#9A7FC7
+majora-dark,Majora's Mask,2000,dark,accentType,syntax,#00F5D4
+majora-dark,Majora's Mask,2000,dark,accentInterface,syntax,#7FFFD4
+majora-dark,Majora's Mask,2000,dark,accentNumber,syntax,#FFD166
+majora-dark,Majora's Mask,2000,dark,accentDecorator,syntax,#E3B23C
+majora-dark,Majora's Mask,2000,dark,accentNamespace,syntax,#9B8AC4
+majora-dark,Majora's Mask,2000,dark,colorError,syntax,#FF6B6B
+majora-dark,Majora's Mask,2000,dark,colorWarning,syntax,#E3B23C
+minishcap-dark,The Minish Cap,2004,dark,bg,context,#1C0A18
+minishcap-dark,The Minish Cap,2004,dark,fg,context,#D9C4A0
+minishcap-dark,The Minish Cap,2004,dark,accentKeyword,syntax,#7A5AD9
+minishcap-dark,The Minish Cap,2004,dark,accentStorage,syntax,#6A5470
+minishcap-dark,The Minish Cap,2004,dark,accentString,syntax,#E8703D
+minishcap-dark,The Minish Cap,2004,dark,accentRegex,syntax,#D9542E
+minishcap-dark,The Minish Cap,2004,dark,accentFunction,syntax,#5FC4D9
+minishcap-dark,The Minish Cap,2004,dark,accentFunctionDim,syntax,#8FD8E8
+minishcap-dark,The Minish Cap,2004,dark,accentType,syntax,#E0B23D
+minishcap-dark,The Minish Cap,2004,dark,accentInterface,syntax,#E8C878
+minishcap-dark,The Minish Cap,2004,dark,accentNumber,syntax,#E0C878
+minishcap-dark,The Minish Cap,2004,dark,accentDecorator,syntax,#A0E0E8
+minishcap-dark,The Minish Cap,2004,dark,accentNamespace,syntax,#8A7A9A
+minishcap-dark,The Minish Cap,2004,dark,colorError,syntax,#E8433A
+minishcap-dark,The Minish Cap,2004,dark,colorWarning,syntax,#FF8A3D
+minishcap-light,The Minish Cap,2004,light,bg,context,#DAE1F2
+minishcap-light,The Minish Cap,2004,light,fg,context,#3A2A1A
+minishcap-light,The Minish Cap,2004,light,accentKeyword,syntax,#2E8B4A
+minishcap-light,The Minish Cap,2004,light,accentStorage,syntax,#5C3008
+minishcap-light,The Minish Cap,2004,light,accentString,syntax,#D9542E
+minishcap-light,The Minish Cap,2004,light,accentRegex,syntax,#C23B2E
+minishcap-light,The Minish Cap,2004,light,accentFunction,syntax,#2E8FD9
+minishcap-light,The Minish Cap,2004,light,accentFunctionDim,syntax,#6FB8E8
+minishcap-light,The Minish Cap,2004,light,accentType,syntax,#D9A62E
+minishcap-light,The Minish Cap,2004,light,accentInterface,syntax,#E8C878
+minishcap-light,The Minish Cap,2004,light,accentNumber,syntax,#C9962E
+minishcap-light,The Minish Cap,2004,light,accentDecorator,syntax,#A0D8E8
+minishcap-light,The Minish Cap,2004,light,accentNamespace,syntax,#6A7A8A
+minishcap-light,The Minish Cap,2004,light,colorError,syntax,#C0392B
+minishcap-light,The Minish Cap,2004,light,colorWarning,syntax,#D9821E
+ocarina-dark,Ocarina of Time,1998,dark,bg,context,#0A0E1C
+ocarina-dark,Ocarina of Time,1998,dark,fg,context,#C9D6C4
+ocarina-dark,Ocarina of Time,1998,dark,accentKeyword,syntax,#3DBE82
+ocarina-dark,Ocarina of Time,1998,dark,accentStorage,syntax,#C48A5A
+ocarina-dark,Ocarina of Time,1998,dark,accentString,syntax,#E8534A
+ocarina-dark,Ocarina of Time,1998,dark,accentRegex,syntax,#FF7A3D
+ocarina-dark,Ocarina of Time,1998,dark,accentFunction,syntax,#4FA8E8
+ocarina-dark,Ocarina of Time,1998,dark,accentFunctionDim,syntax,#7FC4F0
+ocarina-dark,Ocarina of Time,1998,dark,accentType,syntax,#3ECBB8
+ocarina-dark,Ocarina of Time,1998,dark,accentInterface,syntax,#7FE0D0
+ocarina-dark,Ocarina of Time,1998,dark,accentNumber,syntax,#E8B93D
+ocarina-dark,Ocarina of Time,1998,dark,accentDecorator,syntax,#A0F0E8
+ocarina-dark,Ocarina of Time,1998,dark,accentNamespace,syntax,#7A9AB0
+ocarina-dark,Ocarina of Time,1998,dark,colorError,syntax,#E8433A
+ocarina-dark,Ocarina of Time,1998,dark,colorWarning,syntax,#FF6B2E
+ocarina-light,Ocarina of Time,1998,light,bg,context,#DEDCC6
+ocarina-light,Ocarina of Time,1998,light,fg,context,#1E2A22
+ocarina-light,Ocarina of Time,1998,light,accentKeyword,syntax,#1B7A4D
+ocarina-light,Ocarina of Time,1998,light,accentStorage,syntax,#6B4423
+ocarina-light,Ocarina of Time,1998,light,accentString,syntax,#B5231A
+ocarina-light,Ocarina of Time,1998,light,accentRegex,syntax,#C2410C
+ocarina-light,Ocarina of Time,1998,light,accentFunction,syntax,#0F5E9C
+ocarina-light,Ocarina of Time,1998,light,accentFunctionDim,syntax,#4A90C4
+ocarina-light,Ocarina of Time,1998,light,accentType,syntax,#5FB4A7
+ocarina-light,Ocarina of Time,1998,light,accentInterface,syntax,#4FA394
+ocarina-light,Ocarina of Time,1998,light,accentNumber,syntax,#B8860B
+ocarina-light,Ocarina of Time,1998,light,accentDecorator,syntax,#7EC8C3
+ocarina-light,Ocarina of Time,1998,light,accentNamespace,syntax,#5C7A8A
+ocarina-light,Ocarina of Time,1998,light,colorError,syntax,#C0392B
+ocarina-light,Ocarina of Time,1998,light,colorWarning,syntax,#D9480F
+oracleages-dark,Oracle of Ages,2001,dark,bg,context,#131417
+oracleages-dark,Oracle of Ages,2001,dark,fg,context,#C4D4E8
+oracleages-dark,Oracle of Ages,2001,dark,accentKeyword,syntax,#7A6AE0
+oracleages-dark,Oracle of Ages,2001,dark,accentStorage,syntax,#8A94A0
+oracleages-dark,Oracle of Ages,2001,dark,accentString,syntax,#E8A23D
+oracleages-dark,Oracle of Ages,2001,dark,accentRegex,syntax,#E8703D
+oracleages-dark,Oracle of Ages,2001,dark,accentFunction,syntax,#4FC4E0
+oracleages-dark,Oracle of Ages,2001,dark,accentFunctionDim,syntax,#7FD8EC
+oracleages-dark,Oracle of Ages,2001,dark,accentType,syntax,#E0B23D
+oracleages-dark,Oracle of Ages,2001,dark,accentInterface,syntax,#E8C878
+oracleages-dark,Oracle of Ages,2001,dark,accentNumber,syntax,#E0C878
+oracleages-dark,Oracle of Ages,2001,dark,accentDecorator,syntax,#B89AE0
+oracleages-dark,Oracle of Ages,2001,dark,accentNamespace,syntax,#7A8AA0
+oracleages-dark,Oracle of Ages,2001,dark,colorError,syntax,#E8433A
+oracleages-dark,Oracle of Ages,2001,dark,colorWarning,syntax,#FF8A3D
+oracleages-light,Oracle of Ages,2001,light,bg,context,#D8E4C8
+oracleages-light,Oracle of Ages,2001,light,fg,context,#1F2C40
+oracleages-light,Oracle of Ages,2001,light,accentKeyword,syntax,#2E8050
+oracleages-light,Oracle of Ages,2001,light,accentStorage,syntax,#473A1C
+oracleages-light,Oracle of Ages,2001,light,accentString,syntax,#C4763A
+oracleages-light,Oracle of Ages,2001,light,accentRegex,syntax,#B85A2E
+oracleages-light,Oracle of Ages,2001,light,accentFunction,syntax,#3E6FB0
+oracleages-light,Oracle of Ages,2001,light,accentFunctionDim,syntax,#7FA8D9
+oracleages-light,Oracle of Ages,2001,light,accentType,syntax,#B8862E
+oracleages-light,Oracle of Ages,2001,light,accentInterface,syntax,#D9BE7E
+oracleages-light,Oracle of Ages,2001,light,accentNumber,syntax,#C9962E
+oracleages-light,Oracle of Ages,2001,light,accentDecorator,syntax,#A888C4
+oracleages-light,Oracle of Ages,2001,light,accentNamespace,syntax,#6A7A8A
+oracleages-light,Oracle of Ages,2001,light,colorError,syntax,#C0392B
+oracleages-light,Oracle of Ages,2001,light,colorWarning,syntax,#D9821E
+oracleseasons-dark,Oracle of Seasons,2001,dark,bg,context,#220E0A
+oracleseasons-dark,Oracle of Seasons,2001,dark,fg,context,#C8DCE0
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentKeyword,syntax,#4AA8D9
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentStorage,syntax,#FFA364
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentString,syntax,#D9642E
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentRegex,syntax,#E87A3D
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentFunction,syntax,#4FB8E8
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentFunctionDim,syntax,#7FD0F0
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentType,syntax,#7FE0D8
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentInterface,syntax,#A8E0DC
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentNumber,syntax,#E0A83D
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentDecorator,syntax,#A0C8E0
+oracleseasons-dark,Oracle of Seasons,2001,dark,accentNamespace,syntax,#6A8AA0
+oracleseasons-dark,Oracle of Seasons,2001,dark,colorError,syntax,#E8433A
+oracleseasons-dark,Oracle of Seasons,2001,dark,colorWarning,syntax,#FF8A3D
+oracleseasons-light,Oracle of Seasons,2001,light,bg,context,#F0DCE0
+oracleseasons-light,Oracle of Seasons,2001,light,fg,context,#1F3D1A
+oracleseasons-light,Oracle of Seasons,2001,light,accentKeyword,syntax,#2E8B3D
+oracleseasons-light,Oracle of Seasons,2001,light,accentStorage,syntax,#5A3105
+oracleseasons-light,Oracle of Seasons,2001,light,accentString,syntax,#D9587A
+oracleseasons-light,Oracle of Seasons,2001,light,accentRegex,syntax,#C23B5A
+oracleseasons-light,Oracle of Seasons,2001,light,accentFunction,syntax,#2E8FC4
+oracleseasons-light,Oracle of Seasons,2001,light,accentFunctionDim,syntax,#6FB8E0
+oracleseasons-light,Oracle of Seasons,2001,light,accentType,syntax,#D9A62E
+oracleseasons-light,Oracle of Seasons,2001,light,accentInterface,syntax,#E8C878
+oracleseasons-light,Oracle of Seasons,2001,light,accentNumber,syntax,#C99A2E
+oracleseasons-light,Oracle of Seasons,2001,light,accentDecorator,syntax,#E888B0
+oracleseasons-light,Oracle of Seasons,2001,light,accentNamespace,syntax,#6A7A8A
+oracleseasons-light,Oracle of Seasons,2001,light,colorError,syntax,#C0392B
+oracleseasons-light,Oracle of Seasons,2001,light,colorWarning,syntax,#D9701E
+phantomhourglass-dark,Phantom Hourglass,2007,dark,bg,context,#11151B
+phantomhourglass-dark,Phantom Hourglass,2007,dark,fg,context,#D6DEE2
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentKeyword,syntax,#3FBE70
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentStorage,syntax,#C9925A
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentString,syntax,#FF6B55
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentRegex,syntax,#FF7A3D
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentFunction,syntax,#4FA0E0
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentFunctionDim,syntax,#7FC0EE
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentType,syntax,#3ECBB8
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentInterface,syntax,#7FE8D8
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentNumber,syntax,#F0A83D
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentDecorator,syntax,#7FE0EC
+phantomhourglass-dark,Phantom Hourglass,2007,dark,accentNamespace,syntax,#7A9AAC
+phantomhourglass-dark,Phantom Hourglass,2007,dark,colorError,syntax,#FF4438
+phantomhourglass-dark,Phantom Hourglass,2007,dark,colorWarning,syntax,#FFB347
+phantomhourglass-light,Phantom Hourglass,2007,light,bg,context,#D2ECEF
+phantomhourglass-light,Phantom Hourglass,2007,light,fg,context,#132A38
+phantomhourglass-light,Phantom Hourglass,2007,light,accentKeyword,syntax,#1F7A45
+phantomhourglass-light,Phantom Hourglass,2007,light,accentStorage,syntax,#56330A
+phantomhourglass-light,Phantom Hourglass,2007,light,accentString,syntax,#C23B2E
+phantomhourglass-light,Phantom Hourglass,2007,light,accentRegex,syntax,#B8541A
+phantomhourglass-light,Phantom Hourglass,2007,light,accentFunction,syntax,#1B5FA8
+phantomhourglass-light,Phantom Hourglass,2007,light,accentFunctionDim,syntax,#5B93C9
+phantomhourglass-light,Phantom Hourglass,2007,light,accentType,syntax,#56B2A5
+phantomhourglass-light,Phantom Hourglass,2007,light,accentInterface,syntax,#3FA89C
+phantomhourglass-light,Phantom Hourglass,2007,light,accentNumber,syntax,#C6790E
+phantomhourglass-light,Phantom Hourglass,2007,light,accentDecorator,syntax,#4FBEC9
+phantomhourglass-light,Phantom Hourglass,2007,light,accentNamespace,syntax,#5A7A8C
+phantomhourglass-light,Phantom Hourglass,2007,light,colorError,syntax,#A8241C
+phantomhourglass-light,Phantom Hourglass,2007,light,colorWarning,syntax,#E8890C
+skywardsword-dark,Skyward Sword,2011,dark,bg,context,#1C0C05
+skywardsword-dark,Skyward Sword,2011,dark,fg,context,#E8DCC8
+skywardsword-dark,Skyward Sword,2011,dark,accentKeyword,syntax,#4FBF7A
+skywardsword-dark,Skyward Sword,2011,dark,accentStorage,syntax,#C08A54
+skywardsword-dark,Skyward Sword,2011,dark,accentString,syntax,#E85A3A
+skywardsword-dark,Skyward Sword,2011,dark,accentRegex,syntax,#FF7A3D
+skywardsword-dark,Skyward Sword,2011,dark,accentFunction,syntax,#3E9FDB
+skywardsword-dark,Skyward Sword,2011,dark,accentFunctionDim,syntax,#7FC4E8
+skywardsword-dark,Skyward Sword,2011,dark,accentType,syntax,#3ED9C4
+skywardsword-dark,Skyward Sword,2011,dark,accentInterface,syntax,#7FEAE0
+skywardsword-dark,Skyward Sword,2011,dark,accentNumber,syntax,#E8C24A
+skywardsword-dark,Skyward Sword,2011,dark,accentDecorator,syntax,#B060E0
+skywardsword-dark,Skyward Sword,2011,dark,accentNamespace,syntax,#8098AA
+skywardsword-dark,Skyward Sword,2011,dark,colorError,syntax,#E8433A
+skywardsword-dark,Skyward Sword,2011,dark,colorWarning,syntax,#FF6B2E
+skywardsword-light,Skyward Sword,2011,light,bg,context,#F0E0B8
+skywardsword-light,Skyward Sword,2011,light,fg,context,#16202C
+skywardsword-light,Skyward Sword,2011,light,accentKeyword,syntax,#2E8F52
+skywardsword-light,Skyward Sword,2011,light,accentStorage,syntax,#8B5A2B
+skywardsword-light,Skyward Sword,2011,light,accentString,syntax,#B8342A
+skywardsword-light,Skyward Sword,2011,light,accentRegex,syntax,#C2531C
+skywardsword-light,Skyward Sword,2011,light,accentFunction,syntax,#1C6FB0
+skywardsword-light,Skyward Sword,2011,light,accentFunctionDim,syntax,#5FADD9
+skywardsword-light,Skyward Sword,2011,light,accentType,syntax,#2E9C8F
+skywardsword-light,Skyward Sword,2011,light,accentInterface,syntax,#5FBFB2
+skywardsword-light,Skyward Sword,2011,light,accentNumber,syntax,#B8860B
+skywardsword-light,Skyward Sword,2011,light,accentDecorator,syntax,#7ED6D0
+skywardsword-light,Skyward Sword,2011,light,accentNamespace,syntax,#4A6B85
+skywardsword-light,Skyward Sword,2011,light,colorError,syntax,#C0392B
+skywardsword-light,Skyward Sword,2011,light,colorWarning,syntax,#D9531C
+spirittracks-dark,Spirit Tracks,2009,dark,bg,context,#1C0A16
+spirittracks-dark,Spirit Tracks,2009,dark,fg,context,#DCC8CE
+spirittracks-dark,Spirit Tracks,2009,dark,accentKeyword,syntax,#4A9E50
+spirittracks-dark,Spirit Tracks,2009,dark,accentStorage,syntax,#F0B57C
+spirittracks-dark,Spirit Tracks,2009,dark,accentString,syntax,#E858A0
+spirittracks-dark,Spirit Tracks,2009,dark,accentRegex,syntax,#FF8A3D
+spirittracks-dark,Spirit Tracks,2009,dark,accentFunction,syntax,#4A9EE0
+spirittracks-dark,Spirit Tracks,2009,dark,accentFunctionDim,syntax,#7FC0F0
+spirittracks-dark,Spirit Tracks,2009,dark,accentType,syntax,#8FB4C4
+spirittracks-dark,Spirit Tracks,2009,dark,accentInterface,syntax,#A8D4E0
+spirittracks-dark,Spirit Tracks,2009,dark,accentNumber,syntax,#D89048
+spirittracks-dark,Spirit Tracks,2009,dark,accentDecorator,syntax,#B08AE0
+spirittracks-dark,Spirit Tracks,2009,dark,accentNamespace,syntax,#8A7098
+spirittracks-dark,Spirit Tracks,2009,dark,colorError,syntax,#FF4A5C
+spirittracks-dark,Spirit Tracks,2009,dark,colorWarning,syntax,#F0A83D
+spirittracks-light,Spirit Tracks,2009,light,bg,context,#D8E6BC
+spirittracks-light,Spirit Tracks,2009,light,fg,context,#232C14
+spirittracks-light,Spirit Tracks,2009,light,accentKeyword,syntax,#2E7D32
+spirittracks-light,Spirit Tracks,2009,light,accentStorage,syntax,#A67F56
+spirittracks-light,Spirit Tracks,2009,light,accentString,syntax,#C23574
+spirittracks-light,Spirit Tracks,2009,light,accentRegex,syntax,#B8541A
+spirittracks-light,Spirit Tracks,2009,light,accentFunction,syntax,#2A6E9E
+spirittracks-light,Spirit Tracks,2009,light,accentFunctionDim,syntax,#5E9BC9
+spirittracks-light,Spirit Tracks,2009,light,accentType,syntax,#5A7A8A
+spirittracks-light,Spirit Tracks,2009,light,accentInterface,syntax,#7FA8B8
+spirittracks-light,Spirit Tracks,2009,light,accentNumber,syntax,#A8621E
+spirittracks-light,Spirit Tracks,2009,light,accentDecorator,syntax,#8A6BAA
+spirittracks-light,Spirit Tracks,2009,light,accentNamespace,syntax,#5A7248
+spirittracks-light,Spirit Tracks,2009,light,colorError,syntax,#A8241A
+spirittracks-light,Spirit Tracks,2009,light,colorWarning,syntax,#C67F0E
+totk-dark,Tears of the Kingdom,2023,dark,bg,context,#0A0909
+totk-dark,Tears of the Kingdom,2023,dark,fg,context,#DCE4E0
+totk-dark,Tears of the Kingdom,2023,dark,accentKeyword,syntax,#5ECB7E
+totk-dark,Tears of the Kingdom,2023,dark,accentStorage,syntax,#8A7A94
+totk-dark,Tears of the Kingdom,2023,dark,accentString,syntax,#C060D0
+totk-dark,Tears of the Kingdom,2023,dark,accentRegex,syntax,#E8703D
+totk-dark,Tears of the Kingdom,2023,dark,accentFunction,syntax,#4FC0DC
+totk-dark,Tears of the Kingdom,2023,dark,accentFunctionDim,syntax,#8FDCE8
+totk-dark,Tears of the Kingdom,2023,dark,accentType,syntax,#2EA89C
+totk-dark,Tears of the Kingdom,2023,dark,accentInterface,syntax,#6FE0D4
+totk-dark,Tears of the Kingdom,2023,dark,accentNumber,syntax,#D8B84A
+totk-dark,Tears of the Kingdom,2023,dark,accentDecorator,syntax,#E0A050
+totk-dark,Tears of the Kingdom,2023,dark,accentNamespace,syntax,#6C6478
+totk-dark,Tears of the Kingdom,2023,dark,colorError,syntax,#E0524A
+totk-dark,Tears of the Kingdom,2023,dark,colorWarning,syntax,#E0A050
+totk-light,Tears of the Kingdom,2023,light,bg,context,#E9E8D8
+totk-light,Tears of the Kingdom,2023,light,fg,context,#1C241E
+totk-light,Tears of the Kingdom,2023,light,accentKeyword,syntax,#C08A2E
+totk-light,Tears of the Kingdom,2023,light,accentStorage,syntax,#8A7048
+totk-light,Tears of the Kingdom,2023,light,accentString,syntax,#C2632E
+totk-light,Tears of the Kingdom,2023,light,accentRegex,syntax,#C2601C
+totk-light,Tears of the Kingdom,2023,light,accentFunction,syntax,#2A85C4
+totk-light,Tears of the Kingdom,2023,light,accentFunctionDim,syntax,#6FB4DB
+totk-light,Tears of the Kingdom,2023,light,accentType,syntax,#3E6FA8
+totk-light,Tears of the Kingdom,2023,light,accentInterface,syntax,#5FC4BC
+totk-light,Tears of the Kingdom,2023,light,accentNumber,syntax,#C9971E
+totk-light,Tears of the Kingdom,2023,light,accentDecorator,syntax,#D99A42
+totk-light,Tears of the Kingdom,2023,light,accentNamespace,syntax,#6A84A0
+totk-light,Tears of the Kingdom,2023,light,colorError,syntax,#C0392B
+totk-light,Tears of the Kingdom,2023,light,colorWarning,syntax,#D9480F
+twilight-princess-dark,Twilight Princess,2006,dark,bg,context,#14100C
+twilight-princess-dark,Twilight Princess,2006,dark,fg,context,#C4B8A0
+twilight-princess-dark,Twilight Princess,2006,dark,accentKeyword,syntax,#5A7048
+twilight-princess-dark,Twilight Princess,2006,dark,accentStorage,syntax,#5A7048
+twilight-princess-dark,Twilight Princess,2006,dark,accentString,syntax,#A0402E
+twilight-princess-dark,Twilight Princess,2006,dark,accentRegex,syntax,#8A5028
+twilight-princess-dark,Twilight Princess,2006,dark,accentFunction,syntax,#3E5E78
+twilight-princess-dark,Twilight Princess,2006,dark,accentFunctionDim,syntax,#5E7E98
+twilight-princess-dark,Twilight Princess,2006,dark,accentType,syntax,#B0824A
+twilight-princess-dark,Twilight Princess,2006,dark,accentInterface,syntax,#D0A468
+twilight-princess-dark,Twilight Princess,2006,dark,accentNumber,syntax,#A08838
+twilight-princess-dark,Twilight Princess,2006,dark,accentDecorator,syntax,#5A6A48
+twilight-princess-dark,Twilight Princess,2006,dark,accentNamespace,syntax,#7A6E58
+twilight-princess-dark,Twilight Princess,2006,dark,colorError,syntax,#C0503A
+twilight-princess-dark,Twilight Princess,2006,dark,colorWarning,syntax,#E8C020
+twilight-princess-light,Twilight Princess,2006,light,bg,context,#E8E0CC
+twilight-princess-light,Twilight Princess,2006,light,fg,context,#2A2418
+twilight-princess-light,Twilight Princess,2006,light,accentKeyword,syntax,#4A6E2E
+twilight-princess-light,Twilight Princess,2006,light,accentStorage,syntax,#81A662
+twilight-princess-light,Twilight Princess,2006,light,accentString,syntax,#A0281C
+twilight-princess-light,Twilight Princess,2006,light,accentRegex,syntax,#8A4A24
+twilight-princess-light,Twilight Princess,2006,light,accentFunction,syntax,#2A5E8A
+twilight-princess-light,Twilight Princess,2006,light,accentFunctionDim,syntax,#4A80AC
+twilight-princess-light,Twilight Princess,2006,light,accentType,syntax,#C79057
+twilight-princess-light,Twilight Princess,2006,light,accentInterface,syntax,#AC7C3E
+twilight-princess-light,Twilight Princess,2006,light,accentNumber,syntax,#A87A1E
+twilight-princess-light,Twilight Princess,2006,light,accentDecorator,syntax,#5A7A3E
+twilight-princess-light,Twilight Princess,2006,light,accentNamespace,syntax,#6A6248
+twilight-princess-light,Twilight Princess,2006,light,colorError,syntax,#A0281C
+twilight-princess-light,Twilight Princess,2006,light,colorWarning,syntax,#B8860B
+windwaker-dark,The Wind Waker,2002,dark,bg,context,#06121C
+windwaker-dark,The Wind Waker,2002,dark,fg,context,#CDE8E0
+windwaker-dark,The Wind Waker,2002,dark,accentKeyword,syntax,#4FB050
+windwaker-dark,The Wind Waker,2002,dark,accentStorage,syntax,#4FB050
+windwaker-dark,The Wind Waker,2002,dark,accentString,syntax,#E8433A
+windwaker-dark,The Wind Waker,2002,dark,accentRegex,syntax,#FF6B35
+windwaker-dark,The Wind Waker,2002,dark,accentFunction,syntax,#3D8FE8
+windwaker-dark,The Wind Waker,2002,dark,accentFunctionDim,syntax,#6FB0F0
+windwaker-dark,The Wind Waker,2002,dark,accentType,syntax,#2AD9C2
+windwaker-dark,The Wind Waker,2002,dark,accentInterface,syntax,#6FEEDC
+windwaker-dark,The Wind Waker,2002,dark,accentNumber,syntax,#FFA53D
+windwaker-dark,The Wind Waker,2002,dark,accentDecorator,syntax,#E8C24A
+windwaker-dark,The Wind Waker,2002,dark,accentNamespace,syntax,#5A8A9E
+windwaker-dark,The Wind Waker,2002,dark,colorError,syntax,#FF3B30
+windwaker-dark,The Wind Waker,2002,dark,colorWarning,syntax,#FFA53D
+windwaker-light,The Wind Waker,2002,light,bg,context,#F4EAD4
+windwaker-light,The Wind Waker,2002,light,fg,context,#1A2530
+windwaker-light,The Wind Waker,2002,light,accentKeyword,syntax,#2A5F25
+windwaker-light,The Wind Waker,2002,light,accentStorage,syntax,#0C450D
+windwaker-light,The Wind Waker,2002,light,accentString,syntax,#9E1B1B
+windwaker-light,The Wind Waker,2002,light,accentRegex,syntax,#A8460C
+windwaker-light,The Wind Waker,2002,light,accentFunction,syntax,#023E8A
+windwaker-light,The Wind Waker,2002,light,accentFunctionDim,syntax,#0B63C4
+windwaker-light,The Wind Waker,2002,light,accentType,syntax,#00695C
+windwaker-light,The Wind Waker,2002,light,accentInterface,syntax,#146B60
+windwaker-light,The Wind Waker,2002,light,accentNumber,syntax,#9C5000
+windwaker-light,The Wind Waker,2002,light,accentDecorator,syntax,#6B5900
+windwaker-light,The Wind Waker,2002,light,accentNamespace,syntax,#526B7A
+windwaker-light,The Wind Waker,2002,light,colorError,syntax,#D62828
+windwaker-light,The Wind Waker,2002,light,colorWarning,syntax,#F77F00
+zelda1-dark,The Legend of Zelda,1986,dark,bg,context,#120D08
+zelda1-dark,The Legend of Zelda,1986,dark,fg,context,#D8C9A0
+zelda1-dark,The Legend of Zelda,1986,dark,accentKeyword,syntax,#4FA637
+zelda1-dark,The Legend of Zelda,1986,dark,accentStorage,syntax,#C48A5A
+zelda1-dark,The Legend of Zelda,1986,dark,accentString,syntax,#E0453A
+zelda1-dark,The Legend of Zelda,1986,dark,accentRegex,syntax,#F0763A
+zelda1-dark,The Legend of Zelda,1986,dark,accentFunction,syntax,#4F9EE0
+zelda1-dark,The Legend of Zelda,1986,dark,accentFunctionDim,syntax,#8AC0E8
+zelda1-dark,The Legend of Zelda,1986,dark,accentType,syntax,#3ECBBE
+zelda1-dark,The Legend of Zelda,1986,dark,accentInterface,syntax,#7FE0D4
+zelda1-dark,The Legend of Zelda,1986,dark,accentNumber,syntax,#D9A62A
+zelda1-dark,The Legend of Zelda,1986,dark,accentDecorator,syntax,#C47AC4
+zelda1-dark,The Legend of Zelda,1986,dark,accentNamespace,syntax,#7A93A6
+zelda1-dark,The Legend of Zelda,1986,dark,colorError,syntax,#E0453A
+zelda1-dark,The Legend of Zelda,1986,dark,colorWarning,syntax,#FF6B2E
+zelda1-light,The Legend of Zelda,1986,light,bg,context,#E7D9A0
+zelda1-light,The Legend of Zelda,1986,light,fg,context,#2B2410
+zelda1-light,The Legend of Zelda,1986,light,accentKeyword,syntax,#2F6B1F
+zelda1-light,The Legend of Zelda,1986,light,accentStorage,syntax,#B77F55
+zelda1-light,The Legend of Zelda,1986,light,accentString,syntax,#A8241A
+zelda1-light,The Legend of Zelda,1986,light,accentRegex,syntax,#C2570C
+zelda1-light,The Legend of Zelda,1986,light,accentFunction,syntax,#1B5EA8
+zelda1-light,The Legend of Zelda,1986,light,accentFunctionDim,syntax,#5B93C4
+zelda1-light,The Legend of Zelda,1986,light,accentType,syntax,#1D7A72
+zelda1-light,The Legend of Zelda,1986,light,accentInterface,syntax,#4FA89C
+zelda1-light,The Legend of Zelda,1986,light,accentNumber,syntax,#B8860B
+zelda1-light,The Legend of Zelda,1986,light,accentDecorator,syntax,#8C4A8A
+zelda1-light,The Legend of Zelda,1986,light,accentNamespace,syntax,#556B7A
+zelda1-light,The Legend of Zelda,1986,light,colorError,syntax,#B0281C
+zelda1-light,The Legend of Zelda,1986,light,colorWarning,syntax,#C2570C
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,bg,context,#170817
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,fg,context,#E6D8E2
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentKeyword,syntax,#4FA637
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentStorage,syntax,#C48A5A
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentString,syntax,#E0453A
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentRegex,syntax,#F0763A
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentFunction,syntax,#4F9EE0
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentFunctionDim,syntax,#8AC0E8
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentType,syntax,#E0449A
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentInterface,syntax,#F080C0
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentNumber,syntax,#E8B93D
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentDecorator,syntax,#7A6BC4
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentNamespace,syntax,#9A7AA6
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,colorError,syntax,#E0453A
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,colorWarning,syntax,#FF6B2E
+zelda2-light,Zelda II: The Adventure of Link,1987,light,bg,context,#CFE0A0
+zelda2-light,Zelda II: The Adventure of Link,1987,light,fg,context,#1E2B12
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentKeyword,syntax,#2E6B1E
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentStorage,syntax,#B77F53
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentString,syntax,#A8241A
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentRegex,syntax,#C2570C
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentFunction,syntax,#1B5EA8
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentFunctionDim,syntax,#5B93C4
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentType,syntax,#17847A
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentInterface,syntax,#4FA89C
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentNumber,syntax,#B8860B
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentDecorator,syntax,#8C4A8A
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentNamespace,syntax,#556B7A
+zelda2-light,Zelda II: The Adventure of Link,1987,light,colorError,syntax,#A8241A
+zelda2-light,Zelda II: The Adventure of Link,1987,light,colorWarning,syntax,#C2570C

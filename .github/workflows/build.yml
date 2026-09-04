@@ -1,0 +1,41 @@
+name: Build & Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Regenerate themes (fails on any WCAG contrast violation)
+        run: node scripts/generate-themes.js
+
+      - name: Confirm generated output matches what's committed
+        run: |
+          git diff --exit-code -- themes/ package.json theme-metadata.json || {
+            echo "::error::themes/*.json, package.json, or theme-metadata.json are out of date. Run 'node scripts/generate-themes.js' and commit the result.";
+            exit 1;
+          }
+
+      - name: Validate theme JSON + positron* key provenance
+        run: node scripts/validate.js
+
+      - name: Package extension
+        run: npx --yes @vscode/vsce package
+
+      - name: Upload .vsix artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: positron-hylian-palette-vsix
+          path: '*.vsix'

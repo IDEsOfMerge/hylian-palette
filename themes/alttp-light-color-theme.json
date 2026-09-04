@@ -24,13 +24,13 @@
     "editorBracketHighlight.foreground2": "#1B5EA8",
     "editorBracketHighlight.foreground3": "#B8241A",
     "editorBracketHighlight.foreground4": "#B8860B",
-    "editorBracketHighlight.foreground5": "#1E7A6E",
+    "editorBracketHighlight.foreground5": "#5FB4A7",
     "editorBracketHighlight.foreground6": "#7A4A9A",
     "editorBracketHighlight.unexpectedBracket.foreground": "#B0281C",
     "editorError.foreground": "#B0281C",
     "editorWarning.foreground": "#C2570C",
     "editorInfo.foreground": "#5B93C4",
-    "editorHint.foreground": "#1E7A6E",
+    "editorHint.foreground": "#5FB4A7",
     "editorIndentGuide.background1": "#B8CCA0",
     "editorIndentGuide.activeBackground1": "#94AC78",
     "editorWhitespace.foreground": "#B8CCA0",
@@ -76,8 +76,8 @@
     "statusBar.debuggingBackground": "#B0281C",
     "statusBar.debuggingForeground": "#FFFFFF",
     "statusBarItem.hoverBackground": "#FFFFFF22",
-    "statusBarItem.remoteBackground": "#1E7A6E",
-    "statusBarItem.remoteForeground": "#FFFFFF",
+    "statusBarItem.remoteBackground": "#5FB4A7",
+    "statusBarItem.remoteForeground": "#000000",
     "titleBar.activeBackground": "#C0D8A8",
     "titleBar.activeForeground": "#16321A",
     "titleBar.inactiveBackground": "#CCE2BA",
@@ -98,7 +98,7 @@
     "terminal.ansiYellow": "#8C6B0A",
     "terminal.ansiBlue": "#1B5EA8",
     "terminal.ansiMagenta": "#6B3F8A",
-    "terminal.ansiCyan": "#1E7A6E",
+    "terminal.ansiCyan": "#5FB4A7",
     "terminal.ansiWhite": "#3E5A40",
     "terminal.ansiBrightBlack": "#6E8868",
     "terminal.ansiBrightRed": "#B0281C",
@@ -153,7 +153,7 @@
     "gitDecoration.addedResourceForeground": "#1E7A3A",
     "gitDecoration.modifiedResourceForeground": "#1B5EA8",
     "gitDecoration.deletedResourceForeground": "#B0281C",
-    "gitDecoration.untrackedResourceForeground": "#1E7A6E",
+    "gitDecoration.untrackedResourceForeground": "#5FB4A7",
     "gitDecoration.ignoredResourceForeground": "#6E8868",
     "gitDecoration.conflictingResourceForeground": "#B8860B",
     "textLink.foreground": "#2E86D6",
@@ -245,7 +245,7 @@
     "positronConsole.ansiYellow": "#8C6B0A",
     "positronConsole.ansiBlue": "#1B5EA8",
     "positronConsole.ansiMagenta": "#6B3F8A",
-    "positronConsole.ansiCyan": "#1E7A6E",
+    "positronConsole.ansiCyan": "#5FB4A7",
     "positronConsole.ansiWhite": "#3E5A40",
     "positronConsole.ansiBrightBlack": "#6E8868",
     "positronConsole.ansiBrightRed": "#B0281C",
@@ -340,7 +340,7 @@
         "punctuation.definition.tag.documentation"
       ],
       "settings": {
-        "foreground": "#1E7A6E",
+        "foreground": "#5FB4A7",
         "fontStyle": "bold italic"
       }
     },
@@ -440,7 +440,7 @@
         "constant.other.enummember"
       ],
       "settings": {
-        "foreground": "#1E7A6E"
+        "foreground": "#5FB4A7"
       }
     },
     {
@@ -519,7 +519,7 @@
         "support.class"
       ],
       "settings": {
-        "foreground": "#1E7A6E",
+        "foreground": "#5FB4A7",
         "fontStyle": "bold"
       }
     },
@@ -529,7 +529,7 @@
         "support.type"
       ],
       "settings": {
-        "foreground": "#1E7A6E"
+        "foreground": "#5FB4A7"
       }
     },
     {
@@ -546,7 +546,7 @@
         "entity.name.type.enum"
       ],
       "settings": {
-        "foreground": "#1E7A6E",
+        "foreground": "#5FB4A7",
         "fontStyle": "bold"
       }
     },
@@ -675,7 +675,7 @@
         "markup.raw"
       ],
       "settings": {
-        "foreground": "#1E7A6E"
+        "foreground": "#5FB4A7"
       }
     },
     {
@@ -731,7 +731,7 @@
       "foreground": "#5C7A8A"
     },
     "class": {
-      "foreground": "#1E7A6E",
+      "foreground": "#5FB4A7",
       "fontStyle": "bold"
     },
     "class.defaultLibrary": {
@@ -742,14 +742,14 @@
       "fontStyle": "italic"
     },
     "enum": {
-      "foreground": "#1E7A6E",
+      "foreground": "#5FB4A7",
       "fontStyle": "bold"
     },
     "enumMember": {
       "foreground": "#B8860B"
     },
     "struct": {
-      "foreground": "#1E7A6E",
+      "foreground": "#5FB4A7",
       "fontStyle": "bold"
     },
     "typeParameter": {
@@ -757,7 +757,7 @@
       "fontStyle": "italic"
     },
     "type": {
-      "foreground": "#1E7A6E"
+      "foreground": "#5FB4A7"
     },
     "function": {
       "foreground": "#1B5EA8"

@@ -2,6 +2,13 @@
 
 All notable changes to the "Hylian Palette" extension are documented here.
 
+## [0.3.0] - 2026-09-04
+
+- Added an original extension icon (`icon.png`) — an abstract gold/violet gem, echoing the Hyrule/Lorule light-vs-dark-mirror-world duality through color language only, deliberately not a Triforce or any other game-specific silhouette.
+- Added `.github/workflows/build.yml`: regenerates and validates every theme (WCAG contrast, JSON strictness, `positron*` key provenance, generated-output-matches-committed check) and packages the extension on every push/PR.
+- Added `scripts/validate.js`, consolidating the JSON-strictness and `positron*`-key-provenance checks used throughout development into one reusable script.
+- Added a rigorous color-science pass (`analysis/color_science.R`, hand-implemented in pure R after `colorspace`/`farver` proved unstable in this environment): a global PCA of all 34 themes' syntax colors, per-theme CIE a\*-b\* colorspace diagrams, and a color-vision-deficiency audit across 2,652 role-pairs. Found and fixed 20 palette token adjustments (mostly `accentStorage`, which was frequently too close to `accentKeyword`/`accentString`/`colorError` under red-green color blindness) across 19 themes, cutting severe CVD collisions from 35 to 13. See the README's "Color science" section.
+
 ## [0.2.0] - 2026-09-03
 
 Renamed to **Hylian Palette** and expanded to cover every mainline Legend of Zelda game.
