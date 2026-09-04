@@ -5,6 +5,10 @@
   "version": "0.2.0",
   "publisher": "karlmakepeace",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karlmakepeace/positron-wind-waker-majora-themes.git"
+  },
   "engines": {
     "vscode": "^1.90.0",
     "positron": ">=2025.1.0"
