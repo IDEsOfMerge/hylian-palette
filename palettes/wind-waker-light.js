@@ -8,6 +8,7 @@ module.exports = {
   slug: 'windwaker-light',
   label: 'Wind Waker Light',
   game: 'The Wind Waker',
+  year: 2002,
   tokens: {
     mode: 'light',
     bg: '#F4EAD4',

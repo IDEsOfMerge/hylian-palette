@@ -8,6 +8,7 @@ module.exports = {
   slug: 'majora-dark',
   label: "Majora's Mask Dark",
   game: "Majora's Mask",
+  year: 2000,
   tokens: {
     mode: 'dark',
     bg: '#0D0714',

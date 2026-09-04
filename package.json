@@ -31,6 +31,36 @@
         "path": "./themes/majora-dark-color-theme.json"
       },
       {
+        "label": "Majora's Mask Light",
+        "uiTheme": "vs",
+        "path": "./themes/majora-light-color-theme.json"
+      },
+      {
+        "label": "Ocarina of Time Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ocarina-dark-color-theme.json"
+      },
+      {
+        "label": "Ocarina of Time Light",
+        "uiTheme": "vs",
+        "path": "./themes/ocarina-light-color-theme.json"
+      },
+      {
+        "label": "Twilight Princess Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/twilight-princess-dark-color-theme.json"
+      },
+      {
+        "label": "Twilight Princess Light",
+        "uiTheme": "vs",
+        "path": "./themes/twilight-princess-light-color-theme.json"
+      },
+      {
+        "label": "Wind Waker Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/windwaker-dark-color-theme.json"
+      },
+      {
         "label": "Wind Waker Light",
         "uiTheme": "vs",
         "path": "./themes/windwaker-light-color-theme.json"

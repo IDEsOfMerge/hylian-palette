@@ -1,14 +1,58 @@
 [
   {
+    "label": "Ocarina of Time Dark",
+    "game": "Ocarina of Time",
+    "year": 1998,
+    "mode": "dark",
+    "slug": "ocarina-dark"
+  },
+  {
+    "label": "Ocarina of Time Light",
+    "game": "Ocarina of Time",
+    "year": 1998,
+    "mode": "light",
+    "slug": "ocarina-light"
+  },
+  {
     "label": "Majora's Mask Dark",
     "game": "Majora's Mask",
+    "year": 2000,
     "mode": "dark",
     "slug": "majora-dark"
   },
   {
+    "label": "Majora's Mask Light",
+    "game": "Majora's Mask",
+    "year": 2000,
+    "mode": "light",
+    "slug": "majora-light"
+  },
+  {
+    "label": "Wind Waker Dark",
+    "game": "The Wind Waker",
+    "year": 2002,
+    "mode": "dark",
+    "slug": "windwaker-dark"
+  },
+  {
     "label": "Wind Waker Light",
     "game": "The Wind Waker",
+    "year": 2002,
     "mode": "light",
     "slug": "windwaker-light"
+  },
+  {
+    "label": "Twilight Princess Dark",
+    "game": "Twilight Princess",
+    "year": 2006,
+    "mode": "dark",
+    "slug": "twilight-princess-dark"
+  },
+  {
+    "label": "Twilight Princess Light",
+    "game": "Twilight Princess",
+    "year": 2006,
+    "mode": "light",
+    "slug": "twilight-princess-light"
   }
 ]
