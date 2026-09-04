@@ -1,5 +1,61 @@
 [
   {
+    "label": "The Legend of Zelda Dark",
+    "game": "The Legend of Zelda",
+    "year": 1986,
+    "mode": "dark",
+    "slug": "zelda1-dark"
+  },
+  {
+    "label": "The Legend of Zelda Light",
+    "game": "The Legend of Zelda",
+    "year": 1986,
+    "mode": "light",
+    "slug": "zelda1-light"
+  },
+  {
+    "label": "Zelda II Dark",
+    "game": "Zelda II: The Adventure of Link",
+    "year": 1987,
+    "mode": "dark",
+    "slug": "zelda2-dark"
+  },
+  {
+    "label": "Zelda II Light",
+    "game": "Zelda II: The Adventure of Link",
+    "year": 1987,
+    "mode": "light",
+    "slug": "zelda2-light"
+  },
+  {
+    "label": "A Link to the Past Dark",
+    "game": "A Link to the Past",
+    "year": 1991,
+    "mode": "dark",
+    "slug": "alttp-dark"
+  },
+  {
+    "label": "A Link to the Past Light",
+    "game": "A Link to the Past",
+    "year": 1991,
+    "mode": "light",
+    "slug": "alttp-light"
+  },
+  {
+    "label": "Link's Awakening Dark",
+    "game": "Link's Awakening",
+    "year": 1993,
+    "mode": "dark",
+    "slug": "linksawakening-dark"
+  },
+  {
+    "label": "Link's Awakening Light",
+    "game": "Link's Awakening",
+    "year": 1993,
+    "mode": "light",
+    "slug": "linksawakening-light"
+  },
+  {
     "label": "Ocarina of Time Dark",
     "game": "Ocarina of Time",
     "year": 1998,
@@ -28,6 +84,34 @@
     "slug": "majora-light"
   },
   {
+    "label": "Oracle of Ages Dark",
+    "game": "Oracle of Ages",
+    "year": 2001,
+    "mode": "dark",
+    "slug": "oracleages-dark"
+  },
+  {
+    "label": "Oracle of Seasons Dark",
+    "game": "Oracle of Seasons",
+    "year": 2001,
+    "mode": "dark",
+    "slug": "oracleseasons-dark"
+  },
+  {
+    "label": "Oracle of Ages Light",
+    "game": "Oracle of Ages",
+    "year": 2001,
+    "mode": "light",
+    "slug": "oracleages-light"
+  },
+  {
+    "label": "Oracle of Seasons Light",
+    "game": "Oracle of Seasons",
+    "year": 2001,
+    "mode": "light",
+    "slug": "oracleseasons-light"
+  },
+  {
     "label": "Wind Waker Dark",
     "game": "The Wind Waker",
     "year": 2002,
@@ -42,6 +126,20 @@
     "slug": "windwaker-light"
   },
   {
+    "label": "The Minish Cap Dark",
+    "game": "The Minish Cap",
+    "year": 2004,
+    "mode": "dark",
+    "slug": "minishcap-dark"
+  },
+  {
+    "label": "The Minish Cap Light",
+    "game": "The Minish Cap",
+    "year": 2004,
+    "mode": "light",
+    "slug": "minishcap-light"
+  },
+  {
     "label": "Twilight Princess Dark",
     "game": "Twilight Princess",
     "year": 2006,
@@ -54,5 +152,89 @@
     "year": 2006,
     "mode": "light",
     "slug": "twilight-princess-light"
+  },
+  {
+    "label": "Phantom Hourglass Dark",
+    "game": "Phantom Hourglass",
+    "year": 2007,
+    "mode": "dark",
+    "slug": "phantomhourglass-dark"
+  },
+  {
+    "label": "Phantom Hourglass Light",
+    "game": "Phantom Hourglass",
+    "year": 2007,
+    "mode": "light",
+    "slug": "phantomhourglass-light"
+  },
+  {
+    "label": "Spirit Tracks Dark",
+    "game": "Spirit Tracks",
+    "year": 2009,
+    "mode": "dark",
+    "slug": "spirittracks-dark"
+  },
+  {
+    "label": "Spirit Tracks Light",
+    "game": "Spirit Tracks",
+    "year": 2009,
+    "mode": "light",
+    "slug": "spirittracks-light"
+  },
+  {
+    "label": "Skyward Sword Dark",
+    "game": "Skyward Sword",
+    "year": 2011,
+    "mode": "dark",
+    "slug": "skywardsword-dark"
+  },
+  {
+    "label": "Skyward Sword Light",
+    "game": "Skyward Sword",
+    "year": 2011,
+    "mode": "light",
+    "slug": "skywardsword-light"
+  },
+  {
+    "label": "A Link Between Worlds Dark",
+    "game": "A Link Between Worlds",
+    "year": 2013,
+    "mode": "dark",
+    "slug": "albw-dark"
+  },
+  {
+    "label": "A Link Between Worlds Light",
+    "game": "A Link Between Worlds",
+    "year": 2013,
+    "mode": "light",
+    "slug": "albw-light"
+  },
+  {
+    "label": "Breath of the Wild Dark",
+    "game": "Breath of the Wild",
+    "year": 2017,
+    "mode": "dark",
+    "slug": "botw-dark"
+  },
+  {
+    "label": "Breath of the Wild Light",
+    "game": "Breath of the Wild",
+    "year": 2017,
+    "mode": "light",
+    "slug": "botw-light"
+  },
+  {
+    "label": "Tears of the Kingdom Dark",
+    "game": "Tears of the Kingdom",
+    "year": 2023,
+    "mode": "dark",
+    "slug": "totk-dark"
+  },
+  {
+    "label": "Tears of the Kingdom Light",
+    "game": "Tears of the Kingdom",
+    "year": 2023,
+    "mode": "light",
+    "slug": "totk-light"
   }
 ]

@@ -26,6 +26,46 @@
   "contributes": {
     "themes": [
       {
+        "label": "A Link Between Worlds Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/albw-dark-color-theme.json"
+      },
+      {
+        "label": "A Link Between Worlds Light",
+        "uiTheme": "vs",
+        "path": "./themes/albw-light-color-theme.json"
+      },
+      {
+        "label": "A Link to the Past Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/alttp-dark-color-theme.json"
+      },
+      {
+        "label": "A Link to the Past Light",
+        "uiTheme": "vs",
+        "path": "./themes/alttp-light-color-theme.json"
+      },
+      {
+        "label": "Breath of the Wild Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/botw-dark-color-theme.json"
+      },
+      {
+        "label": "Breath of the Wild Light",
+        "uiTheme": "vs",
+        "path": "./themes/botw-light-color-theme.json"
+      },
+      {
+        "label": "Link's Awakening Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/linksawakening-dark-color-theme.json"
+      },
+      {
+        "label": "Link's Awakening Light",
+        "uiTheme": "vs",
+        "path": "./themes/linksawakening-light-color-theme.json"
+      },
+      {
         "label": "Majora's Mask Dark",
         "uiTheme": "vs-dark",
         "path": "./themes/majora-dark-color-theme.json"
@@ -46,6 +86,86 @@
         "path": "./themes/ocarina-light-color-theme.json"
       },
       {
+        "label": "Oracle of Ages Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/oracleages-dark-color-theme.json"
+      },
+      {
+        "label": "Oracle of Ages Light",
+        "uiTheme": "vs",
+        "path": "./themes/oracleages-light-color-theme.json"
+      },
+      {
+        "label": "Oracle of Seasons Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/oracleseasons-dark-color-theme.json"
+      },
+      {
+        "label": "Oracle of Seasons Light",
+        "uiTheme": "vs",
+        "path": "./themes/oracleseasons-light-color-theme.json"
+      },
+      {
+        "label": "Phantom Hourglass Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/phantomhourglass-dark-color-theme.json"
+      },
+      {
+        "label": "Phantom Hourglass Light",
+        "uiTheme": "vs",
+        "path": "./themes/phantomhourglass-light-color-theme.json"
+      },
+      {
+        "label": "Skyward Sword Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/skywardsword-dark-color-theme.json"
+      },
+      {
+        "label": "Skyward Sword Light",
+        "uiTheme": "vs",
+        "path": "./themes/skywardsword-light-color-theme.json"
+      },
+      {
+        "label": "Spirit Tracks Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/spirittracks-dark-color-theme.json"
+      },
+      {
+        "label": "Spirit Tracks Light",
+        "uiTheme": "vs",
+        "path": "./themes/spirittracks-light-color-theme.json"
+      },
+      {
+        "label": "Tears of the Kingdom Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/totk-dark-color-theme.json"
+      },
+      {
+        "label": "Tears of the Kingdom Light",
+        "uiTheme": "vs",
+        "path": "./themes/totk-light-color-theme.json"
+      },
+      {
+        "label": "The Legend of Zelda Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/zelda1-dark-color-theme.json"
+      },
+      {
+        "label": "The Legend of Zelda Light",
+        "uiTheme": "vs",
+        "path": "./themes/zelda1-light-color-theme.json"
+      },
+      {
+        "label": "The Minish Cap Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/minishcap-dark-color-theme.json"
+      },
+      {
+        "label": "The Minish Cap Light",
+        "uiTheme": "vs",
+        "path": "./themes/minishcap-light-color-theme.json"
+      },
+      {
         "label": "Twilight Princess Dark",
         "uiTheme": "vs-dark",
         "path": "./themes/twilight-princess-dark-color-theme.json"
@@ -64,6 +184,16 @@
         "label": "Wind Waker Light",
         "uiTheme": "vs",
         "path": "./themes/windwaker-light-color-theme.json"
+      },
+      {
+        "label": "Zelda II Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/zelda2-dark-color-theme.json"
+      },
+      {
+        "label": "Zelda II Light",
+        "uiTheme": "vs",
+        "path": "./themes/zelda2-light-color-theme.json"
       }
     ],
     "commands": [
