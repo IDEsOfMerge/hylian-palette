@@ -6,6 +6,7 @@ const themeMetadata = require('./theme-metadata.json');
 const DEFAULT_THEME = 'Wind Waker Light';
 const TOGGLE_COMMAND_ID = 'windwakerMajora.toggleTheme';
 const PICK_COMMAND_ID = 'hylianPalette.pickTheme';
+const RANDOM_COMMAND_ID = 'hylianPalette.randomTheme';
 
 function findByLabel(label) {
   return themeMetadata.find((t) => t.label === label);
@@ -22,6 +23,22 @@ async function setTheme(label) {
 }
 
 function activate(context) {
+  const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+  statusBarItem.command = PICK_COMMAND_ID;
+  statusBarItem.tooltip = 'Hylian Palette: pick a Zelda theme';
+
+  function updateStatusBarItem() {
+    const currentLabel = vscode.workspace.getConfiguration('workbench').get('colorTheme');
+    const entry = findByLabel(currentLabel);
+    statusBarItem.text = entry ? `$(symbol-color) ${entry.label}` : '$(symbol-color) Hylian Palette';
+    statusBarItem.show();
+  }
+  updateStatusBarItem();
+
+  const configListener = vscode.workspace.onDidChangeConfiguration((e) => {
+    if (e.affectsConfiguration('workbench.colorTheme')) updateStatusBarItem();
+  });
+
   const toggleDisposable = vscode.commands.registerCommand(TOGGLE_COMMAND_ID, async () => {
     try {
       const currentLabel = vscode.workspace.getConfiguration('workbench').get('colorTheme');
@@ -76,7 +93,21 @@ function activate(context) {
     }
   });
 
-  context.subscriptions.push(toggleDisposable, pickDisposable);
+  const randomDisposable = vscode.commands.registerCommand(RANDOM_COMMAND_ID, async () => {
+    try {
+      const currentLabel = vscode.workspace.getConfiguration('workbench').get('colorTheme');
+      const choices = themeMetadata.filter((t) => t.label !== currentLabel);
+      const pick = choices[Math.floor(Math.random() * choices.length)];
+      await setTheme(pick.label);
+      vscode.window.setStatusBarMessage(`Random theme: "${pick.label}"`, 3000);
+    } catch (err) {
+      vscode.window.showErrorMessage(
+        `Hylian Palette: failed to pick a random theme -- ${err instanceof Error ? err.message : String(err)}`
+      );
+    }
+  });
+
+  context.subscriptions.push(statusBarItem, configListener, toggleDisposable, pickDisposable, randomDisposable);
 }
 
 function deactivate() {}
