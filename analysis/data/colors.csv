@@ -32,12 +32,12 @@ albw-light,A Link Between Worlds,2013,light,colorWarning,syntax,#D9480F
 alttp-dark,A Link to the Past,1991,dark,bg,context,#1B1030
 alttp-dark,A Link to the Past,1991,dark,fg,context,#D4C4E8
 alttp-dark,A Link to the Past,1991,dark,accentKeyword,syntax,#3FA060
-alttp-dark,A Link to the Past,1991,dark,accentStorage,syntax,#F2B482
+alttp-dark,A Link to the Past,1991,dark,accentStorage,syntax,#FFCA97
 alttp-dark,A Link to the Past,1991,dark,accentString,syntax,#E0453A
 alttp-dark,A Link to the Past,1991,dark,accentRegex,syntax,#F0763A
 alttp-dark,A Link to the Past,1991,dark,accentFunction,syntax,#4F9EE0
 alttp-dark,A Link to the Past,1991,dark,accentFunctionDim,syntax,#8AC0E8
-alttp-dark,A Link to the Past,1991,dark,accentType,syntax,#C060E0
+alttp-dark,A Link to the Past,1991,dark,accentType,syntax,#D74EC6
 alttp-dark,A Link to the Past,1991,dark,accentInterface,syntax,#E080D8
 alttp-dark,A Link to the Past,1991,dark,accentNumber,syntax,#E8B93D
 alttp-dark,A Link to the Past,1991,dark,accentDecorator,syntax,#9A5AD4
@@ -407,7 +407,7 @@ twilight-princess-dark,Twilight Princess,2006,dark,colorWarning,syntax,#E8C020
 twilight-princess-light,Twilight Princess,2006,light,bg,context,#E8E0CC
 twilight-princess-light,Twilight Princess,2006,light,fg,context,#2A2418
 twilight-princess-light,Twilight Princess,2006,light,accentKeyword,syntax,#4A6E2E
-twilight-princess-light,Twilight Princess,2006,light,accentStorage,syntax,#81A662
+twilight-princess-light,Twilight Princess,2006,light,accentStorage,syntax,#216E3F
 twilight-princess-light,Twilight Princess,2006,light,accentString,syntax,#A0281C
 twilight-princess-light,Twilight Princess,2006,light,accentRegex,syntax,#8A4A24
 twilight-princess-light,Twilight Princess,2006,light,accentFunction,syntax,#2A5E8A
@@ -436,7 +436,7 @@ windwaker-dark,The Wind Waker,2002,dark,colorError,syntax,#FF3B30
 windwaker-dark,The Wind Waker,2002,dark,colorWarning,syntax,#FFA53D
 windwaker-light,The Wind Waker,2002,light,bg,context,#F4EAD4
 windwaker-light,The Wind Waker,2002,light,fg,context,#1A2530
-windwaker-light,The Wind Waker,2002,light,accentKeyword,syntax,#2A5F25
+windwaker-light,The Wind Waker,2002,light,accentKeyword,syntax,#415A14
 windwaker-light,The Wind Waker,2002,light,accentStorage,syntax,#0C450D
 windwaker-light,The Wind Waker,2002,light,accentString,syntax,#9E1B1B
 windwaker-light,The Wind Waker,2002,light,accentRegex,syntax,#A8460C
@@ -451,7 +451,7 @@ windwaker-light,The Wind Waker,2002,light,colorError,syntax,#D62828
 windwaker-light,The Wind Waker,2002,light,colorWarning,syntax,#F77F00
 zelda1-dark,The Legend of Zelda,1986,dark,bg,context,#120D08
 zelda1-dark,The Legend of Zelda,1986,dark,fg,context,#D8C9A0
-zelda1-dark,The Legend of Zelda,1986,dark,accentKeyword,syntax,#4FA637
+zelda1-dark,The Legend of Zelda,1986,dark,accentKeyword,syntax,#66BC4C
 zelda1-dark,The Legend of Zelda,1986,dark,accentStorage,syntax,#C48A5A
 zelda1-dark,The Legend of Zelda,1986,dark,accentString,syntax,#E0453A
 zelda1-dark,The Legend of Zelda,1986,dark,accentRegex,syntax,#F0763A
@@ -467,7 +467,7 @@ zelda1-dark,The Legend of Zelda,1986,dark,colorWarning,syntax,#FF6B2E
 zelda1-light,The Legend of Zelda,1986,light,bg,context,#E7D9A0
 zelda1-light,The Legend of Zelda,1986,light,fg,context,#2B2410
 zelda1-light,The Legend of Zelda,1986,light,accentKeyword,syntax,#2F6B1F
-zelda1-light,The Legend of Zelda,1986,light,accentStorage,syntax,#B77F55
+zelda1-light,The Legend of Zelda,1986,light,accentStorage,syntax,#61340E
 zelda1-light,The Legend of Zelda,1986,light,accentString,syntax,#A8241A
 zelda1-light,The Legend of Zelda,1986,light,accentRegex,syntax,#C2570C
 zelda1-light,The Legend of Zelda,1986,light,accentFunction,syntax,#1B5EA8
@@ -481,7 +481,7 @@ zelda1-light,The Legend of Zelda,1986,light,colorError,syntax,#B0281C
 zelda1-light,The Legend of Zelda,1986,light,colorWarning,syntax,#C2570C
 zelda2-dark,Zelda II: The Adventure of Link,1987,dark,bg,context,#170817
 zelda2-dark,Zelda II: The Adventure of Link,1987,dark,fg,context,#E6D8E2
-zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentKeyword,syntax,#4FA637
+zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentKeyword,syntax,#66BC4C
 zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentStorage,syntax,#C48A5A
 zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentString,syntax,#E0453A
 zelda2-dark,Zelda II: The Adventure of Link,1987,dark,accentRegex,syntax,#F0763A
@@ -497,7 +497,7 @@ zelda2-dark,Zelda II: The Adventure of Link,1987,dark,colorWarning,syntax,#FF6B2
 zelda2-light,Zelda II: The Adventure of Link,1987,light,bg,context,#CFE0A0
 zelda2-light,Zelda II: The Adventure of Link,1987,light,fg,context,#1E2B12
 zelda2-light,Zelda II: The Adventure of Link,1987,light,accentKeyword,syntax,#2E6B1E
-zelda2-light,Zelda II: The Adventure of Link,1987,light,accentStorage,syntax,#B77F53
+zelda2-light,Zelda II: The Adventure of Link,1987,light,accentStorage,syntax,#61340C
 zelda2-light,Zelda II: The Adventure of Link,1987,light,accentString,syntax,#A8241A
 zelda2-light,Zelda II: The Adventure of Link,1987,light,accentRegex,syntax,#C2570C
 zelda2-light,Zelda II: The Adventure of Link,1987,light,accentFunction,syntax,#1B5EA8

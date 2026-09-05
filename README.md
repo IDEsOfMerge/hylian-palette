@@ -18,6 +18,7 @@
 **A Light and Dark color theme for every mainline Legend of Zelda game.**
 17 games · 34 themes · one VS Code / Positron extension.
 
+[![build](https://github.com/idesofmerge/positron-hylian-palette/actions/workflows/build.yml/badge.svg)](https://github.com/idesofmerge/positron-hylian-palette/actions/workflows/build.yml)
 ![themes](https://img.shields.io/badge/themes-34-7209B7?style=flat-square)
 ![games](https://img.shields.io/badge/games-17-00A896?style=flat-square)
 ![contrast](https://img.shields.io/badge/WCAG-%E2%89%A54.5%3A1-2A5F25?style=flat-square)
@@ -165,13 +166,23 @@ Each swatch strip reads left to right: **background · keywords · strings · fu
 
 </details>
 
+## Installing from the Marketplace
+
+Search for **Hylian Palette** in the Extensions view (`Ctrl+Shift+X` / `Cmd+Shift+X`) in VS Code, Positron, or any VS Code-compatible editor, or install from the command line:
+
+```sh
+code --install-extension idesofmerge.positron-hylian-palette
+```
+
+*(Not yet listed — the [Publish workflow](.github/workflows/publish.yml) and Marketplace/Open VSX accounts are set up, pending the first release. Until then, install manually below.)*
+
 ## Installing locally in Positron
 
 From this folder:
 
 ```sh
 npx --yes @vscode/vsce package
-positron --install-extension positron-hylian-palette-0.2.0.vsix
+positron --install-extension positron-hylian-palette-0.4.0.vsix
 ```
 
 Or, for iterating without repackaging each time, launch an Extension Development Host:
@@ -182,14 +193,17 @@ positron --extensionDevelopmentPath="<full path to this folder>"
 
 ## Selecting a theme
 
-Two ways:
+A few ways:
 
 - Open the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) → **Preferences: Color Theme** → pick any of the 34 themes (alphabetical, VS Code's standard picker).
 - Or run **Hylian Palette: Pick Zelda Theme** — a quick-pick grouped by game in release order, showing Light/Dark side by side per game.
+- Or click the theme name in the status bar (bottom right) to open the same quick-pick.
+- Or run **Hylian Palette: Random Theme** to jump to a random one of the 34 — a quick way to browse the whole catalog.
+- A guided **Welcome: Welcome to Hylian Palette** walkthrough (Command Palette → **Welcome: Open Walkthrough**) covers all of the above the first time you install.
 
 ## Toggling between Light and Dark
 
-Run **Hylian Palette: Toggle Theme** from the Command Palette. It's a *smart, per-game* toggle: it flips between the Light and Dark variant of whichever game's theme is currently active (e.g. "Ocarina of Time Light" → "Ocarina of Time Dark"). If some other, unrelated theme is active, it defaults to Wind Waker Light. Only the standard `workbench.colorTheme` User setting is read or written — no other settings are touched.
+Run **Hylian Palette: Toggle Theme** from the Command Palette, or press `Ctrl+K Ctrl+Z` (`Cmd+K Cmd+Z` on Mac — rebindable in Keyboard Shortcuts like any other command). It's a *smart, per-game* toggle: it flips between the Light and Dark variant of whichever game's theme is currently active (e.g. "Ocarina of Time Light" → "Ocarina of Time Dark"). If some other, unrelated theme is active, it defaults to Wind Waker Light. Only the standard `workbench.colorTheme` User setting is read or written — no other settings are touched.
 
 ## How the themes are built
 
@@ -254,7 +268,7 @@ Every syntax-role pair within every theme was checked for CIE76 (ΔE\*ab) distan
 
 The dominant, systematic finding: `accentStorage` was frequently placed too close to `accentKeyword`, `accentString`, or `colorError` along the exact axis protanopia/deuteranopia collapses — visually distinct to normal vision (many pairs 30-100+ ΔE apart), but landing under 5 ΔE apart for red-green color blindness in the worst cases. This is a standard, well-known failure mode (categorical colors that differ mainly by hue, not lightness, are exactly what CVD removes) — the fix is increasing **lightness** separation, since luminance survives all three deficiency types even when hue collapses.
 
-35 severe cases (near-total collapse, <5 ΔE under some CVD type) were found across 19 themes; 20 palette token adjustments (`accentStorage` in most cases, `accentType` for a recurring green-vs-teal tritanopia collision in 5 light themes) brought that down to 13 remaining, all lower-priority residual cases documented in `analysis/data/severe-flagged.csv` rather than silently left unaddressed. Every fix was constrained to a "vivid accent" lightness band (25-78) rather than allowed to crush toward muddy near-black just to hit the metric, and re-verified against the WCAG contrast gate afterward — see `analysis/data/computed-fixes.csv` for the full before/after list.
+35 severe cases (near-total collapse, <5 ΔE under some CVD type) were found across 19 themes; 20 palette token adjustments (`accentStorage` in most cases, `accentType` for a recurring green-vs-teal tritanopia collision in 5 light themes) brought that down to 13 remaining. A second, more careful pass targeted those 13 directly — this time checking each candidate fix against *every* neighboring role's actual Lab position first (not just the one pair being fixed), since the first pass's batch approach had occasionally traded one collision for a new one. That pass brought 13 down to **3**, all three in Link's Awakening Dark (`accentKeyword`/`accentString`, `accentFunction`/`accentType`, `accentString`/`accentFunction`) — left deliberately unfixed, because they come from that theme's whole point: the real 4-shade DMG Game Boy green ramp (`#0F380F #306230 #8BAC0F #9BBC0F`), which has almost no hue variation to begin with. Forcing more CVD separation there would mean abandoning the hardware-accurate palette that theme exists to showcase, so this is a permanent, disclosed trade-off rather than an open bug. Every fix (both passes) stayed within readable-brightness bounds and was re-verified against the WCAG contrast gate afterward — see `analysis/data/computed-fixes.csv` and `analysis/data/severe-flagged.csv` for the full before/after record.
 
 ```sh
 node scripts/export-color-data.js   # regenerate analysis/data/colors.csv from palettes/*.js
