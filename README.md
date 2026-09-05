@@ -62,7 +62,7 @@ timeline
 
 ## ...and by in-universe story chronology
 
-This is the other timeline — the one every Zelda fan actually means by "the timeline." Per Nintendo's official Hyrule Historia chronology, the story splits into three branches after Ocarina of Time, and (this is the famous twist) the original The Legend of Zelda and Zelda II turn out to sit in the *far future* of one of them, not the past. An original rendering, built from scratch in this project's own style and colors — listing which game's story follows which is historical/factual information, not copyrightable expression, so this is on the same footing as the release-date timeline above, not a reproduction of any published chart.
+This is the other timeline — the one every Zelda fan actually means by "the timeline." Per Nintendo's official Hyrule Historia chronology, the story splits into three branches after Ocarina of Time, and (this is the famous twist) the original The Legend of Zelda and Zelda II turn out to sit in the *far future* of one of them, not the past. Rendered from scratch in this project's own style and colors, not copied from any published chart.
 
 <img src="assets/timeline/timeline-metro.png" alt="Zelda in-universe story chronology as a metro map: a trunk (Skyward Sword, Minish Cap, Four Swords, Ocarina of Time) splits at Ocarina of Time into the Child Timeline (Majora's Mask, Twilight Princess), Adult Timeline (Wind Waker, Phantom Hourglass, Spirit Tracks), and Downfall Timeline (A Link to the Past, Link's Awakening, the Oracle games, A Link Between Worlds, then a large time skip to The Legend of Zelda and Zelda II), reconverging into Breath of the Wild and Tears of the Kingdom" width="900">
 
