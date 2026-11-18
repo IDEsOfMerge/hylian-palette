@@ -2,97 +2,89 @@
 
 // Link's Awakening (1993) -- Dark
 //
-// Signature story: the ONE deliberately near-monochrome theme in the whole
-// family. The original 1993 Game Boy had no color -- just a reflective
-// green-tinted LCD driven by four fixed shades. Those four real DMG hex
-// values are used directly and exactly: #0F380F (darkest, used here as
-// `bg`), #306230, #8BAC0F (used here as `fgComment`), and #9BBC0F
-// (brightest, used here as `fg`). Everything else in this file is a shade
-// built by sliding along that SAME hue family -- deep forest green at the
-// dark end fading to a yellow-green chartreuse at the bright end, exactly
-// like the real hardware's phosphor-ish glow -- rather than reaching for
-// blue, red, or purple. This is a deliberate thematic choice: the entire
-// game turns out to be the Wind Fish's dream, and Koholint Island itself
-// dissolves the moment Link wakes up, so a screen that can only ever show
-// you shades of one color -- nothing else -- fits the "none of this was
-// ever really there" ending better than any amount of extra hue would.
+// Signature story: the ONE deliberately monochrome hardware-tribute theme in the
+// entire catalog. The original 1993 Game Boy (DMG-01) had no color -- only a
+// reflective olive-chartreuse STN LCD driven by 2-bit shade registers. Those
+// canonical DMG shades anchor this palette directly: #0F380F (darkest pixel,
+// `bg`), #306230 (structural borders/chrome), and #8BAC0F / #9BBC0F (classic
+// mid-bright LCD phosphor tones).
 //
-// Two intentional, narrow exceptions: colorError/colorDelete/ansi.red use a
-// muted rust, standing in for the Nightmares -- the shape-shifting, foreign
-// intrusions haunting the ends of each dungeon, the only things in Koholint
-// that were never native to the dream. And because the identity color from
-// Light (Marin's coral, see linksawakening-light.js) has nowhere left to
-// live in a true 4-shade palette, this Dark theme intentionally does NOT
-// carry an identity accent forward -- per the brief's own carve-out, the
-// monochrome concept is the whole point here and takes priority over accent
-// continuity. accentCursor uses the single brightest value the original
-// hardware could ever produce (#9BBC0F) -- the cursor is, quite literally,
-// the brightest pixel a 1993 Game Boy screen could draw.
+// To make real programming genuinely comfortable without breaking the monochrome
+// dream conceit, active tokens glide monotonically along the exact DMG phosphor
+// curve in OKLCH space -- from deep olive-moss (`h ~ 136°`, `L ~ 0.69`) up to
+// lit dot-matrix lime-chartreuse (`h ~ 112°`, `L ~ 0.90`) -- ensuring every
+// single syntax token, comment, operator, and namespace clears WCAG AA 4.5:1
+// against #0F380F while bold/italic typographic cues reinforce role boundaries.
+// One narrow lore exception remains: `colorError` and `gitDelete` take a muted
+// oxidized-amber Nightmare tint (#E08244), representing the foreign Nightmares
+// haunting Koholint's dungeons -- the only presence never native to the Wind
+// Fish's dream.
 
 module.exports = {
   slug: 'linksawakening-dark',
   label: "Link's Awakening Dark",
   game: "Link's Awakening",
   year: 1993,
+  subtitle: "1993 DMG-01 dot-matrix LCD phosphor green ramp — the Wind Fish's dream",
   tokens: {
     mode: 'dark',
     bg: '#0F380F',
-    fg: '#9BBC0F',
-    bgLine: '#1B421B',
-    bgWidget: '#274C27',
-    bgInput: '#0E350E',
-    bgSidebar: '#1F4714',
-    bgPanel: '#1C4414',
-    bgActivity: '#234B19',
-    tintHover: '#31580F',
-    tintSelect: '#476D0F',
-    fgSecondary: '#6E920F',
-    fgMuted: '#4E730F',
-    fgVariable: '#A8C93A',
-    fgPunct: '#6B8A28',
-    fgComment: '#8BAC0F',
-    fgParameter: '#93B830',
-    fgProperty: '#7FA82A',
-    borderSubtle: '#2C502C',
-    borderStrong: '#496849',
-    accentKeyword: '#6FCB2A',
-    accentStorage: '#86C457',
-    accentString: '#A9CB3A',
-    accentRegex: '#C9DB5A',
-    accentFunction: '#7FE04A',
-    accentFunctionDim: '#5FAE3A',
-    accentType: '#8FE070',
-    accentInterface: '#A8E0A0',
-    accentNumber: '#C9E06A',
-    accentDecorator: '#D9F080',
-    accentNamespace: '#5C8A4A',
-    accentCursor: '#9BBC0F',
-    accentFocus: '#8BAC0F',
-    accentBadge: '#C9DB2A',
-    accentButton: '#4C8A1E',
-    accentStatusBar: '#16481A',
-    colorError: '#B8562A',
-    colorWarning: '#C9A82A',
-    colorInfo: '#6FAE8A',
-    gitAdd: '#6FCB2A',
-    gitDelete: '#B8562A',
+    fg: '#C4DE54',
+    bgLine: '#184418',
+    bgWidget: '#204E20',
+    bgInput: '#0B2E0B',
+    bgSidebar: '#153F14',
+    bgPanel: '#133C12',
+    bgActivity: '#1B4719',
+    tintHover: '#26561A',
+    tintSelect: '#35691C',
+    fgSecondary: '#98BA38',
+    fgMuted: '#6A8F28',
+    fgVariable: '#BBD84A',
+    fgPunct: '#85AB2C',
+    fgComment: '#83A825',
+    fgParameter: '#A9CC44',
+    fgProperty: '#9EC23B',
+    borderSubtle: '#265226',
+    borderStrong: '#5E8534',
+    accentKeyword: '#9BBC0F',
+    accentStorage: '#7FB032',
+    accentString: '#B6D63C',
+    accentRegex: '#D2E86B',
+    accentFunction: '#8CC42B',
+    accentFunctionDim: '#7AA836',
+    accentType: '#A6CF52',
+    accentInterface: '#BFE072',
+    accentNumber: '#D6EB63',
+    accentDecorator: '#CBE683',
+    accentNamespace: '#7DA646',
+    accentCursor: '#D6EB63',
+    accentFocus: '#9BBC0F',
+    accentBadge: '#B6D63C',
+    accentButton: '#306230',
+    accentStatusBar: '#1B4A1B',
+    colorError: '#E08244',
+    colorWarning: '#D4B83C',
+    colorInfo: '#96C96E',
+    gitAdd: '#8CC42B',
+    gitDelete: '#E08244',
     ansi: {
-      black: '#16481A',
-      red: '#8A4A22',
-      green: '#6FCB2A',
-      yellow: '#C9A82A',
-      blue: '#5C8A6A',
-      magenta: '#7A8A4A',
-      cyan: '#6FAE8A',
-      white: '#8BAC0F',
-      brightBlack: '#4C6B1E',
-      brightRed: '#B8562A',
-      brightGreen: '#8FE070',
-      brightYellow: '#D9CB4A',
-      brightBlue: '#7FAE9A',
-      brightMagenta: '#9AAA6A',
-      brightCyan: '#A8E0A0',
-      brightWhite: '#C9E06A',
+      black: '#184418',
+      red: '#D97B3E',
+      green: '#8CC42B',
+      yellow: '#C8C438',
+      blue: '#7EB368',
+      magenta: '#A6B856',
+      cyan: '#88C478',
+      white: '#9BBC0F',
+      brightBlack: '#7BA124',
+      brightRed: '#E89254',
+      brightGreen: '#A8D84E',
+      brightYellow: '#DCE868',
+      brightBlue: '#98CCA0',
+      brightMagenta: '#C0CF7A',
+      brightCyan: '#B2E09C',
+      brightWhite: '#D8EE78',
     },
   },
 };

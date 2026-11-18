@@ -2,90 +2,77 @@
 
 // Spirit Tracks (2009) -- Dark
 //
-// Demon King Malladus' corrupted realm: the Dark Realm beneath the Tower of
-// Spirits and the black cracked-earth Chaos Realm of the finale, where the
-// Tracks themselves have been torn up and New Hyrule's demon king wants his
-// body back. The base tone is a black pushed toward warm red-purple --
-// maroon rather than indigo -- which deliberately inverts Majora's Mask
-// Dark's cooler blue-violet cosmic void (Majora's blue channel dominates
-// its red; here red dominates blue), so the two purple-black darks in this
-// family stay readable apart. accentCursor/accentFocus carry Spirit Tracks
-// Light's identity color forward unchanged in hue: Zelda's pale ethereal
-// spirit-blue, brightened here into a genuine glow -- fitting, since a
-// ghost is more visible in the dark than in daylight, and Zelda spends
-// this entire realm as exactly that. accentString/ansi.magenta keep her
-// other identity color, the hot-pink dress, now practically neon against
-// the maroon-black backdrop. accentDecorator is the violet rune-glow of
-// Phantom possession, the mechanic that lets spirit-Zelda animate a
-// suit of armor to fight at Link's side. fgComment stays a muted
-// rose-mauve -- the same family as fg, just quieter, standing in for the
-// hushed upper floors of the Tower of Spirits where Zelda's voice fades
-// to a whisper.
+// Chasing the armored Demon Train across the soot-and-maroon Dark Realm (`bg`):
+// golden Spirit Tracks (`accentNumber`) and steam-boiler brass (`accentStorage`)
+// gleam against coal-dark stone, while Princess Zelda's dual presence --
+// her rose-pink Phantom suit (`accentString`) and her glowing spirit-blue
+// ghost form (`accentType`/`accentCursor`/`accentFocus`) -- lights the dark.
 
 module.exports = {
   slug: 'spirittracks-dark',
   label: 'Spirit Tracks Dark',
   game: 'Spirit Tracks',
   year: 2009,
+  subtitle: 'Dark Realm coal-maroon, Possessed-Phantom rose & Demon Train Malladus',
   tokens: {
     mode: 'dark',
-    bg: '#1C0A16',
-    fg: '#DCC8CE',
-    bgLine: '#28121F',
-    bgWidget: '#2C1524',
-    bgInput: '#170914',
-    bgSidebar: '#20101C',
-    bgPanel: '#1E0E1A',
-    bgActivity: '#241220',
-    tintHover: '#321A2C',
-    tintSelect: '#402038',
-    fgSecondary: '#AC94A6',
-    fgMuted: '#705C6C',
-    fgVariable: '#D6C2CC',
-    fgPunct: '#9E8A96',
-    fgComment: '#9A7E92',
-    fgParameter: '#9EDCC8',
-    fgProperty: '#C8A0C8',
-    borderSubtle: '#321A2C',
-    borderStrong: '#4A2840',
-    accentKeyword: '#4A9E50',
-    accentStorage: '#F0B57C',
-    accentString: '#E858A0',
-    accentRegex: '#FF8A3D',
-    accentFunction: '#4A9EE0',
-    accentFunctionDim: '#7FC0F0',
-    accentType: '#8FB4C4',
-    accentInterface: '#A8D4E0',
-    accentNumber: '#D89048',
-    accentDecorator: '#B08AE0',
-    accentNamespace: '#8A7098',
-    accentCursor: '#7DD8F0',
-    accentFocus: '#7DD8F0',
-    accentBadge: '#F0A83D',
-    accentButton: '#4A9EE0',
-    accentStatusBar: '#4A1638',
-    colorError: '#FF4A5C',
-    colorWarning: '#F0A83D',
-    colorInfo: '#7FC0F0',
-    gitAdd: '#4A9E50',
-    gitDelete: '#FF4A5C',
+    bg: '#190810',
+    fg: '#E0CFD7',
+    bgLine: '#230F19',
+    bgWidget: '#29151F',
+    bgInput: '#15050C',
+    bgSidebar: '#1F0C17',
+    bgPanel: '#1D0A15',
+    bgActivity: '#230D1A',
+    tintHover: '#301124',
+    tintSelect: '#421632',
+    fgSecondary: '#AE9CA4',
+    fgMuted: '#776A70',
+    fgVariable: '#D9C4CE',
+    fgPunct: '#A5949C',
+    fgComment: '#9F8896',
+    fgParameter: '#93C3B5',
+    fgProperty: '#C9B1CF',
+    borderSubtle: '#331C27',
+    borderStrong: '#725763',
+    accentKeyword: '#8DE69A',
+    accentStorage: '#BB9266',
+    accentString: '#F56BBD',
+    accentRegex: '#FF8F4B',
+    accentFunction: '#4EAFFD',
+    accentFunctionDim: '#7EC3FF',
+    accentType: '#00E3FD',
+    accentInterface: '#99EBFF',
+    accentNumber: '#FDC956',
+    accentDecorator: '#B58FFF',
+    accentNamespace: '#AE95AF',
+    accentCursor: '#66DCFA',
+    accentFocus: '#66DCFA',
+    accentBadge: '#F2A438',
+    accentButton: '#3E94E0',
+    accentStatusBar: '#4D1838',
+    colorError: '#F92141',
+    colorWarning: '#FFAD3F',
+    colorInfo: '#62C8F9',
+    gitAdd: '#5FCC74',
+    gitDelete: '#F92141',
     ansi: {
-      black: '#28121F',
-      red: '#C2405A',
-      green: '#4A9E50',
-      yellow: '#C9973E',
-      blue: '#4A9EE0',
-      magenta: '#E858A0',
-      cyan: '#7DD8F0',
-      white: '#AC94A6',
-      brightBlack: '#705C6C',
-      brightRed: '#FF4A5C',
-      brightGreen: '#6ABE78',
-      brightYellow: '#F0C050',
-      brightBlue: '#7FC0F0',
-      brightMagenta: '#F080C0',
-      brightCyan: '#A0E8F5',
-      brightWhite: '#DCC8CE',
+      black: '#230F19',
+      red: '#F51B3E',
+      green: '#5FCC74',
+      yellow: '#E1B57A',
+      blue: '#4EAFFD',
+      magenta: '#F56BBD',
+      cyan: '#52E1FB',
+      white: '#AE9CA4',
+      brightBlack: '#9F8896',
+      brightRed: '#F92141',
+      brightGreen: '#6DE183',
+      brightYellow: '#F3C586',
+      brightBlue: '#7BC2FF',
+      brightMagenta: '#FF8ACD',
+      brightCyan: '#92E8F9',
+      brightWhite: '#E0CFD7',
     },
   },
 };

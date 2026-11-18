@@ -1,23 +1,30 @@
 {
   "name": "positron-hylian-palette",
   "displayName": "Hylian Palette — Every Mainline Zelda Game",
-  "description": "A Light and Dark color theme for every mainline Legend of Zelda game (17 games, 34 themes) for VS Code and Positron, each with its own rationale-backed palette drawn from that game's art direction. Includes a smart per-game toggle command and a \"Pick Zelda Theme\" quick-pick grouped by game.",
-  "version": "0.4.0",
+  "description": "Scientifically tuned Light and Dark color themes for every mainline Legend of Zelda game (18 games, 36 themes, 1986–2024) for VS Code and Positron — crafted in OKLCH from each game's authentic art direction with 100% WCAG AA contrast, APCA hierarchy, and color-blindness resilience.",
+  "version": "1.0.0",
   "publisher": "idesofmerge",
   "license": "MIT",
   "icon": "icon.png",
   "galleryBanner": {
-    "color": "#1A1424",
+    "color": "#16102B",
     "theme": "dark"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/idesofmerge/positron-hylian-palette.git"
   },
+  "bugs": {
+    "url": "https://github.com/idesofmerge/positron-hylian-palette/issues"
+  },
+  "homepage": "https://idesofmerge.github.io/positron-hylian-palette/",
   "engines": {
     "vscode": "^1.90.0",
     "positron": ">=2025.1.0"
   },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "categories": [
     "Themes"
   ],
@@ -26,16 +33,20 @@
     "color theme",
     "zelda",
     "hylian",
+    "echoes of wisdom",
+    "tears of the kingdom",
+    "breath of the wild",
     "wind waker",
     "majora's mask",
     "ocarina of time",
     "twilight princess",
-    "breath of the wild",
-    "tears of the kingdom",
     "skyward sword",
     "a link between worlds",
     "a link to the past",
     "link's awakening",
+    "oklch",
+    "accessible",
+    "colorblind",
     "dark theme",
     "light theme",
     "positron"
@@ -72,6 +83,16 @@
         "label": "Breath of the Wild Light",
         "uiTheme": "vs",
         "path": "./themes/botw-light-color-theme.json"
+      },
+      {
+        "label": "Echoes of Wisdom Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/echoes-dark-color-theme.json"
+      },
+      {
+        "label": "Echoes of Wisdom Light",
+        "uiTheme": "vs",
+        "path": "./themes/echoes-light-color-theme.json"
       },
       {
         "label": "Link's Awakening Dark",
@@ -216,7 +237,7 @@
     ],
     "commands": [
       {
-        "command": "windwakerMajora.toggleTheme",
+        "command": "hylianPalette.toggleTheme",
         "title": "Hylian Palette: Toggle Theme"
       },
       {
@@ -226,11 +247,15 @@
       {
         "command": "hylianPalette.randomTheme",
         "title": "Hylian Palette: Random Theme"
+      },
+      {
+        "command": "hylianPalette.openExplorer",
+        "title": "Hylian Palette: Open Palette & Colorimetry Explorer"
       }
     ],
     "keybindings": [
       {
-        "command": "windwakerMajora.toggleTheme",
+        "command": "hylianPalette.toggleTheme",
         "key": "ctrl+k ctrl+z",
         "mac": "cmd+k cmd+z"
       }
@@ -239,12 +264,12 @@
       {
         "id": "hylianPalette.gettingStarted",
         "title": "Welcome to Hylian Palette",
-        "description": "34 Zelda-inspired themes, one extension — a quick tour.",
+        "description": "18 mainline Zelda games · 36 scientifically tuned themes — a quick tour.",
         "steps": [
           {
             "id": "pickTheme",
-            "title": "Pick your first theme",
-            "description": "Every mainline Zelda game gets a Light and a Dark theme, each with a rationale-backed palette drawn from that game's own art direction.\n[Pick a Zelda Theme](command:hylianPalette.pickTheme)",
+            "title": "Pick your first theme (with live preview)",
+            "description": "Every mainline Zelda game from 1986 to 2024 gets a Light and a Dark theme crafted in OKLCH from that game's authentic art direction. Arrow through the list to preview live before committing.\n[Pick a Zelda Theme](command:hylianPalette.pickTheme)",
             "media": {
               "image": "assets/swatches/C9A227.png",
               "altText": "Triforce gold swatch"
@@ -256,30 +281,34 @@
           {
             "id": "toggle",
             "title": "Toggle Light and Dark",
-            "description": "A smart, per-game toggle — flips between the Light and Dark variant of whichever game's theme is active. Bound to `ctrl+k ctrl+z` (`cmd+k cmd+z` on Mac), or run it from the Command Palette.\n[Toggle Theme](command:windwakerMajora.toggleTheme)",
+            "description": "A smart, per-game toggle — flips between the Light and Dark variant of whichever game's theme is active. Bound to `ctrl+k ctrl+z` (`cmd+k cmd+z` on Mac), or run it from the Command Palette.\n[Toggle Theme](command:hylianPalette.toggleTheme)",
             "media": {
               "markdown": "assets/walkthrough/toggle.md"
             },
             "completionEvents": [
+              "onCommand:hylianPalette.toggleTheme",
               "onCommand:windwakerMajora.toggleTheme"
             ]
           },
           {
             "id": "story",
             "title": "Every pair tells a story",
-            "description": "Ocarina of Time's syntax colors are the three Spiritual Stones. Twilight Princess Dark desaturates everything except Midna's orange. Link's Awakening Dark uses the real 4-shade Game Boy green ramp. One or two \"identity\" colors stay constant between a game's Light and Dark variant — the rest shifts with the light.",
+            "description": "Ocarina of Time's syntax colors are the three Spiritual Stones plus the royal-indigo Ocarina. Twilight Princess Dark lowers OKLCH chroma across every token except Midna's blazing orange. Link's Awakening Dark honors the real 1993 DMG-01 LCD green ramp, and Echoes of Wisdom steps from Zelda's cloak into the Still World.",
             "media": {
-              "image": "assets/swatches/00F5D4.png",
+              "image": "assets/swatches/1CEAD4.png",
               "altText": "Fierce Deity cyan swatch"
             }
           },
           {
             "id": "colorScience",
-            "title": "Explore the color science",
-            "description": "Every palette is checked for WCAG contrast and audited for color-vision-deficiency collisions, and there's a PCA + dendrogram showing which themes look like each other.\n[See the full analysis on GitHub](https://github.com/idesofmerge/positron-hylian-palette#color-science)",
+            "title": "Launch the Interactive Palette & Colorimetry Explorer",
+            "description": "Inspect OKLCH coordinates, WCAG 2.1 + APCA contrast, OKLab chromaticity polygons, and real-time protanopia/deuteranopia/tritanopia simulations across all 36 themes — and live-sync any theme straight into your editor.\n[Open Interactive Explorer](command:hylianPalette.openExplorer)",
             "media": {
               "markdown": "assets/walkthrough/color-science.md"
-            }
+            },
+            "completionEvents": [
+              "onCommand:hylianPalette.openExplorer"
+            ]
           }
         ]
       }

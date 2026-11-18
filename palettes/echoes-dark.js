@@ -1,0 +1,80 @@
+'use strict';
+
+// Echoes of Wisdom (2024) -- Dark
+//
+// Stepping through Tri's portal into the Still World: an eerie geometric
+// violet-indigo void (`bg`) where uprooted trees float upside-down
+// (`accentType`), townsfolk stand petrified in pale stone (`accentStorage`,
+// `fgComment`), magenta fractures (`accentString`) rim the abyss, blue Might
+// Crystals (`accentNumber`) glint in dungeon chests, Swordfighter-Form cyan
+// (`accentFunction`) channels Link's lost blade, and Tri's golden triangles
+// (`accentKeyword`, `accentCursor`, `accentFocus`) lead Zelda home.
+
+module.exports = {
+  slug: 'echoes-dark',
+  label: 'Echoes of Wisdom Dark',
+  game: 'Echoes of Wisdom',
+  year: 2024,
+  subtitle: "The Still World's rift-violet void, Tri's golden Echoes & Swordfighter cyan",
+  tokens: {
+    mode: 'dark',
+    bg: '#0F091F',
+    fg: '#D3D2E5',
+    bgLine: '#18112A',
+    bgWidget: '#1D172F',
+    bgInput: '#0C061A',
+    bgSidebar: '#140E26',
+    bgPanel: '#120D25',
+    bgActivity: '#16102B',
+    tintHover: '#201638',
+    tintSelect: '#2D1D4D',
+    fgSecondary: '#A09FB3',
+    fgMuted: '#6E6D7B',
+    fgVariable: '#C9C8DF',
+    fgPunct: '#9796A9',
+    fgComment: '#8C8CA2',
+    fgParameter: '#8EC3C3',
+    fgProperty: '#C9B996',
+    borderSubtle: '#251E3A',
+    borderStrong: '#615A7A',
+    accentKeyword: '#FFC83C',
+    accentStorage: '#B9C1D2',
+    accentString: '#EB64C0',
+    accentRegex: '#FF9044',
+    accentFunction: '#3DF6FF',
+    accentFunctionDim: '#77F1F7',
+    accentType: '#4CD283',
+    accentInterface: '#69E1A7',
+    accentNumber: '#69A9FF',
+    accentDecorator: '#B793FF',
+    accentNamespace: '#999BBD',
+    accentCursor: '#FFD147',
+    accentFocus: '#FFD147',
+    accentBadge: '#E84CA2',
+    accentButton: '#3298C9',
+    accentStatusBar: '#3B1E66',
+    colorError: '#F03948',
+    colorWarning: '#FFA838',
+    colorInfo: '#00E0E9',
+    gitAdd: '#4CD283',
+    gitDelete: '#F03948',
+    ansi: {
+      black: '#18112A',
+      red: '#EA3244',
+      green: '#4CD283',
+      yellow: '#FFC83C',
+      blue: '#69A9FF',
+      magenta: '#EF67C3',
+      cyan: '#00E2EB',
+      white: '#A09FB3',
+      brightBlack: '#8C8CA2',
+      brightRed: '#F03948',
+      brightGreen: '#5AE793',
+      brightYellow: '#FCDA8F',
+      brightBlue: '#8CBDFF',
+      brightMagenta: '#FF80D4',
+      brightCyan: '#4FEFF7',
+      brightWhite: '#D3D2E5',
+    },
+  },
+};

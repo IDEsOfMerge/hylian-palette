@@ -2,93 +2,78 @@
 
 // Phantom Hourglass (2007) -- Light
 //
-// Wind Waker's toon-shaded sequel, deliberately pushed cooler and more
-// saturated than its parent: the DS's flatter, punchier cel-shading turns
-// Wind Waker's warm parchment-and-turquoise Great Sea into a crisper,
-// purely aquatic cyan-blue. accentCursor/accentFocus share one identity
-// color -- a vivid cerulean "open ocean under a bright DS sky" -- kept
-// constant into Phantom Hourglass Dark (brightened there), so the family
-// resemblance to Wind Waker survives while the hue itself (pure cyan-blue,
-// not WW's greener turquoise) stays unmistakably its own. accentNumber is
-// the hourglass's sand -- literally the title item, and the game's real
-// dread mechanic is a shrinking, numeric time limit inside the Temple of
-// the Ocean King, so tying "numbers" to sand-gold is a direct mechanical
-// callback. accentString is the red dotted course line the stylus draws
-// across the sea chart -- Phantom Hourglass's signature DS-only mechanic
-// was drawing directly on the map. fgComment carries that same idea one
-// step further: it's toned as soft pencil/graphite-blue, the color of the
-// handwritten notes and circled clues players scribble in the margins of
-// their own charts -- a real, unique feature of this game's touch-screen
-// interface, and a natural fit for what a code comment actually is.
-// accentDecorator is Ciela the fairy's spark. Sidebar/panel zones drift
-// toward the mint-green of the island chains dotting the ocean, echoing
-// (without copying) how Wind Waker Light shifts its own UI zones toward
-// land colors.
+// Wind Waker's DS sequel swaps warm parchment for crisp, aquatic lagoon-cyan
+// (`bg`) and celebrates the DS's touch-screen cartography: `accentString` wears
+// the red dotted course-line you draw with the stylus (and Leaf, Spirit of
+// Power), `fgComment` takes the graphite-blue of handwritten map margin notes,
+// `accentFunction` channels Neri (Spirit of Wisdom), and `accentNumber` holds
+// the golden Sand of Hours inside the Phantom Hourglass.
 
 module.exports = {
   slug: 'phantomhourglass-light',
   label: 'Phantom Hourglass Light',
   game: 'Phantom Hourglass',
   year: 2007,
+  subtitle: 'DS sunlit lagoon chart, stylus route-red & Hourglass sand-gold',
   tokens: {
     mode: 'light',
-    bg: '#D2ECEF',
-    fg: '#132A38',
-    bgLine: '#C7E4E8',
-    bgWidget: '#E4F6F8',
-    bgInput: '#FFFFFF',
-    bgSidebar: '#D8EFE4',
-    bgPanel: '#CFE8DC',
-    bgActivity: '#C5E0D2',
-    tintHover: '#DCF0EE',
-    tintSelect: '#A9DCE2',
-    fgSecondary: '#3C5C68',
-    fgMuted: '#7FA0AA',
-    fgVariable: '#173A4A',
-    fgPunct: '#3E5C66',
-    fgComment: '#3F6478',
-    fgParameter: '#1F6B5E',
-    fgProperty: '#2C5570',
-    borderSubtle: '#B9DBDF',
-    borderStrong: '#8FBAC2',
-    accentKeyword: '#1F7A45',
-    accentStorage: '#56330A',
-    accentString: '#C23B2E',
-    accentRegex: '#B8541A',
-    accentFunction: '#1B5FA8',
-    accentFunctionDim: '#5B93C9',
-    accentType: '#56B2A5',
-    accentInterface: '#3FA89C',
-    accentNumber: '#C6790E',
-    accentDecorator: '#4FBEC9',
-    accentNamespace: '#5A7A8C',
-    accentCursor: '#0090C9',
-    accentFocus: '#0090C9',
-    accentBadge: '#E8890C',
-    accentButton: '#1B5FA8',
-    accentStatusBar: '#0C6E9E',
-    colorError: '#A8241C',
-    colorWarning: '#E8890C',
-    colorInfo: '#5B93C9',
-    gitAdd: '#1F7A45',
-    gitDelete: '#A8241C',
+    bg: '#DAF3F5',
+    fg: '#07232D',
+    bgLine: '#CDE9EB',
+    bgWidget: '#E6F9FA',
+    bgInput: '#F1FCFD',
+    bgSidebar: '#D3EEE2',
+    bgPanel: '#CFEBDF',
+    bgActivity: '#C7E6D9',
+    tintHover: '#BDE7EC',
+    tintSelect: '#9BDEE6',
+    fgSecondary: '#304F5C',
+    fgMuted: '#5E7680',
+    fgVariable: '#072E3A',
+    fgPunct: '#395662',
+    fgComment: '#3F5F6A',
+    fgParameter: '#004E40',
+    fgProperty: '#12425D',
+    borderSubtle: '#B6D5D8',
+    borderStrong: '#708F92',
+    accentKeyword: '#32632D',
+    accentStorage: '#5B2B04',
+    accentString: '#B01A2D',
+    accentRegex: '#9A4300',
+    accentFunction: '#003E7C',
+    accentFunctionDim: '#274F80',
+    accentType: '#077578',
+    accentInterface: '#14646B',
+    accentNumber: '#8D5F00',
+    accentDecorator: '#632C8F',
+    accentNamespace: '#345B6C',
+    accentCursor: '#0084BD',
+    accentFocus: '#0084BD',
+    accentBadge: '#D9720B',
+    accentButton: '#1458A8',
+    accentStatusBar: '#0C6A99',
+    colorError: '#600019',
+    colorWarning: '#915100',
+    colorInfo: '#005F9A',
+    gitAdd: '#006430',
+    gitDelete: '#600019',
     ansi: {
-      black: '#1E3A44',
-      red: '#7A1A12',
-      green: '#1F7A45',
-      yellow: '#8A5A08',
-      blue: '#1B5FA8',
-      magenta: '#6B4A8A',
-      cyan: '#56B2A5',
-      white: '#3C5C68',
-      brightBlack: '#7FA0AA',
-      brightRed: '#A8241C',
-      brightGreen: '#3FA060',
-      brightYellow: '#C6790E',
-      brightBlue: '#5B93C9',
-      brightMagenta: '#8A6BAA',
-      brightCyan: '#3FA89C',
-      brightWhite: '#132A38',
+      black: '#07232D',
+      red: '#510013',
+      green: '#006430',
+      yellow: '#895C00',
+      blue: '#00498F',
+      magenta: '#632C8F',
+      cyan: '#007273',
+      white: '#395662',
+      brightBlack: '#3F5F6A',
+      brightRed: '#600019',
+      brightGreen: '#026E36',
+      brightYellow: '#906100',
+      brightBlue: '#195598',
+      brightMagenta: '#6D329C',
+      brightCyan: '#1C7778',
+      brightWhite: '#072E3A',
     },
   },
 };

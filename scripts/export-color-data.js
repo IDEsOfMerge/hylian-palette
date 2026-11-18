@@ -2,15 +2,13 @@
 'use strict';
 
 // Dev-only tool: exports the color-science-relevant tokens from every
-// palette into a flat CSV for the R analysis in analysis/color_science.R.
-// Restricted to the ~13 roles that actually sit next to each other in real
-// syntax-highlighted code and therefore need to be mutually distinguishable
-// (plus bg/fg for context) -- not the full ~40-token schema, most of which
-// is structural chrome rather than semantically-load-bearing syntax color.
+// palette into a flat CSV for analysis/color_science.R and theme_similarity.R,
+// enriched with OKLCH coordinates, WCAG 2.1 contrast ratio, and APCA Lc.
 // Run with: node scripts/export-color-data.js
 
 const fs = require('fs');
 const path = require('path');
+const cs = require('./color-science');
 
 const PALETTES_DIR = path.join(__dirname, '..', 'palettes');
 const OUT_DIR = path.join(__dirname, '..', 'analysis', 'data');
@@ -30,18 +28,28 @@ function csvEscape(value) {
 }
 
 function main() {
-  const files = fs.readdirSync(PALETTES_DIR).filter((f) => f.endsWith('.js'));
-  const rows = [['theme_slug', 'game', 'year', 'mode', 'role', 'role_kind', 'hex']];
+  const files = fs.readdirSync(PALETTES_DIR).filter((f) => f.endsWith('.js')).sort();
+  const rows = [[
+    'theme_slug', 'game', 'year', 'mode', 'role', 'role_kind', 'hex',
+    'oklch_L', 'oklch_C', 'oklch_h', 'wcag_bg', 'apca_lc',
+  ]];
 
   for (const f of files) {
     const p = require(path.join(PALETTES_DIR, f));
     const t = p.tokens;
-    for (const role of CONTEXT_ROLES) {
-      rows.push([p.slug, p.game, p.year, t.mode, role, 'context', t[role].toUpperCase()]);
-    }
-    for (const role of SYNTAX_ROLES) {
-      rows.push([p.slug, p.game, p.year, t.mode, role, 'syntax', t[role].toUpperCase()]);
-    }
+    const emitRow = (role, kind) => {
+      const hex = t[role].toUpperCase();
+      const lch = cs.hexToOklch(hex);
+      const wcag = cs.contrastRatio(hex, t.bg);
+      const lc = cs.apcaContrast(hex, t.bg);
+      rows.push([
+        p.slug, p.game, p.year, t.mode, role, kind, hex,
+        lch.L.toFixed(4), lch.C.toFixed(4), lch.h.toFixed(2),
+        wcag.toFixed(2), lc.toFixed(1),
+      ]);
+    };
+    for (const role of CONTEXT_ROLES) emitRow(role, 'context');
+    for (const role of SYNTAX_ROLES) emitRow(role, 'syntax');
   }
 
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });

@@ -1,7 +1,9 @@
 .vscode/**
 **/*.map
+*.vsix
 .gitignore
 scripts/**
 palettes/**
 analysis/**
+site/**
 .github/**
