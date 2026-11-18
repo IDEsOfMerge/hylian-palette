@@ -1,13 +1,25 @@
 <!-- markdownlint-disable MD033 MD041 -->
 ```text
-       /\
-      /  \
-     /    \
-    /------\
-   /\      /\
-  /  \    /  \
- /    \  /    \
-/------\/------\
+╔════════════════╤══════════════════════════════════════════════════════════════╗
+║  ── HYRULE ──  │        ──── 40TH ANNIVERSARY TRIBUTE · 1986–2026 ────        ║
+║       /\       │        ██╗  ██╗██╗   ██╗██╗     ██╗ █████╗ ███╗   ██╗        ║
+║      /█▒\      │        ██║  ██║╚██╗ ██╔╝██║     ██║██╔══██╗████╗  ██║        ║
+║     /██▒▒\     │        ███████║ ╚████╔╝ ██║     ██║███████║██╔██╗ ██║        ║
+║    /\    /\    │        ██╔══██║  ╚██╔╝  ██║     ██║██╔══██║██║╚██╗██║        ║
+║   /█▒\  /█▒\   │        ██║  ██║   ██║   ███████╗██║██║  ██║██║ ╚████║        ║
+║  /██▒▒\/██▒▒\  │        ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝        ║
+╟────────────────┼──────────────────────────────────────────────────────────────╢
+║  \▒▒░░/\▒▒░░/  │  ██████╗  █████╗ ██╗     ███████╗████████╗████████╗███████╗  ║
+║   \▒░/  \▒░/   │  ██╔══██╗██╔══██╗██║     ██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝  ║
+║    \/    \/    │  ██████╔╝███████║██║     █████╗     ██║      ██║   █████╗    ║
+║     \▒▒░░/     │  ██╔═══╝ ██╔══██║██║     ██╔══╝     ██║      ██║   ██╔══╝    ║
+║      \▒░/      │  ██║     ██║  ██║███████╗███████╗   ██║      ██║   ███████╗  ║
+║       \/       │  ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝      ╚═╝   ╚══════╝  ║
+║  ── LORULE ──  │                                                              ║
+╠════════════════╧══════════════════════════════════════════════════════════════╣
+║   18 MAINLINE ZELDA GAMES  ·  36 LIGHT & DARK THEMES  ·  VS CODE / POSITRON   ║
+║   OKLCH COLORIMETRY  ·  100% WCAG AA  ·  APCA-W3  ·  CIEDE2000  ·  CVD SAFE   ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
 
 <div align="center">
@@ -17,7 +29,10 @@
 **A Light and Dark color theme for every mainline Legend of Zelda game.**
 18 games · 36 themes · one VS Code / Positron extension.
 
-[![explorer](https://img.shields.io/badge/live_explorer-interactive_workbench-C9A227?style=flat-square)](https://idesofmerge.github.io/positron-hylian-palette/)
+*Created to celebrate the **40th anniversary of The Legend of Zelda (1986–2026)** — an independent fan tribute to four decades of Hyrule's art direction and color craft.*
+
+![40th anniversary](https://img.shields.io/badge/40th_anniversary-1986%E2%80%932026-C9A227?style=flat-square)
+[![explorer](https://img.shields.io/badge/live_explorer-interactive_workbench-B08515?style=flat-square)](https://idesofmerge.github.io/positron-hylian-palette/)
 [![build](https://github.com/idesofmerge/positron-hylian-palette/actions/workflows/build.yml/badge.svg)](https://github.com/idesofmerge/positron-hylian-palette/actions/workflows/build.yml)
 ![version](https://img.shields.io/badge/version-1.0.0-264EB5?style=flat-square)
 ![themes](https://img.shields.io/badge/themes-36-7209B7?style=flat-square)
@@ -323,6 +338,7 @@ Rscript --vanilla analysis/timeline_metro.R
 
 ## Notes
 
+- Created to commemorate the **40th anniversary of *The Legend of Zelda* (1986–2026)** — an independent, unofficial fan tribute not affiliated with or endorsed by Nintendo.
 - Zero runtime `npm` dependencies — `extension.js` uses only the built-in `vscode` API and static `theme-metadata.json`.
 - Positron-specific workbench tokens (`positronConsole.*`, `positronVariables.*`, `positronPlots.*`, `positronDataExplorer.*`, etc.) are strictly validated against Positron's upstream color registry (`5,472` verified usages across 36 themes).
 - No game artwork, logos, sprites, or copyrighted assets appear anywhere in this repository — every visual (extension icon, 345 swatch PNGs, timeline diagram, and color-science plots) is generated algorithmically from hex coordinates and geometric primitives.

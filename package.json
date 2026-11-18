@@ -1,7 +1,7 @@
 {
   "name": "positron-hylian-palette",
   "displayName": "Hylian Palette — Every Mainline Zelda Game",
-  "description": "Scientifically tuned Light and Dark color themes for every mainline Legend of Zelda game (18 games, 36 themes, 1986–2024) for VS Code and Positron — crafted in OKLCH from each game's authentic art direction with 100% WCAG AA contrast, APCA hierarchy, and color-blindness resilience.",
+  "description": "Created for the 40th anniversary of The Legend of Zelda (1986–2026) — scientifically tuned Light and Dark themes for all 18 mainline games (36 themes) for VS Code and Positron, crafted in OKLCH with 100% WCAG AA contrast, APCA hierarchy, and CVD resilience.",
   "version": "1.0.0",
   "publisher": "idesofmerge",
   "license": "MIT",
@@ -33,6 +33,7 @@
     "color theme",
     "zelda",
     "hylian",
+    "40th anniversary",
     "echoes of wisdom",
     "tears of the kingdom",
     "breath of the wild",
