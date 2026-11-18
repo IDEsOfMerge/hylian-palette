@@ -28,14 +28,14 @@ ERA_ORDER <- c(
   "Link's Awakening", "Oracle of Seasons", "Oracle of Ages", "The Minish Cap",
   "Ocarina of Time", "Majora's Mask", "The Wind Waker", "Twilight Princess",
   "Phantom Hourglass", "Spirit Tracks",
-  "Skyward Sword", "A Link Between Worlds", "Breath of the Wild", "Tears of the Kingdom"
+  "Skyward Sword", "A Link Between Worlds", "Breath of the Wild", "Tears of the Kingdom", "Echoes of Wisdom"
 )
 ERA_LABEL <- c(
   "The Legend of Zelda" = "8-bit & 16-bit", "Zelda II: The Adventure of Link" = "8-bit & 16-bit", "A Link to the Past" = "8-bit & 16-bit",
   "Link's Awakening" = "Handheld", "Oracle of Seasons" = "Handheld", "Oracle of Ages" = "Handheld", "The Minish Cap" = "Handheld",
   "Ocarina of Time" = "N64 & GameCube", "Majora's Mask" = "N64 & GameCube", "The Wind Waker" = "N64 & GameCube", "Twilight Princess" = "N64 & GameCube",
   "Phantom Hourglass" = "Nintendo DS", "Spirit Tracks" = "Nintendo DS",
-  "Skyward Sword" = "Modern", "A Link Between Worlds" = "Modern", "Breath of the Wild" = "Modern", "Tears of the Kingdom" = "Modern"
+  "Skyward Sword" = "Modern", "A Link Between Worlds" = "Modern", "Breath of the Wild" = "Modern", "Tears of the Kingdom" = "Modern", "Echoes of Wisdom" = "Modern"
 )
 ERA_COLORS <- c(
   "8-bit & 16-bit" = "#8A5A24", "Handheld" = "#2E8B4A", "N64 & GameCube" = "#023E8A",
@@ -76,7 +76,7 @@ p_pca <- ggplot(pca_df, aes(PC1, PC2, color = role, shape = mode)) +
   geom_point(size = 2.2, alpha = 0.75) +
   scale_shape_manual(values = c(light = 21, dark = 19)) +
   labs(
-    title = "Global PCA of syntax-role colors across all 34 themes (CIE Lab space)",
+    title = "Global PCA of syntax-role colors across all 36 themes (CIE Lab space)",
     subtitle = sprintf("PC1 explains %.1f%% of variance, PC2 %.1f%% -- unscaled, so PC1 tracks mostly lightness/chroma structure", var_explained[1], var_explained[2]),
     x = sprintf("PC1 (%.1f%%)", var_explained[1]), y = sprintf("PC2 (%.1f%%)", var_explained[2]),
     color = "Syntax role", shape = "Mode"
@@ -120,9 +120,9 @@ p_small_multiples <- ggplot() +
   theme_minimal(base_size = 11) +
   theme(strip.text = element_text(size = 9.5, face = "bold"), axis.text = element_text(size = 7))
 
-# 4 columns (was 6) -- 9 rows for 34 themes -- gives each panel enough room
-# for the bigger fonts above to stay legible, at the cost of a taller image.
+# 4 columns x 9 rows = 36 themes cleanly filling the grid.
 ggsave("analysis/plots/theme_colorspace_grid.png", p_small_multiples, width = 16, height = 32, dpi = 150, limitsize = FALSE)
+file.copy("analysis/plots/theme_colorspace_grid.png", "assets/color-science/theme-colorspace-grid.png", overwrite = TRUE)
 cat("Saved analysis/plots/theme_colorspace_grid.png\n")
 
 # One big overlay "family fingerprint" -- all 34 polygons on one set of axes, colored by era.

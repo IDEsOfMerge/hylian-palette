@@ -18,17 +18,19 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Regenerate themes (fails on any WCAG contrast violation)
-        run: node scripts/generate-themes.js
+      - name: Regenerate themes & interactive Explorer (fails on any perceptual violation)
+        run: |
+          node scripts/generate-themes.js
+          node scripts/generate-explorer.js
 
       - name: Confirm generated output matches what's committed
         run: |
-          git diff --exit-code -- themes/ package.json theme-metadata.json || {
-            echo "::error::themes/*.json, package.json, or theme-metadata.json are out of date. Run 'node scripts/generate-themes.js' and commit the result.";
+          git diff --exit-code -- themes/ package.json theme-metadata.json site/index.html assets/explorer/explorer.html || {
+            echo "::error::Generated themes or Explorer bundles are out of date. Run 'node scripts/generate-themes.js && node scripts/generate-explorer.js' and commit the result.";
             exit 1;
           }
 
-      - name: Validate theme JSON + positron* key provenance
+      - name: Validate theme JSON, Explorer CSP & positron* key provenance
         run: node scripts/validate.js
 
       - name: Package extension

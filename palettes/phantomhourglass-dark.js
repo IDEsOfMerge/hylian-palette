@@ -2,90 +2,77 @@
 
 // Phantom Hourglass (2007) -- Dark
 //
-// The Temple of the Ocean King: thirteen floors of pitch-black stone that
-// Link must re-descend again and again as a real-time sand timer drains,
-// stalked by armored Phantoms that mean instant, run-ending death if their
-// gaze catches you. The base tone is deliberately near-neutral gunmetal --
-// cooler and far less saturated than any other entry in the family (Ocarina
-// Dark's blue-navy, Wind Waker Dark's teal-navy, Twilight Princess Dark's
-// brown-black, Majora's Mask Dark's violet-black all lean hard into one
-// hue; this one reads as plated armor and wet dungeon stone instead).
-// accentCursor/accentFocus keep Phantom Hourglass Light's cerulean identity
-// exactly, brightened into a glow -- the same open-ocean blue, now the
-// pinprick of daylight memory in an otherwise lightless temple.
-// accentNumber stays the hourglass's sand, brightened to the amber-gold it
-// takes on catching torchlight as the count spirals toward zero.
-// accentString is Torch Phantom red and the stylus route-line, brightened.
-// fgComment keeps Light's pencil-graphite rationale -- the same handwritten
-// chart annotations, now dimmed as if read by lantern-light, carried by the
-// Spirit of Time (Ciela's tiny ghost-light guide) through the Temple's
-// dark. accentDecorator is that same spirit-light, brightened to a proper
-// glow.
+// Descending the thirteen cursed floors of the Temple of the Ocean King as
+// the Sand of Hours (`accentNumber`) ticks toward zero: cold wet gunmetal-slate
+// (`bg`) echoes plated Phantom armor, punctuated by Safe-Zone sanctuary
+// emerald (`accentKeyword`), Torch-Phantom coral (`accentString`), Phantom-Sword
+// cyan (`accentType`), and Bellum's eye-violet (`accentDecorator`).
 
 module.exports = {
   slug: 'phantomhourglass-dark',
   label: 'Phantom Hourglass Dark',
   game: 'Phantom Hourglass',
   year: 2007,
+  subtitle: 'Temple of the Ocean King gunmetal armor, Safe-Zone cyan & Sand of Hours',
   tokens: {
     mode: 'dark',
-    bg: '#11151B',
-    fg: '#D6DEE2',
-    bgLine: '#171C24',
-    bgWidget: '#1A2028',
-    bgInput: '#0D1116',
-    bgSidebar: '#141A20',
-    bgPanel: '#121820',
-    bgActivity: '#161C24',
-    tintHover: '#1E2830',
-    tintSelect: '#26323C',
-    fgSecondary: '#9FB4BE',
-    fgMuted: '#5E727C',
-    fgVariable: '#C6D4DA',
-    fgPunct: '#8CA0AA',
-    fgComment: '#7C94A0',
-    fgParameter: '#7FD6C0',
-    fgProperty: '#9AC4DC',
-    borderSubtle: '#232C36',
-    borderStrong: '#38454E',
-    accentKeyword: '#3FBE70',
-    accentStorage: '#C9925A',
-    accentString: '#FF6B55',
-    accentRegex: '#FF7A3D',
-    accentFunction: '#4FA0E0',
-    accentFunctionDim: '#7FC0EE',
-    accentType: '#3ECBB8',
-    accentInterface: '#7FE8D8',
-    accentNumber: '#F0A83D',
-    accentDecorator: '#7FE0EC',
-    accentNamespace: '#7A9AAC',
-    accentCursor: '#3FC1F0',
-    accentFocus: '#3FC1F0',
-    accentBadge: '#FFB347',
-    accentButton: '#4FA0E0',
-    accentStatusBar: '#1E4E66',
-    colorError: '#FF4438',
-    colorWarning: '#FFB347',
-    colorInfo: '#7FC0EE',
-    gitAdd: '#3FBE70',
-    gitDelete: '#FF4438',
+    bg: '#091117',
+    fg: '#C7D8DE',
+    bgLine: '#101921',
+    bgWidget: '#161F26',
+    bgInput: '#060D13',
+    bgSidebar: '#0B161D',
+    bgPanel: '#0A151C',
+    bgActivity: '#0D1921',
+    tintHover: '#002331',
+    tintSelect: '#003040',
+    fgSecondary: '#93A5AB',
+    fgMuted: '#647176',
+    fgVariable: '#BACFD6',
+    fgPunct: '#8C9DA3',
+    fgComment: '#7A939D',
+    fgParameter: '#92C3B7',
+    fgProperty: '#9BC1D6',
+    borderSubtle: '#1D272F',
+    borderStrong: '#56616B',
+    accentKeyword: '#9BF4A2',
+    accentStorage: '#C0A37B',
+    accentString: '#FF6E46',
+    accentRegex: '#FF9044',
+    accentFunction: '#54AEFE',
+    accentFunctionDim: '#83C2FF',
+    accentType: '#02DFDE',
+    accentInterface: '#63EDF4',
+    accentNumber: '#FFBF00',
+    accentDecorator: '#CB8AF8',
+    accentNamespace: '#83A4B6',
+    accentCursor: '#38C4FA',
+    accentFocus: '#38C4FA',
+    accentBadge: '#F5A638',
+    accentButton: '#3B92E0',
+    accentStatusBar: '#184963',
+    colorError: '#EB364D',
+    colorWarning: '#FFAE34',
+    colorInfo: '#69C1FC',
+    gitAdd: '#4CCE7B',
+    gitDelete: '#EB364D',
     ansi: {
-      black: '#171C24',
-      red: '#C2382E',
-      green: '#3FBE70',
-      yellow: '#C99A3E',
-      blue: '#4FA0E0',
-      magenta: '#8A6BAA',
-      cyan: '#3ECBB8',
-      white: '#9FB4BE',
-      brightBlack: '#5E727C',
-      brightRed: '#FF4438',
-      brightGreen: '#5CE090',
-      brightYellow: '#F0A83D',
-      brightBlue: '#7FC0EE',
-      brightMagenta: '#A88AC4',
-      brightCyan: '#7FE8D8',
-      brightWhite: '#D6DEE2',
+      black: '#101921',
+      red: '#EB364D',
+      green: '#4CCE7B',
+      yellow: '#D7B584',
+      blue: '#54AEFE',
+      magenta: '#CB8AF8',
+      cyan: '#1FE6E5',
+      white: '#93A5AB',
+      brightBlack: '#7A939D',
+      brightRed: '#EB364D',
+      brightGreen: '#5AE38A',
+      brightYellow: '#E9C591',
+      brightBlue: '#7FC1FF',
+      brightMagenta: '#D9A4FF',
+      brightCyan: '#56F2F0',
+      brightWhite: '#C7D8DE',
     },
   },
 };

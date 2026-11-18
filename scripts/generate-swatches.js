@@ -2,8 +2,9 @@
 'use strict';
 
 // Dev-only tool: renders tiny solid-color PNG swatches (no dependencies,
-// pure Node + zlib) for use in README.md color tables, since GitHub strips
-// inline CSS from README HTML so colored <span style="..."> doesn't render.
+// pure Node + zlib) for use in README.md color tables and walkthrough steps,
+// since GitHub strips inline CSS from README HTML. Cleans stale swatch PNGs
+// first so unused hexes never bloat the packaged VSIX.
 // Run with: node scripts/generate-swatches.js
 
 const fs = require('fs');
@@ -75,20 +76,33 @@ function makeSwatchPng(hex) {
 
 function main() {
   const palettesDir = path.join(__dirname, '..', 'palettes');
-  const files = fs.readdirSync(palettesDir).filter((f) => f.endsWith('.js'));
+  const files = fs.readdirSync(palettesDir).filter((f) => f.endsWith('.js')).sort();
   const hexes = new Set();
 
   for (const f of files) {
     const p = require(path.join(palettesDir, f));
     const t = p.tokens;
-    for (const key of ['bg', 'fg', 'accentKeyword', 'accentString', 'accentFunction', 'accentType', 'accentNumber', 'accentCursor']) {
+    for (const key of [
+      'bg', 'fg', 'accentKeyword', 'accentStorage', 'accentString',
+      'accentFunction', 'accentType', 'accentNumber', 'accentDecorator',
+      'accentCursor', 'accentFocus',
+    ]) {
       hexes.add(t[key].toUpperCase());
     }
   }
 
-  if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
+  if (fs.existsSync(OUT_DIR)) {
+    for (const existing of fs.readdirSync(OUT_DIR)) {
+      if (existing.endsWith('.png')) {
+        fs.unlinkSync(path.join(OUT_DIR, existing));
+      }
+    }
+  } else {
+    fs.mkdirSync(OUT_DIR, { recursive: true });
+  }
+
   let count = 0;
-  for (const hex of hexes) {
+  for (const hex of [...hexes].sort()) {
     const clean = hex.replace('#', '');
     fs.writeFileSync(path.join(OUT_DIR, `${clean}.png`), makeSwatchPng(hex));
     count++;

@@ -2,11 +2,31 @@
 
 All notable changes to the "Hylian Palette" extension are documented here.
 
+## [1.0.0] - 2026-11-18
+
+First stable `1.0.0` release — a ground-up scientific and artistic overhaul tuning all **18 mainline Legend of Zelda games (36 Light & Dark themes)** in perceptual **OKLCH** color space.
+
+### Added
+- **Echoes of Wisdom Light & Dark (2024)**: completes the 18-game, 36-theme mainline catalog — sunlit tilt-shift Castle Town craft stone paired with Princess Zelda's royal indigo cloak, Null rift magenta, and Tri Rod gold in Light mode; fractured Still World indigo-violet rift lit by Tri's golden triangles, Swordfighter cyan, and suspended canopy emerald in Dark mode. Placed on the Downfall Timeline in `assets/timeline/timeline-metro.png`.
+- **Perceptual Colorimetry Engine (`scripts/color-science.js`)**: full IEC 61966-2-1 sRGB ↔ Linear RGB, Björn Ottosson **OKLab & OKLCH** synthesis with binary-search gamut mapping, **WCAG 2.1**, **APCA-W3 (`Lc`)**, **CIEDE2000 ($\Delta E_{00}$)**, and **Machado, Oliveira & Fernandes (2009)** protanopia/deuteranopia/tritanopia simulation enforced directly in the build and validation pipeline.
+- **Interactive Palette & Colorimetry Explorer (`scripts/generate-explorer.js`, `extension.js`, `.github/workflows/pages.yml`)**: dual-target zero-CDN interactive workbench and perceptual colorimetry studio generated directly from `palettes/*.js` — available both **inside VS Code / Positron** via **Hylian Palette: Open Palette & Colorimetry Explorer** (`hylianPalette.openExplorer`, with strict nonce CSP and two-way live workbench theme sync) and **on the web via GitHub Pages** (`site/index.html`, URL hash deep-linking, `settings.json` copy, and automated `actions/deploy-pages` CI workflow).
+- **Live-preview Theme Picker (`extension.js`)**: upgraded **Hylian Palette: Pick Zelda Theme** to `vscode.window.createQuickPick()` with instant live theme preview on highlight, per-theme art-direction subtitles, an `$(check) Active` indicator, and clean `Esc` rollback to the previously active theme.
+- **Expanded Workbench, Editor & Language Scope Coverage (`scripts/generate-themes.js`)**: added cohesive styling for sticky scroll, inlay hints, inline ghost-text completions, minimap/overview ruler, gutter folding & diff markers, breadcrumbs, peek/hover/suggest widgets, 3-way merge editors, notebooks, charts, luminance-aware status bar hover states, and dedicated R, Python, Quarto/Markdown, Diff, YAML/TOML, and CSS/HTML TextMate rules alongside `5,472` verified Positron IDE color keys.
+
+### Changed
+- **True Per-Game Art-Direction Tuning Across All 36 Palettes (`palettes/*.js`)**: eliminated all shared template hexes across games (`36 / 36` unique primary colors in every core slot) and aligned syntax-role hues with each game's authentic visual language and hardware era — e.g., *Ocarina of Time*'s three Spiritual Stones + royal-indigo Ocarina, *Zelda II*'s Palace brick-crimson & Parapa amber, *Oracle of Ages*'s Nayru sapphire & Ambi violet, *Breath of the Wild*'s Sheikah Slate cyan-blue & Malice magenta, *Twilight Princess Dark*'s atmospheric desaturated Twilight Realm with Midna's `#FF781F` flame accent, and *Link's Awakening Dark*'s hardware-faithful 1993 DMG-01 4-shade green LCD ramp.
+- **100% WCAG 2.1 AA + Zero Polychromatic Critical CVD Collisions**:
+  - `720 / 720` foreground and syntax tokens across all 36 themes pass WCAG AA `4.5:1` on `editor.background` (`4.62:1`–`14.36:1`; primary `fg/bg` `|Lc| = 79.4–93.7` across all 35 polychromatic themes) and `>= 3.8:1` on `editor.lineHighlightBackground`.
+  - `576 / 576` integrated terminal / Positron console ANSI colors pass contrast gates while preserving canonical ANSI hue bands.
+  - Across all **35 polychromatic themes (`735` critical adjacent syntax pairs)**, **0 pairs** fall below `10 ΔE*ab` under protanopia, deuteranopia, or tritanopia (`0` severe, `0` moderate), achieved by staggering adjacent syntax roles across OKLCH lightness. Only monochrome `linksawakening-dark` retains 3 intentional single-hue DMG-01 pairs `< 10 ΔE*ab`.
+- **Startup Status Bar & Command IDs**: switched extension activation to `onStartupFinished` so the status bar theme indicator appears immediately on startup with near-zero overhead; standardized primary toggle command ID to `hylianPalette.toggleTheme` while keeping `windwakerMajora.toggleTheme` registered as a backward-compatible alias.
+- **Refreshed Analytical Plots, Swatches & Walkthroughs**: regenerated all 345 swatch PNGs, 540-row `analysis/data/colors.csv`, high-DPI color-science figures (`assets/color-science/*.png`), in-universe chronology metro map (`assets/timeline/timeline-metro.png`), and first-run walkthrough guides.
+
 ## [0.4.0] - 2026-09-04
 
 - Added a status-bar item showing the active theme, clickable to open the same quick-pick as **Hylian Palette: Pick Zelda Theme**.
 - Added **Hylian Palette: Random Theme**, jumping to a random one of the 34 themes.
-- Added a default keybinding for **Hylian Palette: Toggle Theme** (`Ctrl+K Ctrl+Z` / `Cmd+K Cmd+Z`, rebindable like any other command).
+- Added a default keybinding for **Hylian Palette: Toggle Theme** (`Ctrl+K Ctrl+Z` / `Cmd+K Ctrl+Z`, rebindable like any other command).
 - Added a first-run "Welcome to Hylian Palette" walkthrough (`contributes.walkthroughs`) covering theme selection, toggling, the identity-color design pattern, and the color-science write-up.
 - Added Marketplace-publishing readiness: `galleryBanner`, a CI-status badge, a manual (`workflow_dispatch`-only) `.github/workflows/publish.yml`, and a "Installing from the Marketplace" README section — actual publishing is gated on the maintainer's own Marketplace/Open VSX publisher account and is not done by this release.
 - Ran a second, more careful pass over the color-vision-deficiency audit's remaining 13 severe cases (from 0.3.0's first pass) — this time checking each candidate fix against every neighboring role's actual color, not just the pair being fixed, after the first pass's batch approach turned out to have traded a couple of collisions for new ones. Brought severe cases from 13 down to 3, all three in Link's Awakening Dark and left deliberately unfixed as a disclosed, permanent trade-off (they come from using the real 4-shade DMG Game Boy green ramp, which has almost no hue variation to work with). See the README's Color science section for the full account.

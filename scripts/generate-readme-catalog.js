@@ -15,7 +15,7 @@ const ERAS = [
   { title: 'Handheld (Game Boy / Color / Advance)', games: ["Link's Awakening", 'Oracle of Seasons', 'Oracle of Ages', 'The Minish Cap'] },
   { title: 'N64 & GameCube', games: ['Ocarina of Time', "Majora's Mask", 'The Wind Waker', 'Twilight Princess'] },
   { title: 'Nintendo DS', games: ['Phantom Hourglass', 'Spirit Tracks'] },
-  { title: 'Modern (Wii / 3DS / Switch)', games: ['Skyward Sword', 'A Link Between Worlds', 'Breath of the Wild', 'Tears of the Kingdom'] },
+  { title: 'Modern (Wii / 3DS / Switch)', games: ['Skyward Sword', 'A Link Between Worlds', 'Breath of the Wild', 'Tears of the Kingdom', 'Echoes of Wisdom'] },
 ];
 
 function loadPalettes() {

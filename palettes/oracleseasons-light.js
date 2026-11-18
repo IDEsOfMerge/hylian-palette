@@ -2,87 +2,79 @@
 
 // Oracle of Seasons (2001) -- Light
 //
-// Signature story: Holodrum's four seasons are the game's own built-in
-// palette-shift device, so Light and Dark each claim two. This Light theme
-// leans into the WARM half of the year: Spring's cherry-blossom pink (the
-// base `bg` -- the Lost Woods and Horon Village both bloom pink every
-// Spring) meeting Summer's deep jungle green (`fg` -- Holodrum's overgrowth
-// at its lushest, when Gnarled Root Dungeon's vines choke every path).
-// Keywords use that same saturated Summer green; strings use the blossom
-// pink itself, pushed more magenta for readability; functions use a clear
-// Summer sky-blue; types use midsummer marigold-gold sun. fgComment nods to
-// Gasha Seeds -- the speckled brown seeds you plant and wait on, Holodrum's
-// original "annotation," since every one hides a different note-to-self
-// about what might grow. The identity color -- Din's ember-red-orange,
-// carried through both this theme and oracleseasons-dark.js -- belongs to
-// Din herself, the fire-dancer Oracle of Seasons: whichever season is
-// showing on the surface, her flame (and Subrosia's lava core beneath
-// Holodrum) never actually goes out.
+// Swinging the Rod of Seasons atop a tree stump repaints all of Holodrum in
+// four distinct GBC hardware palettes -- and here all four seasons share the
+// syntax stage over a soft Spring cherry-blossom canvas: Summer canopy emerald
+// (`accentKeyword`), Spring blossom crimson-rose (`accentString`), Winter
+// creek cerulean (`accentFunction`), and Autumn harvest russet-gold
+// (`accentNumber`), joined by Subrosian Star-Ore teal (`accentType`). Din's
+// living flame (#D63E18 -> #FA5C32) stays constant into Dark.
 
 module.exports = {
   slug: 'oracleseasons-light',
   label: 'Oracle of Seasons Light',
   game: 'Oracle of Seasons',
   year: 2001,
+  subtitle: "Holodrum Spring cherry-blossom cream, Four Seasons & Din's flame",
   tokens: {
     mode: 'light',
-    bg: '#F0DCE0',
-    fg: '#1F3D1A',
-    bgLine: '#E4D1D5',
-    bgWidget: '#F1DEE2',
-    bgInput: '#F2E1E4',
-    bgSidebar: '#EFD3D4',
-    bgPanel: '#EFD8DA',
-    bgActivity: '#E8CFD0',
-    tintHover: '#EBBBB5',
-    tintSelect: '#E69E8F',
-    fgSecondary: '#77806D',
-    fgMuted: '#A1A095',
-    fgVariable: '#2A4A22',
-    fgPunct: '#5C6B52',
-    fgComment: '#7A5A42',
-    fgParameter: '#1F4A5C',
-    fgProperty: '#6B4F1A',
-    borderSubtle: '#CAB9BC',
-    borderStrong: '#A39698',
-    accentKeyword: '#2E8B3D',
-    accentStorage: '#5A3105',
-    accentString: '#D9587A',
-    accentRegex: '#C23B5A',
-    accentFunction: '#2E8FC4',
-    accentFunctionDim: '#6FB8E0',
-    accentType: '#D9A62E',
-    accentInterface: '#E8C878',
-    accentNumber: '#C99A2E',
-    accentDecorator: '#E888B0',
-    accentNamespace: '#6A7A8A',
-    accentCursor: '#D9481E',
-    accentFocus: '#D9481E',
-    accentBadge: '#E8703D',
-    accentButton: '#2E8FC4',
-    accentStatusBar: '#B8391E',
-    colorError: '#C0392B',
-    colorWarning: '#D9701E',
-    colorInfo: '#4A90C4',
-    gitAdd: '#2E8B3D',
-    gitDelete: '#C0392B',
+    bg: '#FCE5E7',
+    fg: '#162411',
+    bgLine: '#F3DADC',
+    bgWidget: '#FFEEF0',
+    bgInput: '#FFF5F6',
+    bgSidebar: '#FADDDE',
+    bgPanel: '#F8D9DB',
+    bgActivity: '#F4D3D4',
+    tintHover: '#F9D2CE',
+    tintSelect: '#F9BEB9',
+    fgSecondary: '#3F503A',
+    fgMuted: '#697664',
+    fgVariable: '#1D2E17',
+    fgPunct: '#44543F',
+    fgComment: '#6E523F',
+    fgParameter: '#004A5F',
+    fgProperty: '#553510',
+    borderSubtle: '#E0C5C7',
+    borderStrong: '#9C8082',
+    accentKeyword: '#004425',
+    accentStorage: '#743B11',
+    accentString: '#88004F',
+    accentRegex: '#A62914',
+    accentFunction: '#174F86',
+    accentFunctionDim: '#375F8B',
+    accentType: '#067479',
+    accentInterface: '#14636C',
+    accentNumber: '#8B6000',
+    accentDecorator: '#5F2B8C',
+    accentNamespace: '#355B6D',
+    accentCursor: '#D63E18',
+    accentFocus: '#D63E18',
+    accentBadge: '#D95E1C',
+    accentButton: '#1864A8',
+    accentStatusBar: '#9E2B1C',
+    colorError: '#61000E',
+    colorWarning: '#944E00',
+    colorInfo: '#005F98',
+    gitAdd: '#00651C',
+    gitDelete: '#61000E',
     ansi: {
-      black: '#2B3324',
-      red: '#8E241A',
-      green: '#2E8B3D',
-      yellow: '#8A6508',
-      blue: '#2E8FC4',
-      magenta: '#C23B5A',
-      cyan: '#3E8A8A',
-      white: '#5C6B58',
-      brightBlack: '#77806D',
-      brightRed: '#C0392B',
-      brightGreen: '#4FAE5F',
-      brightYellow: '#D9A62E',
-      brightBlue: '#6FB8E0',
-      brightMagenta: '#E888B0',
-      brightCyan: '#6FC4C0',
-      brightWhite: '#1F3D1A',
+      black: '#162411',
+      red: '#52000A',
+      green: '#00651C',
+      yellow: '#8C5A00',
+      blue: '#005184',
+      magenta: '#5F2B8C',
+      cyan: '#007271',
+      white: '#44543F',
+      brightBlack: '#6E523F',
+      brightRed: '#61000E',
+      brightGreen: '#026F20',
+      brightYellow: '#935E00',
+      brightBlue: '#1B5D8E',
+      brightMagenta: '#693199',
+      brightCyan: '#187574',
+      brightWhite: '#1D2E17',
     },
   },
 };

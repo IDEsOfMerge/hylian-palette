@@ -2,88 +2,78 @@
 
 // A Link to the Past (1991) -- Dark World
 //
-// Ganon's corrupted mirror of Hyrule: same geography as Light World, same
-// building silhouettes, but the whole palette is dragged into sickly
-// purples and magentas -- withered grass, jade-tinted water, a permanent
-// violet haze over everything. That corruption color is given to
-// Type/Interface here (a deliberate hue shift away from Light World's teal
-// stonework, the same kind of "this world is not the one you know"
-// discontinuity used for Zelda II's palace interiors), and the base tone is
-// a deep violet-indigo void, distinguished from Zelda II's more pink-leaning
-// magenta-black and from Ocarina's blue-black. Pendant colors survive as
-// Crystal colors -- courage-green and power-blue keyword/function keep
-// their Light World hues, just brightened -- because the Crystal Maidens'
-// power isn't corrupted even though the land holding their prisons is.
-// Crystal blue itself is the constant cursor/focus accent carried over
-// unchanged in hue from Light World, brightened here for contrast: the
-// seven crystals glow exactly the same shade in Turtle Rock as they would
-// in the Sanctuary. fgComment is the purple haze/fog that visibly blankets
-// the Dark World overworld in-game, rendered as a muted lavender.
+// Warping atop the Pyramid of Power reveals Ganon's corrupted Golden Land:
+// bruised plum storm-skies (`bg`), eerie olive-chartreuse grass (`accentKeyword`),
+// Skull Woods bone (`accentStorage`), and the unforgettable shock of Link
+// transforming into a pink bunny without the Moon Pearl (`accentString`).
+// Unbowed by the Dark World's miasma, the seven Maiden Crystals keep glowing
+// clear sapphire-azure in `accentFunction` and the shared cursor/focus accent.
 
 module.exports = {
   slug: 'alttp-dark',
   label: 'A Link to the Past Dark',
   game: 'A Link to the Past',
   year: 1991,
+  subtitle: "Ganon's Dark World twilight plum, Bunny-Link pink & Maiden Crystals",
   tokens: {
     mode: 'dark',
-    bg: '#1B1030',
-    fg: '#D4C4E8',
-    bgLine: '#241640',
-    bgWidget: '#2C1A4C',
-    bgInput: '#180D28',
-    bgSidebar: '#221238',
-    bgPanel: '#201136',
-    bgActivity: '#281842',
-    tintHover: '#34205A',
-    tintSelect: '#4A2570',
-    fgSecondary: '#B8A0D0',
-    fgMuted: '#7A6090',
-    fgVariable: '#D4C4E8',
-    fgPunct: '#A48CC0',
-    fgComment: '#A88CC4',
-    fgParameter: '#E0A8D4',
-    fgProperty: '#8FB8E0',
-    borderSubtle: '#3A2456',
-    borderStrong: '#5C3A78',
-    accentKeyword: '#3FA060',
-    accentStorage: '#FFCA97',
-    accentString: '#E0453A',
-    accentRegex: '#F0763A',
-    accentFunction: '#4F9EE0',
-    accentFunctionDim: '#8AC0E8',
-    accentType: '#D74EC6',
-    accentInterface: '#E080D8',
-    accentNumber: '#E8B93D',
-    accentDecorator: '#9A5AD4',
-    accentNamespace: '#8A7AA6',
-    accentCursor: '#4A9EE8',
-    accentFocus: '#4A9EE8',
-    accentBadge: '#FF6B2E',
-    accentButton: '#4F9EE0',
-    accentStatusBar: '#7A1E5C',
-    colorError: '#E0453A',
-    colorWarning: '#FF6B2E',
-    colorInfo: '#8AC0E8',
-    gitAdd: '#3FA060',
-    gitDelete: '#E0453A',
+    bg: '#150B25',
+    fg: '#D6D0E7',
+    bgLine: '#1E1330',
+    bgWidget: '#231936',
+    bgInput: '#110820',
+    bgSidebar: '#19102E',
+    bgPanel: '#180E2C',
+    bgActivity: '#1C1232',
+    tintHover: '#25193C',
+    tintSelect: '#332052',
+    fgSecondary: '#A49DB5',
+    fgMuted: '#706C7D',
+    fgVariable: '#CDC5E2',
+    fgPunct: '#9E97AE',
+    fgComment: '#948BAE',
+    fgParameter: '#D2A8C8',
+    fgProperty: '#97C1DB',
+    borderSubtle: '#2B2041',
+    borderStrong: '#655A7F',
+    accentKeyword: '#A9CD6C',
+    accentStorage: '#D9C9AB',
+    accentString: '#EF6ABA',
+    accentRegex: '#FF8F51',
+    accentFunction: '#ACD6FF',
+    accentFunctionDim: '#BEDFFF',
+    accentType: '#AD82FB',
+    accentInterface: '#C496FB',
+    accentNumber: '#FCC537',
+    accentDecorator: '#3BE1E1',
+    accentNamespace: '#9D9DC3',
+    accentCursor: '#4DA6FF',
+    accentFocus: '#4DA6FF',
+    accentBadge: '#E85298',
+    accentButton: '#3B8CE8',
+    accentStatusBar: '#4A1F6E',
+    colorError: '#F92338',
+    colorWarning: '#FFA838',
+    colorInfo: '#67B9FB',
+    gitAdd: '#92CC5D',
+    gitDelete: '#F92338',
     ansi: {
-      black: '#241640',
-      red: '#C23B2E',
-      green: '#3FA060',
-      yellow: '#C99A1E',
-      blue: '#4F9EE0',
-      magenta: '#B850D8',
-      cyan: '#3ECBBE',
-      white: '#B8A0D0',
-      brightBlack: '#7A6090',
-      brightRed: '#E0453A',
-      brightGreen: '#6ED47E',
-      brightYellow: '#E8B93D',
-      brightBlue: '#8AC0E8',
-      brightMagenta: '#E080D8',
-      brightCyan: '#7FE0D4',
-      brightWhite: '#D4C4E8',
+      black: '#1E1330',
+      red: '#F61E36',
+      green: '#92CC5D',
+      yellow: '#D8C5A2',
+      blue: '#5AB1FF',
+      magenta: '#EF6ABA',
+      cyan: '#3BE1E1',
+      white: '#A49DB5',
+      brightBlack: '#948BAE',
+      brightRed: '#F92338',
+      brightGreen: '#A3E16B',
+      brightYellow: '#E9D5B0',
+      brightBlue: '#85C4FF',
+      brightMagenta: '#FF83CB',
+      brightCyan: '#65F0EF',
+      brightWhite: '#D6D0E7',
     },
   },
 };

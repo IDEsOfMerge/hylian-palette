@@ -2,88 +2,80 @@
 
 // The Minish Cap (2004) -- Light
 //
-// Signature story: the game's central gimmick is scale -- Ezlo shrinks Link
-// down to Picori/Minish size, and every dew drop, blade of grass, and
-// dropped acorn becomes a towering landmark. The base `bg` is a pale
-// sky-blue, the color of the sky reflected inside an oversized dew drop
-// the way Link would actually see it while standing beneath one. `fg` is
-// Ezlo's own well-worn hat-brown -- the talking cap is Link's one constant
-// companion for the entire adventure, so his color anchors the body text.
-// Keywords use Minish Woods deep leaf-green; strings use the red Kinstone
-// pieces traded with Hyrule Town's townsfolk (Kinstone-fusion is the game's
-// signature side-mechanic); types use the gold of the Bound Chests sealing
-// away the four Elements; decorators use the pale wind-cyan of the Wind
-// Tribe atop Mt. Crenel. fgComment nods to worn bronze Kinstone fragments --
-// the game's own currency of half-finished stories waiting to be matched
-// up, a fitting parallel to a comment waiting on its code. The identity
-// color is Vaati's violet-magenta -- carried constant (and brightened) into
-// minishcap-dark.js, because his sealed presence looms over Hyrule in both
-// themes even before he ever appears on screen.
+// Shrunk to thumb-height beneath Minish Woods clover: the canvas (`bg`) holds
+// the pale sky-tint inside a giant blade-of-grass dewdrop, while `fg` wears
+// the warm walnut-umber of Ezlo's cap. The four sacred Elements infused into
+// the Picori Blade drive the syntax palette -- Fire-Element & Red-Kinstone
+// vermilion (`accentString`), Water-Element sapphire (`accentFunction`),
+// Earth-Element amethyst (`accentType`), and Wind-Element gold (`accentNumber`)
+// -- joined by Ezlo clover-green (`accentKeyword`) and Vaati's violet
+// (`accentCursor`/`accentFocus`).
 
 module.exports = {
   slug: 'minishcap-light',
   label: 'The Minish Cap Light',
   game: 'The Minish Cap',
   year: 2004,
+  subtitle: 'Oversized morning dewdrop, Ezlo clover-green & the Four Elements',
   tokens: {
     mode: 'light',
-    bg: '#DAE1F2',
-    fg: '#3A2A1A',
-    bgLine: '#CFD6E6',
-    bgWidget: '#DCE3F3',
-    bgInput: '#DFE5F4',
-    bgSidebar: '#D5D7EF',
-    bgPanel: '#D8DCF1',
-    bgActivity: '#D0D2E9',
-    tintHover: '#C8BCE8',
-    tintSelect: '#B89BDF',
-    fgSecondary: '#7D7775',
-    fgMuted: '#9D9BA0',
-    fgVariable: '#4A3624',
-    fgPunct: '#6B5A48',
-    fgComment: '#6B5636',
-    fgParameter: '#2A4A66',
-    fgProperty: '#2E4A32',
-    borderSubtle: '#B7BDCB',
-    borderStrong: '#9499A5',
-    accentKeyword: '#2E8B4A',
-    accentStorage: '#5C3008',
-    accentString: '#D9542E',
-    accentRegex: '#C23B2E',
-    accentFunction: '#2E8FD9',
-    accentFunctionDim: '#6FB8E8',
-    accentType: '#D9A62E',
-    accentInterface: '#E8C878',
-    accentNumber: '#C9962E',
-    accentDecorator: '#A0D8E8',
-    accentNamespace: '#6A7A8A',
-    accentCursor: '#8A3AC4',
-    accentFocus: '#8A3AC4',
-    accentBadge: '#E8703D',
-    accentButton: '#2E8FD9',
-    accentStatusBar: '#2E6B3A',
-    colorError: '#C0392B',
-    colorWarning: '#D9821E',
-    colorInfo: '#4A90C4',
-    gitAdd: '#2E8B4A',
-    gitDelete: '#C0392B',
+    bg: '#E2EDFC',
+    fg: '#2D1A0D',
+    bgLine: '#D7E2F4',
+    bgWidget: '#ECF4FF',
+    bgInput: '#F3F8FF',
+    bgSidebar: '#DDE5FA',
+    bgPanel: '#DAE2F8',
+    bgActivity: '#D3DCF4',
+    tintHover: '#D9DAFA',
+    tintSelect: '#CACAFB',
+    fgSecondary: '#5C4434',
+    fgMuted: '#816D60',
+    fgVariable: '#3B2210',
+    fgPunct: '#634C3D',
+    fgComment: '#6D5440',
+    fgParameter: '#0F4766',
+    fgProperty: '#214728',
+    borderSubtle: '#C1CEE1',
+    borderStrong: '#7C889C',
+    accentKeyword: '#227236',
+    accentStorage: '#5D2904',
+    accentString: '#BA3435',
+    accentRegex: '#9A4300',
+    accentFunction: '#105181',
+    accentFunctionDim: '#356187',
+    accentType: '#57228C',
+    accentInterface: '#4F1C71',
+    accentNumber: '#8B6000',
+    accentDecorator: '#007275',
+    accentNamespace: '#3E5871',
+    accentCursor: '#7E34BD',
+    accentFocus: '#7E34BD',
+    accentBadge: '#D95826',
+    accentButton: '#165EB0',
+    accentStatusBar: '#216B3A',
+    colorError: '#600019',
+    colorWarning: '#8F5300',
+    colorInfo: '#035E9D',
+    gitAdd: '#006425',
+    gitDelete: '#600019',
     ansi: {
-      black: '#332619',
-      red: '#8E241A',
-      green: '#2E8B4A',
-      yellow: '#8A6508',
-      blue: '#2E8FD9',
-      magenta: '#8A3AC4',
-      cyan: '#3E9AA8',
-      white: '#5C554E',
-      brightBlack: '#7D7168',
-      brightRed: '#C0392B',
-      brightGreen: '#4FAE6A',
-      brightYellow: '#D9A62E',
-      brightBlue: '#6FB8E8',
-      brightMagenta: '#A85AD9',
-      brightCyan: '#6FC4C0',
-      brightWhite: '#3A2A1A',
+      black: '#2D1A0D',
+      red: '#510013',
+      green: '#006425',
+      yellow: '#875D00',
+      blue: '#004F8B',
+      magenta: '#57228C',
+      cyan: '#007275',
+      white: '#634C3D',
+      brightBlack: '#6D5440',
+      brightRed: '#600019',
+      brightGreen: '#026E2A',
+      brightYellow: '#8E6200',
+      brightBlue: '#1B5B95',
+      brightMagenta: '#60289A',
+      brightCyan: '#187578',
+      brightWhite: '#3B2210',
     },
   },
 };

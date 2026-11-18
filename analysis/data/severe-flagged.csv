@@ -1,4 +1,2 @@
-"theme_slug","role1","role2","d_normal","d_protan","d_deutan","d_tritan","min_cvd","worst_type","flagged"
-"linksawakening-dark","accentKeyword","accentString",22.1966348680017,3.69759233214691,4.57184761903973,23.5709490478813,3.69759233214691,"protan",TRUE
-"linksawakening-dark","accentFunction","accentType",17.60466806516,18.8200701756135,13.8859661067676,4.77511486510118,4.77511486510118,"tritan",TRUE
-"linksawakening-dark","accentString","accentFunction",23.5516581312456,5.44534970233304,4.95540424354753,25.1702376706203,4.95540424354753,"deutan",TRUE
+theme_slug,role1,role2,d_normal,d00_normal,d_protan,d_deutan,d_tritan,min_cvd,worst_type,flagged
+linksawakening-dark,accentStorage,colorError,66.96,42.365,23.327,2.042,69.989,2.042,deutan,TRUE

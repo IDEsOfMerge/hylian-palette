@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline';" />
+  <title>Hylian Palette — Interactive Workbench &amp; Perceptual Colorimetry Explorer</title>
+  <meta name="description" content="Interactive workbench preview and perceptual colorimetry explorer for Hylian Palette — 36 scientifically tuned Light and Dark VS Code & Positron themes across all 18 mainline Legend of Zelda games (1986–2024)." />
+  <meta property="og:title" content="Hylian Palette — Interactive Workbench & Colorimetry Explorer" />
+  <meta property="og:description" content="Explore all 36 OKLCH-calibrated Light and Dark themes for VS Code & Positron with live R/Python/TypeScript syntax previews, WCAG 2.1 + APCA contrast readouts, and real-time dichromacy simulation." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --shell-bg: #111317;
+      --shell-surface: #181b21;
+      --shell-elevated: #1f232b;
+      --shell-border: #2b303b;
+      --shell-border-strong: #3d4454;
+      --shell-text: #eceff4;
+      --shell-muted: #9aa3b2;
+      --shell-accent: #c9a227;
+      --shell-accent-fg: #121316;
+      --shell-radius: 10px;
+      --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    body[data-shell-mode="light"] {
+      --shell-bg: #f4f2ec;
+      --shell-surface: #ffffff;
+      --shell-elevated: #ece9e0;
+      --shell-border: #d8d3c6;
+      --shell-border-strong: #b8b1a0;
+      --shell-text: #181b20;
+      --shell-muted: #575e6b;
+      --shell-accent: #1d4e89;
+      --shell-accent-fg: #ffffff;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--shell-bg);
+      color: var(--shell-text);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    .page-wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px 20px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Top Header */
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--shell-surface);
+      border: 1px solid var(--shell-border);
+      border-radius: var(--shell-radius);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-gem {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 650;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--shell-muted);
+    }
+
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button, select, .btn-link {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 550;
+      line-height: 1;
+      border-radius: 7px;
+      border: 1px solid var(--shell-border);
+      background: var(--shell-elevated);
+      color: var(--shell-text);
+      padding: 8px 12px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 120ms ease, border-color 120ms ease, transform 80ms ease;
+    }
+
+    button:hover, select:hover, .btn-link:hover {
+      border-color: var(--shell-border-strong);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background: var(--shell-text);
+      color: var(--shell-bg);
+      border-color: var(--shell-text);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+      border-color: var(--shell-text);
+    }
+
+    .kbd-hint {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(127, 127, 127, 0.18);
+      opacity: 0.85;
+    }
+
+    .sync-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--shell-muted);
+      padding: 6px 10px;
+      border-radius: 7px;
+      border: 1px solid var(--shell-border);
+      background: var(--shell-elevated);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .sync-toggle input {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    /* Era Game Selector Rail */
+    .era-panel {
+      background: var(--shell-surface);
+      border: 1px solid var(--shell-border);
+      border-radius: var(--shell-radius);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .era-groups {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+    }
+
+    .era-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .era-label {
+      font-size: 10px;
+      font-weight: 650;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--shell-muted);
+    }
+
+    .era-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .game-pill {
+      padding: 5px 9px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 500;
+      background: var(--shell-bg);
+      border: 1px solid var(--shell-border);
+      color: var(--shell-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .game-pill:hover {
+      color: var(--shell-text);
+      border-color: var(--shell-border-strong);
+    }
+
+    .game-pill[aria-pressed="true"] {
+      background: var(--shell-text);
+      color: var(--shell-bg);
+      border-color: var(--shell-text);
+      font-weight: 600;
+    }
+
+    .mini-strip {
+      display: inline-flex;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid rgba(128, 128, 128, 0.35);
+      height: 10px;
+      flex-shrink: 0;
+    }
+
+    .mini-strip span {
+      width: 5px;
+      height: 10px;
+      display: block;
+    }
+
+    /* Story + Mode/CVD Control Bar */
+    .story-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+      padding: 16px 18px;
+      background: var(--shell-surface);
+      border: 1px solid var(--shell-border);
+      border-radius: var(--shell-radius);
+    }
+
+    @media (max-width: 920px) {
+      .story-bar { grid-template-columns: 1fr; }
+    }
+
+    .story-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 12px;
+    }
+
+    .story-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+    }
+
+    .story-sub {
+      font-size: 12.5px;
+      color: var(--shell-muted);
+    }
+
+    .story-text {
+      margin: 7px 0 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--shell-muted);
+      max-width: 82ch;
+    }
+
+    .control-clusters {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    @media (max-width: 920px) {
+      .control-clusters { align-items: flex-start; }
+    }
+
+    .seg-group {
+      display: inline-flex;
+      background: var(--shell-bg);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--shell-border);
+      gap: 2px;
+      flex-wrap: wrap;
+    }
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      color: var(--shell-muted);
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 550;
+    }
+
+    .seg-btn:hover {
+      color: var(--shell-text);
+    }
+
+    .seg-btn[aria-selected="true"] {
+      background: var(--shell-surface);
+      color: var(--shell-text);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
+    }
+
+    /* Simulated Positron / VS Code Workbench */
+    .workbench {
+      border-radius: var(--shell-radius);
+      overflow: hidden;
+      border: 1px solid var(--shell-border-strong);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+      font-family: var(--font-mono);
+    }
+
+    .wb-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      height: 36px;
+      border-bottom: 1px solid transparent;
+      font-size: 12px;
+    }
+
+    .wb-tabs {
+      display: flex;
+      align-items: stretch;
+      height: 100%;
+      gap: 2px;
+      overflow-x: auto;
+    }
+
+    .wb-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 10px;
+    }
+
+    .wb-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .wb-tab {
+      border: none;
+      border-top: 2px solid transparent;
+      border-radius: 0;
+      padding: 0 13px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      background: transparent;
+      cursor: pointer;
+      height: 100%;
+      white-space: nowrap;
+    }
+
+    .wb-pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .wb-body {
+      display: grid;
+      grid-template-columns: 44px 235px 1fr;
+      min-height: 370px;
+    }
+
+    @media (max-width: 960px) {
+      .wb-body { grid-template-columns: 1fr; }
+      .wb-activity, .wb-sidebar { display: none; }
+    }
+
+    .wb-activity {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 0;
+      gap: 14px;
+      border-right: 1px solid transparent;
+    }
+
+    .wb-act-icon {
+      width: 44px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-left: 2px solid transparent;
+      opacity: 0.85;
+    }
+
+    .wb-sidebar {
+      padding: 12px;
+      border-right: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 11.5px;
+    }
+
+    .wb-sec-head {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .wb-file-item {
+      padding: 4px 7px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+
+    .wb-var-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 3px 0;
+      font-size: 11px;
+    }
+
+    .wb-main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .wb-editor {
+      margin: 0;
+      padding: 14px 0;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.62;
+      overflow-x: auto;
+      flex: 1;
+    }
+
+    .code-line {
+      display: flex;
+      padding: 0 16px 0 0;
+      min-width: max-content;
+    }
+
+    .line-num {
+      width: 42px;
+      padding-right: 14px;
+      text-align: right;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .wb-console {
+      padding: 10px 16px 12px;
+      border-top: 1px solid transparent;
+      font-size: 11.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ansi-strip {
+      display: grid;
+      grid-template-columns: repeat(16, minmax(0, 1fr));
+      gap: 4px;
+      padding-top: 4px;
+    }
+
+    .ansi-cell {
+      height: 16px;
+      border-radius: 3px;
+      border: 1px solid rgba(128, 128, 128, 0.28);
+      cursor: pointer;
+      padding: 0;
+      transition: transform 90ms ease;
+    }
+
+    .ansi-cell:hover {
+      transform: scaleY(1.25);
+    }
+
+    .wb-statusbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 5px 12px;
+      font-size: 11.5px;
+    }
+
+    @keyframes blinkCursor {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0.18; }
+    }
+
+    .sim-cursor {
+      display: inline-block;
+      width: 7px;
+      height: 1.12em;
+      vertical-align: text-bottom;
+      margin-left: 1px;
+      animation: blinkCursor 1.1s infinite;
+    }
+
+    /* Science Studio Grid */
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .studio-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel-card {
+      background: var(--shell-surface);
+      border: 1px solid var(--shell-border);
+      border-radius: var(--shell-radius);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .panel-meta {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--shell-muted);
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+    }
+
+    table.audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .audit-table th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--shell-muted);
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--shell-border);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .audit-table td {
+      padding: 6.5px 8px;
+      border-bottom: 1px solid var(--shell-border);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      white-space: nowrap;
+    }
+
+    .audit-table tr.token-row {
+      cursor: pointer;
+      transition: background-color 100ms ease;
+    }
+
+    .audit-table tr.token-row:hover {
+      background: var(--shell-elevated);
+    }
+
+    .audit-table td.role-cell {
+      font-family: var(--font-sans);
+      font-weight: 500;
+    }
+
+    .swatch-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .swatch-box {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(128, 128, 128, 0.35);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .canvas-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .canvas-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 8px;
+      border-radius: 8px;
+      background: var(--shell-bg);
+      border: 1px solid var(--shell-border);
+    }
+
+    .pair-compare {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 8px;
+      border-top: 1px solid var(--shell-border);
+      font-size: 12px;
+      color: var(--shell-muted);
+      flex-wrap: wrap;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: var(--shell-text);
+      color: var(--shell-bg);
+      padding: 8px 14px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 150ms ease, transform 150ms ease;
+      z-index: 50;
+    }
+
+    .toast[data-visible="true"] {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer.foot {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--shell-muted);
+      padding-top: 4px;
+    }
+
+    footer.foot a {
+      color: var(--shell-text);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+  </style>
+</head>
+<body data-shell-mode="dark" data-target="web" data-initial-theme="">
+  <div class="page-wrap">
+    <header class="topbar">
+      <div class="brand">
+        <svg class="brand-gem" viewBox="0 0 32 32" aria-hidden="true">
+          <polygon id="gem-left" points="16,2 28,16 16,30 4,16" fill="#C9A227" />
+          <polygon id="gem-right" points="16,2 28,16 16,30" fill="#264EB5" opacity="0.88" />
+          <polygon points="16,7 23,16 16,25 9,16" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="1.2" />
+        </svg>
+        <div>
+          <h1>Hylian Palette</h1>
+          <p class="brand-sub">18 Mainline Zelda Games (1986–2024) · 36 OKLCH-Calibrated VS Code &amp; Positron Themes</p>
+        </div>
+      </div>
+
+      <div class="top-actions" id="top-actions">
+        <button type="button" id="btn-prev-theme" title="Previous theme (Left Arrow)">←</button>
+        <button type="button" id="btn-toggle-mode" class="btn-primary" title="Flip Light and Dark variant of current game (T)">
+          <span id="toggle-mode-label">Switch to Light</span>
+          <span class="kbd-hint">T</span>
+        </button>
+        <button type="button" id="btn-next-theme" title="Next theme (Right Arrow)">→</button>
+        <button type="button" id="btn-random-theme" title="Jump to a random theme (R)">
+          Random <span class="kbd-hint">R</span>
+        </button>
+        <span id="env-actions"></span>
+      </div>
+    </header>
+
+    <nav class="era-panel" aria-label="Mainline games by hardware era">
+      <div class="era-groups" id="era-groups"></div>
+    </nav>
+
+    <section class="story-bar" aria-labelledby="active-theme-heading">
+      <div>
+        <div class="story-head">
+          <h2 class="story-title" id="active-theme-heading"></h2>
+          <span class="story-sub" id="active-theme-subtitle"></span>
+        </div>
+        <p class="story-text" id="active-theme-story"></p>
+      </div>
+
+      <div class="control-clusters">
+        <div class="seg-group" role="tablist" aria-label="Vision simulation">
+          <button type="button" class="seg-btn cvd-btn" data-cvd="normal" role="tab" aria-selected="true">Normal <span class="kbd-hint">1</span></button>
+          <button type="button" class="seg-btn cvd-btn" data-cvd="protan" role="tab" aria-selected="false">Protanopia <span class="kbd-hint">2</span></button>
+          <button type="button" class="seg-btn cvd-btn" data-cvd="deutan" role="tab" aria-selected="false">Deuteranopia <span class="kbd-hint">3</span></button>
+          <button type="button" class="seg-btn cvd-btn" data-cvd="tritan" role="tab" aria-selected="false">Tritanopia <span class="kbd-hint">4</span></button>
+        </div>
+      </div>
+    </section>
+
+    <main class="workbench" id="workbench" aria-label="Simulated Positron and VS Code Workbench">
+      <div class="wb-titlebar" id="wb-titlebar">
+        <div class="wb-tabs">
+          <div class="wb-dots" aria-hidden="true">
+            <span id="dot-close"></span>
+            <span id="dot-min"></span>
+            <span id="dot-max"></span>
+          </div>
+          <button type="button" class="wb-tab lang-tab" id="tab-r" data-lang="r">color_science.R</button>
+          <button type="button" class="wb-tab lang-tab" id="tab-py" data-lang="py">oklch_gamut.py</button>
+          <button type="button" class="wb-tab lang-tab" id="tab-ts" data-lang="ts">extension.ts</button>
+          <button type="button" class="wb-tab lang-tab" id="tab-qmd" data-lang="qmd">report.qmd</button>
+        </div>
+        <span class="wb-pill" id="wb-vision-pill"></span>
+      </div>
+
+      <div class="wb-body">
+        <aside class="wb-activity" id="wb-activity" aria-hidden="true">
+          <div class="wb-act-icon" id="act-icon-active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2Z"/></svg>
+          </div>
+          <div class="wb-act-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          </div>
+          <div class="wb-act-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="9" r="3"/><path d="M6 9v6M18 12c0 3-3 4-12 4"/></svg>
+          </div>
+          <div class="wb-act-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+          </div>
+        </aside>
+
+        <aside class="wb-sidebar" id="wb-sidebar">
+          <div>
+            <div class="wb-sec-head" id="wb-exp-head">Explorer · Workspace</div>
+            <div id="wb-file-list"></div>
+          </div>
+          <div id="wb-positron-pane" style="padding-top:10px;border-top:1px solid transparent">
+            <div class="wb-sec-head" id="wb-var-head">Positron · Variables</div>
+            <div id="wb-var-list"></div>
+          </div>
+        </aside>
+
+        <div class="wb-main">
+          <pre class="wb-editor" id="wb-editor"></pre>
+          <div class="wb-console" id="wb-console">
+            <div id="wb-console-lines"></div>
+            <div>
+              <div class="wb-sec-head" id="wb-ansi-head" style="margin-bottom:4px">Integrated Terminal · 16 ANSI Slots (click any swatch to copy hex)</div>
+              <div class="ansi-strip" id="ansi-strip"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-statusbar" id="wb-statusbar">
+        <div style="display:flex;align-items:center;gap:14px">
+          <span id="sb-git">⎇ main · Positron R 4.4</span>
+          <span id="sb-cvd-gate"></span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px">
+          <span id="sb-contrast"></span>
+          <strong id="sb-label"></strong>
+        </div>
+      </div>
+    </main>
+
+    <section class="studio-grid" aria-label="Perceptual Colorimetry Audit">
+      <div class="panel-card">
+        <div class="panel-head">
+          <h2>Perceptual Token Inspector (click any row to copy hex)</h2>
+          <span class="panel-meta" id="audit-summary-badge"></span>
+        </div>
+        <div class="table-scroll">
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>Semantic Role</th>
+                <th>Hex</th>
+                <th>OKLCH (L% · C · H°)</th>
+                <th>WCAG / bg</th>
+                <th>WCAG / line</th>
+                <th>APCA |Lc|</th>
+              </tr>
+            </thead>
+            <tbody id="audit-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="canvas-stack">
+        <div class="panel-card">
+          <div class="panel-head">
+            <h2>OKLab a–b Chromaticity Polygon</h2>
+            <span class="panel-meta" id="chroma-meta">Solid = active · Dashed = Light/Dark sibling</span>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="canvas-chroma" width="320" height="260"></canvas>
+          </div>
+          <div class="pair-compare" id="pair-compare-box"></div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-head">
+            <h2>OKLCH Lightness Staggering &amp; CVD Safety</h2>
+            <span class="panel-meta" id="cvd-min-readout"></span>
+          </div>
+          <div class="canvas-wrap">
+            <canvas id="canvas-lightness" width="320" height="190"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>Every color synthesized in OKLCH &amp; verified against WCAG 2.1, APCA-W3, CIEDE2000 &amp; Machado et al. (2009) dichromacy matrices. Zero copyrighted game assets.</span>
+      <span id="footer-links"></span>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const THEMES = [{"slug":"zelda1-light","label":"The Legend of Zelda Light","game":"The Legend of Zelda","shortGame":"Zelda I","era":"8-bit & 16-bit","year":1986,"mode":"light","subtitle":"NES 2C02 sandstone overworld, gold cartridge & starting-tunic emerald","story":"Grounded in two unmistakable artifacts of 1986-87 hardware history: the warm sandy-ochre overworld ground (`$37` on the NES Ricoh 2C02 PPU) and the famous metallic gold North American cartridge shell. Primary syntax roles map onto the exact 2C02 hue families a player sees in the first five minutes of the quest: Link's starting green tunic for keywords, the Wooden Sword inside the Old Man's cave for storage, Heart Container / Red Potion vermilion for strings, Blue Ring / Magical Rod cobalt for functions, and dungeon-wall stone cyan for types. Triforce gold (#C89214 -> #F0B828) anchors cursor and focus across both Light and Dark.","t":{"bg":"#F4E4BE","fg":"#281D0D","bgLine":"#EBD9AF","bgWidget":"#F7ECD0","bgSidebar":"#F0DDB3","bgPanel":"#EDD9AE","bgActivity":"#E9D3A4","tintSelect":"#E3C588","borderSubtle":"#D8C596","borderStrong":"#958151","fgSecondary":"#554835","fgMuted":"#7B7060","fgVariable":"#342611","fgPunct":"#574B38","fgComment":"#62533B","fgParameter":"#294C2E","fgProperty":"#214059","kw":"#1B5C1F","stor":"#492600","str":"#A73731","rx":"#9A4300","fn":"#01489F","fnDim":"#2D5B9F","type":"#006F7F","iface":"#145E70","num":"#875D00","dec":"#7E2C75","ns":"#345B6F","cur":"#C89214","foc":"#C89214","badge":"#C94418","status":"#245E1E","err":"#680023","warn":"#964D00","info":"#14599B","gitAdd":"#086114","gitDel":"#680023"},"ansi":{"black":"#281D0D","red":"#59001D","green":"#086114","yellow":"#865C00","blue":"#01489F","magenta":"#7E2C75","cyan":"#006D74","white":"#574B38","brightBlack":"#62533B","brightRed":"#680023","brightGreen":"#0C6B18","brightYellow":"#895E00","brightBlue":"#1955A8","brightMagenta":"#8A3180","brightCyan":"#157178","brightWhite":"#342611"}},{"slug":"zelda1-dark","label":"The Legend of Zelda Dark","game":"The Legend of Zelda","shortGame":"Zelda I","era":"8-bit & 16-bit","year":1986,"mode":"dark","subtitle":"NES $0F torchlit dungeon obsidian & 8-bit sprite luminance","story":"Every labyrinth room in the 1986 original sits on flat un-dithered `$0F` PPU black, letting small 3-color sprites pop like stained glass on CRT phosphor. This theme honors that stark figure-ground clarity: a warm torchlit charcoal canvas (#110D08) paired with high-purity NES dungeon hues -- tunic emerald, Red Candle vermilion-orange, Blue Ring azure, Level-9 cyan block walls, and radiant Triforce gold. `fgComment` carries the weathered off-gold of the Old Man's cave hints (\"IT'S A SECRET TO EVERYBODY\"), while diagnostic errors occupy deep Death-Mountain crimson cleanly separated from string literals.","t":{"bg":"#140D06","fg":"#E1D3B6","bgLine":"#1D150D","bgWidget":"#231A13","bgSidebar":"#1A1109","bgPanel":"#191008","bgActivity":"#1E130A","tintSelect":"#3B2300","borderSubtle":"#2B2219","borderStrong":"#685E53","fgSecondary":"#AFA081","fgMuted":"#796D57","fgVariable":"#DBC8A4","fgPunct":"#A6987C","fgComment":"#9D8C6D","fgParameter":"#8CC8A0","fgProperty":"#92C0E8","kw":"#9AE849","stor":"#E1A988","str":"#F16F38","rx":"#FFA153","fn":"#5DA7FF","fnDim":"#86BCFF","type":"#0FD8DA","iface":"#63E6EF","num":"#FFD88E","dec":"#E27FE5","ns":"#84A7BB","cur":"#F0B828","foc":"#F0B828","badge":"#F26422","status":"#4D2418","err":"#F33E52","warn":"#FFA838","info":"#70B7FA","gitAdd":"#68CC5F","gitDel":"#F33E52"},"ansi":{"black":"#1D150D","red":"#EA344B","green":"#68CC5F","yellow":"#CB8F62","blue":"#5DA7FF","magenta":"#E27FE5","cyan":"#1BDBDD","white":"#AFA081","brightBlack":"#9D8C6D","brightRed":"#F33E52","brightGreen":"#77E16D","brightYellow":"#DD9E6E","brightBlue":"#83BBFF","brightMagenta":"#F495F6","brightCyan":"#55EAEB","brightWhite":"#E1D3B6"}},{"slug":"zelda2-light","label":"Zelda II Light","game":"Zelda II: The Adventure of Link","shortGame":"Zelda II","era":"8-bit & 16-bit","year":1987,"mode":"light","subtitle":"Side-scrolling RPG spell meter, Red Tunic & sunlit Hyrule map","story":"Zelda II is the series' boldest mechanical departure -- a side-scrolling swordplay and spellcasting RPG with an EXP counter, a blue Magic Meter, and a Shield spell that turns Link's tunic crimson. Rather than stamping another green-keyword template onto it, `accentKeyword` claims that iconic Shield-Spell Red Tunic crimson, `accentFunction` maps to the cobalt Magic Meter (Shield, Jump, Life, Fairy, Fire, Reflect, Spell, Thunder), `accentString` takes Parapa Palace's warm sandstone-ochre brickwork, and `accentNumber` honors the series' only EXP progression counter.","t":{"bg":"#E4EDC9","fg":"#1B2211","bgLine":"#DAE3BB","bgWidget":"#EDF3D8","bgSidebar":"#E0E6BF","bgPanel":"#DDE3BA","bgActivity":"#D7DDB0","tintSelect":"#DACB93","borderSubtle":"#C5CFA3","borderStrong":"#818A5D","fgSecondary":"#454E3A","fgMuted":"#6D7564","fgVariable":"#232D17","fgPunct":"#49523E","fgComment":"#535B41","fgParameter":"#5F3629","fgProperty":"#243F5A","kw":"#A3212D","stor":"#572900","str":"#975106","rx":"#992D00","fn":"#00459A","fnDim":"#2B589A","type":"#077280","iface":"#176171","num":"#165927","dec":"#6A3491","ns":"#395A6F","cur":"#D62828","foc":"#D62828","badge":"#C84B14","status":"#7D1D22","err":"#760044","warn":"#8B5500","info":"#1E589C","gitAdd":"#09611A","gitDel":"#760044"},"ansi":{"black":"#1B2211","red":"#67003A","green":"#005512","yellow":"#5A2E08","blue":"#00459A","magenta":"#6A3491","cyan":"#007075","white":"#49523E","brightBlack":"#535B41","brightRed":"#760044","brightGreen":"#045E17","brightYellow":"#613108","brightBlue":"#1752A3","brightMagenta":"#743A9E","brightCyan":"#147378","brightWhite":"#232D17"}},{"slug":"zelda2-dark","label":"Zelda II Dark","game":"Zelda II: The Adventure of Link","shortGame":"Zelda II","era":"8-bit & 16-bit","year":1987,"mode":"dark","subtitle":"Great Palace magenta brickwork, Thunderbird azure & Dark Link shadow","story":"Stepping through a Palace doorway on the NES abruptly swaps Hyrule's green overworld for pitch-black side-scrolling halls framed in electric magenta, cobalt, and ochre brick. Here the Great Palace takes center stage: palace hot-magenta drives `accentType`, Shield-Spell crimson holds `accentKeyword` and the constant cursor/focus accent, Thunderbird sapphire powers `accentFunction`, and Dark Link -- waiting in the final room as Link's own metallic silhouette -- lends cool steel-silver to `accentStorage`.","t":{"bg":"#150915","fg":"#DECFDD","bgLine":"#1E101F","bgWidget":"#231624","bgSidebar":"#1A0C1C","bgPanel":"#190B1B","bgActivity":"#1E0E20","tintSelect":"#3B173E","borderSubtle":"#2C1D2D","borderStrong":"#6B596C","fgSecondary":"#AB9CAA","fgMuted":"#766A75","fgVariable":"#D6C4D5","fgPunct":"#A394A2","fgComment":"#9E879F","fgParameter":"#96BED6","fgProperty":"#95C4CA","kw":"#F15C86","stor":"#C0BCDB","str":"#FAA037","rx":"#FF824F","fn":"#5CA9FC","fnDim":"#84BEFF","type":"#C74AAE","iface":"#D665AF","num":"#81F287","dec":"#3FE4EC","ns":"#A696BA","cur":"#F54738","foc":"#F54738","badge":"#E84CA8","status":"#5E194D","err":"#EB383D","warn":"#FDAF2D","info":"#71BFFF","gitAdd":"#68CF6E","gitDel":"#EB383D"},"ansi":{"black":"#1E101F","red":"#EA363C","green":"#76DD7B","yellow":"#FD9E3D","blue":"#5FACFF","magenta":"#BDB9D9","cyan":"#3FE4EC","white":"#AB9CAA","brightBlack":"#9E879F","brightRed":"#EB383D","brightGreen":"#81EE87","brightYellow":"#FFB674","brightBlue":"#86BFFF","brightMagenta":"#D0CCEB","brightCyan":"#62EEF5","brightWhite":"#DECFDD"}},{"slug":"alttp-light","label":"A Link to the Past Light","game":"A Link to the Past","shortGame":"ALttP","era":"8-bit & 16-bit","year":1991,"mode":"light","subtitle":"SNES Light World celadon meadow, Three Pendants & pink-haired Link","story":"SNES 15-bit BGR555 color gave Hyrule its canonical fairy-tale vibrancy: sunbeams piercing Lost Woods fog, Sanctuary stained glass, and the three Pendants of Virtue in their quirky, authentic SNES colors -- Courage emerald (`accentKeyword`), Power sapphire (`accentFunction`), and Wisdom ruby (`accentString`). `accentDecorator` nods to one of 16-bit gaming's favorite palette quirks: Link's famous magenta-pink sprite hair. Maiden-Crystal / Magic-Mirror azure anchors cursor and focus across Light World and Dark World.","t":{"bg":"#DCF0D9","fg":"#142317","bgLine":"#D0E7CD","bgWidget":"#E7F6E4","bgSidebar":"#D5EACE","bgPanel":"#D1E7CA","bgActivity":"#CAE2C2","tintSelect":"#A2D5F3","borderSubtle":"#BAD3B6","borderStrong":"#748D71","fgSecondary":"#3E5040","fgMuted":"#677669","fgVariable":"#1B2E1E","fgPunct":"#435445","fgComment":"#4B5D4B","fgParameter":"#5D3821","fgProperty":"#1C4158","kw":"#1B7037","stor":"#582E07","str":"#BE2138","rx":"#9E3F00","fn":"#044AA7","fnDim":"#2F5EA6","type":"#004B53","iface":"#0D424C","num":"#855E00","dec":"#87216D","ns":"#345B6F","cur":"#1E74CC","foc":"#1E74CC","badge":"#C93B2B","status":"#186337","err":"#760028","warn":"#915100","info":"#0A5A9A","gitAdd":"#006129","gitDel":"#760028"},"ansi":{"black":"#142317","red":"#660021","green":"#006129","yellow":"#5A3009","blue":"#004894","magenta":"#87216D","cyan":"#00707C","white":"#435445","brightBlack":"#4B5D4B","brightRed":"#760028","brightGreen":"#036B2E","brightYellow":"#5F3208","brightBlue":"#18549D","brightMagenta":"#932677","brightCyan":"#167480","brightWhite":"#1B2E1E"}},{"slug":"alttp-dark","label":"A Link to the Past Dark","game":"A Link to the Past","shortGame":"ALttP","era":"8-bit & 16-bit","year":1991,"mode":"dark","subtitle":"Ganon's Dark World twilight plum, Bunny-Link pink & Maiden Crystals","story":"Warping atop the Pyramid of Power reveals Ganon's corrupted Golden Land: bruised plum storm-skies (`bg`), eerie olive-chartreuse grass (`accentKeyword`), Skull Woods bone (`accentStorage`), and the unforgettable shock of Link transforming into a pink bunny without the Moon Pearl (`accentString`). Unbowed by the Dark World's miasma, the seven Maiden Crystals keep glowing clear sapphire-azure in `accentFunction` and the shared cursor/focus accent.","t":{"bg":"#150B25","fg":"#D6D0E7","bgLine":"#1E1330","bgWidget":"#231936","bgSidebar":"#19102E","bgPanel":"#180E2C","bgActivity":"#1C1232","tintSelect":"#332052","borderSubtle":"#2B2041","borderStrong":"#655A7F","fgSecondary":"#A49DB5","fgMuted":"#706C7D","fgVariable":"#CDC5E2","fgPunct":"#9E97AE","fgComment":"#948BAE","fgParameter":"#D2A8C8","fgProperty":"#97C1DB","kw":"#A9CD6C","stor":"#D9C9AB","str":"#EF6ABA","rx":"#FF8F51","fn":"#ACD6FF","fnDim":"#BEDFFF","type":"#AD82FB","iface":"#C496FB","num":"#FCC537","dec":"#3BE1E1","ns":"#9D9DC3","cur":"#4DA6FF","foc":"#4DA6FF","badge":"#E85298","status":"#4A1F6E","err":"#F92338","warn":"#FFA838","info":"#67B9FB","gitAdd":"#92CC5D","gitDel":"#F92338"},"ansi":{"black":"#1E1330","red":"#F61E36","green":"#92CC5D","yellow":"#D8C5A2","blue":"#5AB1FF","magenta":"#EF6ABA","cyan":"#3BE1E1","white":"#A49DB5","brightBlack":"#948BAE","brightRed":"#F92338","brightGreen":"#A3E16B","brightYellow":"#E9D5B0","brightBlue":"#85C4FF","brightMagenta":"#FF83CB","brightCyan":"#65F0EF","brightWhite":"#D6D0E7"}},{"slug":"linksawakening-light","label":"Link's Awakening Light","game":"Link's Awakening","shortGame":"Link's Awakening","era":"Handheld","year":1993,"mode":"light","subtitle":"Koholint tilt-shift toy diorama, Marin's hibiscus & Wind Fish's Egg","story":"Inspired by Koholint Island rendered as a sunlit, tilt-shift tabletop toy diorama: glossy seafoam-white shores (`bg`), Mabe Village enamel-green pastures (`accentKeyword`), Koholint surf cerulean (`accentFunction`), Marin's coral-red hibiscus (`accentString` and `accentCursor`), the Eight Instruments' brass-gold (`accentNumber`), and the unmistakable purple-magenta triangles painted across the giant Wind Fish's Egg atop Mt. Tamaranch (`accentType`). Owl Statue slate-stone anchors `fgComment`.","t":{"bg":"#DFF3EC","fg":"#032428","bgLine":"#D2E9E1","bgWidget":"#EAF9F4","bgSidebar":"#D4EFE3","bgPanel":"#D0ECE0","bgActivity":"#C8E6D9","tintSelect":"#9EE0D7","borderSubtle":"#BCD5CC","borderStrong":"#758F85","fgSecondary":"#2D5155","fgMuted":"#5C777B","fgVariable":"#002F34","fgPunct":"#36585B","fgComment":"#435F66","fgParameter":"#004D4D","fgProperty":"#1F4729","kw":"#12662B","stor":"#5B2B06","str":"#B03B37","rx":"#9F4500","fn":"#00355C","fnDim":"#214463","type":"#662785","iface":"#591E68","num":"#8B6000","dec":"#007273","ns":"#435A77","cur":"#D93829","foc":"#14828A","badge":"#D95B26","status":"#1B7842","err":"#60001A","warn":"#925600","info":"#006093","gitAdd":"#006425","gitDel":"#60001A"},"ansi":{"black":"#032428","red":"#510014","green":"#006425","yellow":"#8B6000","blue":"#005087","magenta":"#662785","cyan":"#007273","white":"#36585B","brightBlack":"#435F66","brightRed":"#60001A","brightGreen":"#026E2A","brightYellow":"#906300","brightBlue":"#1B5C91","brightMagenta":"#702D92","brightCyan":"#1C7778","brightWhite":"#002F34"}},{"slug":"linksawakening-dark","label":"Link's Awakening Dark","game":"Link's Awakening","shortGame":"Link's Awakening","era":"Handheld","year":1993,"mode":"dark","subtitle":"1993 DMG-01 dot-matrix LCD phosphor green ramp — the Wind Fish's dream","story":"Signature story: the ONE deliberately monochrome hardware-tribute theme in the entire catalog. The original 1993 Game Boy (DMG-01) had no color -- only a reflective olive-chartreuse STN LCD driven by 2-bit shade registers. Those canonical DMG shades anchor this palette directly: #0F380F (darkest pixel, `bg`), #306230 (structural borders/chrome), and #8BAC0F / #9BBC0F (classic mid-bright LCD phosphor tones). To make real programming genuinely comfortable without breaking the monochrome dream conceit, active tokens glide monotonically along the exact DMG phosphor curve in OKLCH space -- from deep olive-moss (`h ~ 136°`, `L ~ 0.69`) up to lit dot-matrix lime-chartreuse (`h ~ 112°`, `L ~ 0.90`) -- ensuring every single syntax token, comment, operator, and namespace clears WCAG AA 4.5:1 against #0F380F while bold/italic typographic cues reinforce role boundaries. One narrow lore exception remains: `colorError` and `gitDelete` take a muted oxidized-amber Nightmare tint (#E08244), representing the foreign Nightmares haunting Koholint's dungeons -- the only presence never native to the Wind Fish's dream.","t":{"bg":"#0F380F","fg":"#C4DE54","bgLine":"#184418","bgWidget":"#204E20","bgSidebar":"#153F14","bgPanel":"#133C12","bgActivity":"#1B4719","tintSelect":"#35691C","borderSubtle":"#265226","borderStrong":"#5E8534","fgSecondary":"#98BA38","fgMuted":"#6A8F28","fgVariable":"#BBD84A","fgPunct":"#85AB2C","fgComment":"#83A825","fgParameter":"#A9CC44","fgProperty":"#9EC23B","kw":"#9BBC0F","stor":"#7FB032","str":"#B6D63C","rx":"#D2E86B","fn":"#8CC42B","fnDim":"#7AA836","type":"#A6CF52","iface":"#BFE072","num":"#D6EB63","dec":"#CBE683","ns":"#7DA646","cur":"#D6EB63","foc":"#9BBC0F","badge":"#B6D63C","status":"#1B4A1B","err":"#E08244","warn":"#D4B83C","info":"#96C96E","gitAdd":"#8CC42B","gitDel":"#E08244"},"ansi":{"black":"#184418","red":"#D97B3E","green":"#8CC42B","yellow":"#C8C438","blue":"#7EB368","magenta":"#A6B856","cyan":"#88C478","white":"#9BBC0F","brightBlack":"#7BA124","brightRed":"#E89254","brightGreen":"#A8D84E","brightYellow":"#DCE868","brightBlue":"#98CCA0","brightMagenta":"#C0CF7A","brightCyan":"#B2E09C","brightWhite":"#D8EE78"}},{"slug":"ocarina-light","label":"Ocarina of Time Light","game":"Ocarina of Time","shortGame":"Ocarina of Time","era":"N64 & GameCube","year":1998,"mode":"light","subtitle":"Temple of Time limestone, three Spiritual Stones & royal-blue Ocarina","story":"Built directly around the sacred relics that unlock the Door of Time: Kokiri Emerald (`accentKeyword`), Goron Ruby (`accentString`), and Zora Sapphire (`accentFunction`) sit against sunlit Temple of Time limestone. Unlike generic teal, `accentType` wears the true sweet-potato royal periwinkle-indigo of the Ocarina of Time itself (echoed by the Shadow Medallion in `accentInterface`), while `accentNumber` takes Spirit-Medallion desert amber and `accentDecorator` catches Navi's cyan fairy-glow. Triforce gold (#C9A227) remains byte-for-byte identical across Light and Dark.","t":{"bg":"#EDE9D6","fg":"#182218","bgLine":"#E3DFCA","bgWidget":"#F3F0E2","bgSidebar":"#DDE6D2","bgPanel":"#DAE2CE","bgActivity":"#D4DDC6","tintSelect":"#DECA99","borderSubtle":"#CFCAB3","borderStrong":"#8A866F","fgSecondary":"#414F41","fgMuted":"#6A756A","fgVariable":"#1F2D1F","fgPunct":"#455245","fgComment":"#4E5B4A","fgParameter":"#164C4A","fgProperty":"#2B3E57","kw":"#007345","stor":"#5F2E02","str":"#B92B3E","rx":"#9A4300","fn":"#3662B7","fnDim":"#1A619B","type":"#3D2E98","iface":"#3B267D","num":"#875D00","dec":"#00717A","ns":"#385A6E","cur":"#C9A227","foc":"#C9A227","badge":"#C94A18","status":"#2B4294","err":"#710022","warn":"#925000","info":"#0E5E9A","gitAdd":"#006033","gitDel":"#710022"},"ansi":{"black":"#182218","red":"#61001C","green":"#006033","yellow":"#875D00","blue":"#004B8A","magenta":"#3D2E98","cyan":"#006F78","white":"#455245","brightBlack":"#4E5B4A","brightRed":"#710022","brightGreen":"#036A39","brightYellow":"#8B6000","brightBlue":"#195793","brightMagenta":"#4435A7","brightCyan":"#16737C","brightWhite":"#1F2D1F"}},{"slug":"ocarina-dark","label":"Ocarina of Time Dark","game":"Ocarina of Time","shortGame":"Ocarina of Time","era":"N64 & GameCube","year":1998,"mode":"dark","subtitle":"Nocturnal Hyrule Field, Six Medallions & dungeon torchlight","story":"Seven years later under Ganondorf's reign -- or midnight riding across Hyrule Field under N64 vertex-lit stars. Against deep star-indigo (#0B0F1F), the Spiritual Stones and Six Sage Medallions glow like stained glass in dungeon torchlight: Kokiri Emerald, Goron Ruby, Zora Sapphire, the royal indigo Ocarina and Shadow Medallion, Spirit desert-bronze, and Navi's bright cyan lantern. Triforce gold (#C9A227) stays unchanged from Light.","t":{"bg":"#070E1D","fg":"#CBD9CB","bgLine":"#0E1628","bgWidget":"#131C2D","bgSidebar":"#0B1224","bgPanel":"#0A1123","bgActivity":"#0D1528","tintSelect":"#16274C","borderSubtle":"#1A2438","borderStrong":"#545F76","fgSecondary":"#98A698","fgMuted":"#687267","fgVariable":"#BFD0BF","fgPunct":"#8F9D8F","fgComment":"#839385","fgParameter":"#90C3BC","fgProperty":"#A0BFD9","kw":"#6BD798","stor":"#CDA173","str":"#FA6C3F","rx":"#FF8F4B","fn":"#4492D2","fnDim":"#6CA6D8","type":"#9E8EFF","iface":"#B7A1FF","num":"#FFD165","dec":"#4FE6F1","ns":"#86A2BB","cur":"#C9A227","foc":"#C9A227","badge":"#F0622E","status":"#44266E","err":"#EB364D","warn":"#FFA842","info":"#69BDFA","gitAdd":"#42CE85","gitDel":"#EB364D"},"ansi":{"black":"#0E1628","red":"#EA354C","green":"#42CE85","yellow":"#E3AF77","blue":"#4EAFFD","magenta":"#9E8EFF","cyan":"#4BE3EE","white":"#98A698","brightBlack":"#839385","brightRed":"#EB364D","brightGreen":"#50E395","brightYellow":"#F5BE83","brightBlue":"#7BC2FF","brightMagenta":"#B0A7FF","brightCyan":"#6BEEF8","brightWhite":"#CBD9CB"}},{"slug":"majora-light","label":"Majora's Mask Light","game":"Majora's Mask","shortGame":"Majora's Mask","era":"N64 & GameCube","year":2000,"mode":"light","subtitle":"Clock Town Carnival dawn, Majora magenta & Fierce Deity cyan","story":"Clock Town preparing for the Carnival of Time under the pale morning sky of the First Day -- festive sandstone and bunting on the surface, yet every pigment of Majora's cursed mask is already hiding in plain sight: heart magenta (`accentKeyword`/`accentCursor`), Woodfall/Tael violet (`accentFunction`), Termina Moon orange (`accentString`), the mask's toxic lime-green spikes (`accentNumber`), Tatl's golden bell (`accentDecorator`), and Fierce Deity cyan (`accentType`/`accentFocus`).","t":{"bg":"#F9E6DA","fg":"#221A30","bgLine":"#F0DBCE","bgWidget":"#FDEFE6","bgSidebar":"#F5DCE9","bgPanel":"#F2D8E6","bgActivity":"#EED2E0","tintSelect":"#EDBDDC","borderSubtle":"#DDC6B8","borderStrong":"#988173","fgSecondary":"#4E4560","fgMuted":"#746D84","fgVariable":"#2D223F","fgPunct":"#544B65","fgComment":"#5C546F","fgParameter":"#5D2F54","fgProperty":"#134062","kw":"#64003D","stor":"#543100","str":"#9E4F37","rx":"#980029","fn":"#562694","fnDim":"#614295","type":"#00736E","iface":"#0C6263","num":"#556E00","dec":"#845F00","ns":"#525173","cur":"#BD195D","foc":"#0B786D","badge":"#C97B12","status":"#941E52","err":"#9D2943","warn":"#8B5500","info":"#00628A","gitAdd":"#06641A","gitDel":"#9D2943"},"ansi":{"black":"#221A30","red":"#911C3A","green":"#315D00","yellow":"#553201","blue":"#00628A","magenta":"#562694","cyan":"#00716C","white":"#544B65","brightBlack":"#5C546F","brightRed":"#9D2943","brightGreen":"#376602","brightYellow":"#5B3600","brightBlue":"#206D94","brightMagenta":"#5F2CA2","brightCyan":"#167570","brightWhite":"#2D223F"}},{"slug":"majora-dark","label":"Majora's Mask Dark","game":"Majora's Mask","shortGame":"Majora's Mask","era":"N64 & GameCube","year":2000,"mode":"dark","subtitle":"Final-Night cosmic void, acid-mask neon & Fierce Deity cyan","story":"Takaya Imamura and Yoshiaki Koizumi defined Majora's Mask with heavy comic-book black shadows punctuated by psychedelic tribal-mask pigments. Against a deep cosmic violet-black void, Majora's magenta (`accentKeyword`), cursed Woodfall purple (`accentFunction`), Falling-Moon orange (`accentString`), toxic mask-spike lime (`accentNumber`), Astral Observatory azure (`accentDecorator`), and Fierce Deity's electric cyan (`accentType` and cursor/focus) ignite without ever losing perceptual separation.","t":{"bg":"#10071B","fg":"#D5D1E8","bgLine":"#180F25","bgWidget":"#1E142B","bgSidebar":"#140B22","bgPanel":"#130A20","bgActivity":"#170D26","tintSelect":"#2F1948","borderSubtle":"#261C35","borderStrong":"#645976","fgSecondary":"#A39EB6","fgMuted":"#6F6C7D","fgVariable":"#CCC6E3","fgPunct":"#9995AC","fgComment":"#878BA9","fgParameter":"#BAB0DD","fgProperty":"#A0BEDF","kw":"#FC4FA2","stor":"#E4C37C","str":"#FD940B","rx":"#EF75E1","fn":"#B490FC","fnDim":"#C5ABFF","type":"#00FEED","iface":"#56FAF5","num":"#C6F161","dec":"#58BAFF","ns":"#9D99C1","cur":"#1CEAD4","foc":"#1CEAD4","badge":"#E01E68","status":"#2E1652","err":"#EF3B4A","warn":"#FDAF2D","info":"#1ACFDF","gitAdd":"#6BDA73","gitDel":"#EF3B4A"},"ansi":{"black":"#180F25","red":"#E83345","green":"#99D846","yellow":"#E9C26B","blue":"#58BAFF","magenta":"#EF75E1","cyan":"#00E6D7","white":"#A39EB6","brightBlack":"#878BA9","brightRed":"#EF3B4A","brightGreen":"#A6E94F","brightYellow":"#FBD277","brightBlue":"#89CCFF","brightMagenta":"#FF8EF1","brightCyan":"#44F1E1","brightWhite":"#D5D1E8"}},{"slug":"oracleseasons-light","label":"Oracle of Seasons Light","game":"Oracle of Seasons","shortGame":"Oracle of Seasons","era":"Handheld","year":2001,"mode":"light","subtitle":"Holodrum Spring cherry-blossom cream, Four Seasons & Din's flame","story":"Swinging the Rod of Seasons atop a tree stump repaints all of Holodrum in four distinct GBC hardware palettes -- and here all four seasons share the syntax stage over a soft Spring cherry-blossom canvas: Summer canopy emerald (`accentKeyword`), Spring blossom crimson-rose (`accentString`), Winter creek cerulean (`accentFunction`), and Autumn harvest russet-gold (`accentNumber`), joined by Subrosian Star-Ore teal (`accentType`). Din's living flame (#D63E18 -> #FA5C32) stays constant into Dark.","t":{"bg":"#FCE5E7","fg":"#162411","bgLine":"#F3DADC","bgWidget":"#FFEEF0","bgSidebar":"#FADDDE","bgPanel":"#F8D9DB","bgActivity":"#F4D3D4","tintSelect":"#F9BEB9","borderSubtle":"#E0C5C7","borderStrong":"#9C8082","fgSecondary":"#3F503A","fgMuted":"#697664","fgVariable":"#1D2E17","fgPunct":"#44543F","fgComment":"#6E523F","fgParameter":"#004A5F","fgProperty":"#553510","kw":"#004425","stor":"#743B11","str":"#88004F","rx":"#A62914","fn":"#174F86","fnDim":"#375F8B","type":"#067479","iface":"#14636C","num":"#8B6000","dec":"#5F2B8C","ns":"#355B6D","cur":"#D63E18","foc":"#D63E18","badge":"#D95E1C","status":"#9E2B1C","err":"#61000E","warn":"#944E00","info":"#005F98","gitAdd":"#00651C","gitDel":"#61000E"},"ansi":{"black":"#162411","red":"#52000A","green":"#00651C","yellow":"#8C5A00","blue":"#005184","magenta":"#5F2B8C","cyan":"#007271","white":"#44543F","brightBlack":"#6E523F","brightRed":"#61000E","brightGreen":"#026F20","brightYellow":"#935E00","brightBlue":"#1B5D8E","brightMagenta":"#693199","brightCyan":"#187574","brightWhite":"#1D2E17"}},{"slug":"oracleseasons-dark","label":"Oracle of Seasons Dark","game":"Oracle of Seasons","shortGame":"Oracle of Seasons","era":"Handheld","year":2001,"mode":"dark","subtitle":"Woods of Winter frost on Subrosian volcanic obsidian & Autumn ember","story":"Holodrum's cold, late-year twilight above and Subrosia's molten subterranean sea directly below: crisp Woods-of-Winter frost (`fg` and `accentKeyword`) cuts across dark volcanic terracotta-obsidian (`bg`), joined by Subrosian furnace ember-orange (`accentString`), Star-Ore jade (`accentType`), and Rosa's famous ribbon pink (`accentDecorator`). Din's flame (#FA5C32) burns steadily across both modes.","t":{"bg":"#1C0805","fg":"#C2D9DF","bgLine":"#27100C","bgWidget":"#2C1611","bgSidebar":"#240C08","bgPanel":"#220A07","bgActivity":"#280D0A","tintSelect":"#4A160D","borderSubtle":"#361D18","borderStrong":"#765851","fgSecondary":"#8EA6AD","fgMuted":"#617277","fgVariable":"#B4D0D8","fgPunct":"#879DA3","fgComment":"#AE8671","fgParameter":"#8FC1CD","fgProperty":"#97C6BF","kw":"#A6E6FF","stor":"#E5AA74","str":"#FD731E","rx":"#FF9D36","fn":"#61A3FA","fnDim":"#85B8FD","type":"#57E8B5","iface":"#7CF7D3","num":"#FFDA6E","dec":"#ED7CD0","ns":"#7FA5B9","cur":"#FA5C32","foc":"#FA5C32","badge":"#FA6E2E","status":"#6B2417","err":"#F9223D","warn":"#FFAD3F","info":"#61C3F9","gitAdd":"#5BD47D","gitDel":"#F9223D"},"ansi":{"black":"#27100C","red":"#F51B3A","green":"#4CDFAC","yellow":"#D3A974","blue":"#61A3FA","magenta":"#ED7CD0","cyan":"#00CACC","white":"#8EA6AD","brightBlack":"#AE8671","brightRed":"#F9223D","brightGreen":"#54F0BA","brightYellow":"#E5B881","brightBlue":"#81B7FF","brightMagenta":"#FF92E2","brightCyan":"#4AD9DA","brightWhite":"#C2D9DF"}},{"slug":"oracleages-light","label":"Oracle of Ages Light","game":"Oracle of Ages","shortGame":"Oracle of Ages","era":"Handheld","year":2001,"mode":"light","subtitle":"Labrynna's Ancient Past limestone, Nayru's sapphire & Harp of Ages","story":"Labrynna four centuries in the Past: sunlit sage-limestone ruins (`bg`) where Nayru -- Oracle of Ages and vessel of Wisdom -- sings across time. Because Ages is built on puzzle logic and temporal wisdom rather than brute force, Nayru's royal sapphire claims `accentKeyword` (as well as the shared cursor/focus identity), paired with Mermaid-Sea teal (`accentFunction`), ancient Lynna terracotta (`accentString`), Tarm-Ruins ivy (`accentType`), Harp-of-Ages brass (`accentNumber`), and a dark glint of Veran's amethyst in `accentDecorator`.","t":{"bg":"#E5EEDC","fg":"#122033","bgLine":"#DAE4D0","bgWidget":"#EEF5E7","bgSidebar":"#DBE9D5","bgPanel":"#D8E6D1","bgActivity":"#D1E0CA","tintSelect":"#ABD2F9","borderSubtle":"#C5D0BA","borderStrong":"#808A74","fgSecondary":"#3B4B64","fgMuted":"#657387","fgVariable":"#182942","fgPunct":"#415168","fgComment":"#4F5C49","fgParameter":"#1A446D","fgProperty":"#59330A","kw":"#00489F","stor":"#592E04","str":"#B53C38","rx":"#980029","fn":"#00464C","fnDim":"#295358","type":"#20763C","iface":"#10663C","num":"#855E00","dec":"#643095","ns":"#3C5873","cur":"#2460C9","foc":"#2460C9","badge":"#C96A18","status":"#23498D","err":"#751527","warn":"#8F5300","info":"#006191","gitAdd":"#00642B","gitDel":"#751527"},"ansi":{"black":"#122033","red":"#6A061E","green":"#00642B","yellow":"#59310D","blue":"#00459A","magenta":"#643095","cyan":"#006E76","white":"#415168","brightBlack":"#4F5C49","brightRed":"#751527","brightGreen":"#026E30","brightYellow":"#5E330D","brightBlue":"#1752A3","brightMagenta":"#6E36A3","brightCyan":"#1C747C","brightWhite":"#182942"}},{"slug":"oracleages-dark","label":"Oracle of Ages Dark","game":"Oracle of Ages","shortGame":"Oracle of Ages","era":"Handheld","year":2001,"mode":"dark","subtitle":"Veran's Black Tower graphite stone, Symmetry City & Time Portals","story":"Present-day Labrynna under Veran's shadow: Symmetry City's stark flagstone and the looming Black Tower give this theme a crisp, architectural graphite-slate dark (`bg`), deliberately near-neutral compared to its more saturated peers. Veran's sorcerous violet takes `accentKeyword`, Black-Tower torchlight warms `accentString`, Time-Portal jade lights `accentType`, and Nayru's sapphire (#5C9BFF) threads unchanged in hue through cursor and focus.","t":{"bg":"#0C1016","fg":"#C6D7E6","bgLine":"#14181F","bgWidget":"#1A1E25","bgSidebar":"#0E151F","bgPanel":"#0D141D","bgActivity":"#111822","tintSelect":"#102B4D","borderSubtle":"#21262E","borderStrong":"#5A606B","fgSecondary":"#92A4B4","fgMuted":"#64707C","fgVariable":"#B8CEE0","fgPunct":"#8B9CAB","fgComment":"#84919E","fgParameter":"#AEB5DC","fgProperty":"#CBB896","kw":"#A386FF","stor":"#BAD0E8","str":"#FA943A","rx":"#FD704D","fn":"#11B8E6","fnDim":"#68CAEE","type":"#00FACF","iface":"#55FCE2","num":"#FFD97E","dec":"#EF81D2","ns":"#8CA0BB","cur":"#5C9BFF","foc":"#5C9BFF","badge":"#F07838","status":"#26386E","err":"#EF3A50","warn":"#FFAE33","info":"#59C8FD","gitAdd":"#59D483","gitDel":"#EF3A50"},"ansi":{"black":"#14181F","red":"#EB364D","green":"#59D483","yellow":"#FA943A","blue":"#8CA0BB","magenta":"#A88FFF","cyan":"#3BE5C0","white":"#92A4B4","brightBlack":"#84919E","brightRed":"#EF3A50","brightGreen":"#67E993","brightYellow":"#FFAB68","brightBlue":"#A0B3CC","brightMagenta":"#B9A8FF","brightCyan":"#65F4D1","brightWhite":"#C6D7E6"}},{"slug":"windwaker-light","label":"Wind Waker Light","game":"The Wind Waker","shortGame":"Wind Waker","era":"N64 & GameCube","year":2002,"mode":"light","subtitle":"Sunlit sea-chart parchment, cel-wake turquoise & King of Red Lions","story":"GameCube cel-shaded gouache at high noon: un-muddied flat pigments laid over a warm Fishman sea-chart parchment (`bg`) with an island-breeze seafoam sidebar. Hero-of-Winds tunic emerald (`accentKeyword`), mast-timber walnut (`accentStorage`), King of Red Lions crimson (`accentString`/`accentCursor`), deep Great Sea ultramarine (`accentFunction`), whitecap wake turquoise (`accentType`/`accentFocus`), and Treasure-Chart marigold (`accentNumber`) deliver effortless all-day legibility.","t":{"bg":"#F7ECD6","fg":"#0D222D","bgLine":"#EEE1C8","bgWidget":"#FCF4E3","bgSidebar":"#D7EDE1","bgPanel":"#D3EADD","bgActivity":"#CBE4D7","tintSelect":"#9DDFD6","borderSubtle":"#DACDB1","borderStrong":"#95876B","fgSecondary":"#364E5C","fgMuted":"#617581","fgVariable":"#102C3B","fgPunct":"#3D5562","fgComment":"#435D6A","fgParameter":"#004D4E","fgProperty":"#1B415B","kw":"#003B1E","stor":"#623102","str":"#BD393B","rx":"#9A4300","fn":"#00428A","fnDim":"#29548C","type":"#087573","iface":"#126467","num":"#8A5B00","dec":"#643192","ns":"#365B6D","cur":"#D62828","foc":"#008B7D","badge":"#E06D06","status":"#0A4DA6","err":"#8F1A43","warn":"#915100","info":"#035E9D","gitAdd":"#006517","gitDel":"#8F1A43"},"ansi":{"black":"#0D222D","red":"#83093A","green":"#006517","yellow":"#5E3008","blue":"#00428A","magenta":"#643192","cyan":"#007270","white":"#3D5562","brightBlack":"#435D6A","brightRed":"#8F1A43","brightGreen":"#026F1B","brightYellow":"#643306","brightBlue":"#164E93","brightMagenta":"#6E379F","brightCyan":"#1B7674","brightWhite":"#102C3B"}},{"slug":"windwaker-dark","label":"Wind Waker Dark","game":"The Wind Waker","shortGame":"Wind Waker","era":"N64 & GameCube","year":2002,"mode":"dark","subtitle":"Starlit Great Sea, bioluminescent wake turquoise & Tower of the Gods","story":"Sailing the Great Sea by starlight as the Tower of the Gods rises luminous from dark teal-navy swells (`bg`). `accentStorage` takes the Tower's sacred carved brass-gold stone (resolving any overlap with tunic emerald), while the two Wind Waker signature colors -- King of Red Lions crimson and bioluminescent Great Sea turquoise -- shine across strings, types, cursor, and focus.","t":{"bg":"#001018","fg":"#C1DBD6","bgLine":"#021922","bgWidget":"#071F27","bgSidebar":"#00161D","bgPanel":"#00141B","bgActivity":"#001920","tintSelect":"#002E37","borderSubtle":"#0C2730","borderStrong":"#48636E","fgSecondary":"#8DA8A4","fgMuted":"#607370","fgVariable":"#B2D2CD","fgPunct":"#849E9A","fgComment":"#739593","fgParameter":"#90C4B9","fgProperty":"#9AC1D5","kw":"#8FF794","stor":"#C9A975","str":"#FF6645","rx":"#FF8A3F","fn":"#4CABFD","fnDim":"#7BC0FF","type":"#00DACB","iface":"#5EE8E3","num":"#FFBF00","dec":"#C78DF8","ns":"#7AA7B5","cur":"#FA5247","foc":"#26E0C7","badge":"#FF9E2C","status":"#0E3B4D","err":"#EC3154","warn":"#FFAD3F","info":"#69C1FC","gitAdd":"#5ECD66","gitDel":"#EC3154"},"ansi":{"black":"#021922","red":"#EB2F53","green":"#5ECD66","yellow":"#DBB475","blue":"#4CABFD","magenta":"#C78DF8","cyan":"#00E8D8","white":"#8DA8A4","brightBlack":"#739593","brightRed":"#EC3154","brightGreen":"#6CE274","brightYellow":"#EDC481","brightBlue":"#78BEFF","brightMagenta":"#D5A7FF","brightCyan":"#4CF2E2","brightWhite":"#C1DBD6"}},{"slug":"minishcap-light","label":"The Minish Cap Light","game":"The Minish Cap","shortGame":"Minish Cap","era":"Handheld","year":2004,"mode":"light","subtitle":"Oversized morning dewdrop, Ezlo clover-green & the Four Elements","story":"Shrunk to thumb-height beneath Minish Woods clover: the canvas (`bg`) holds the pale sky-tint inside a giant blade-of-grass dewdrop, while `fg` wears the warm walnut-umber of Ezlo's cap. The four sacred Elements infused into the Picori Blade drive the syntax palette -- Fire-Element & Red-Kinstone vermilion (`accentString`), Water-Element sapphire (`accentFunction`), Earth-Element amethyst (`accentType`), and Wind-Element gold (`accentNumber`) -- joined by Ezlo clover-green (`accentKeyword`) and Vaati's violet (`accentCursor`/`accentFocus`).","t":{"bg":"#E2EDFC","fg":"#2D1A0D","bgLine":"#D7E2F4","bgWidget":"#ECF4FF","bgSidebar":"#DDE5FA","bgPanel":"#DAE2F8","bgActivity":"#D3DCF4","tintSelect":"#CACAFB","borderSubtle":"#C1CEE1","borderStrong":"#7C889C","fgSecondary":"#5C4434","fgMuted":"#816D60","fgVariable":"#3B2210","fgPunct":"#634C3D","fgComment":"#6D5440","fgParameter":"#0F4766","fgProperty":"#214728","kw":"#227236","stor":"#5D2904","str":"#BA3435","rx":"#9A4300","fn":"#105181","fnDim":"#356187","type":"#57228C","iface":"#4F1C71","num":"#8B6000","dec":"#007275","ns":"#3E5871","cur":"#7E34BD","foc":"#7E34BD","badge":"#D95826","status":"#216B3A","err":"#600019","warn":"#8F5300","info":"#035E9D","gitAdd":"#006425","gitDel":"#600019"},"ansi":{"black":"#2D1A0D","red":"#510013","green":"#006425","yellow":"#875D00","blue":"#004F8B","magenta":"#57228C","cyan":"#007275","white":"#634C3D","brightBlack":"#6D5440","brightRed":"#600019","brightGreen":"#026E2A","brightYellow":"#8E6200","brightBlue":"#1B5B95","brightMagenta":"#60289A","brightCyan":"#187578","brightWhite":"#3B2210"}},{"slug":"minishcap-dark","label":"The Minish Cap Dark","game":"The Minish Cap","shortGame":"Minish Cap","era":"Handheld","year":2004,"mode":"dark","subtitle":"Dark Hyrule Castle plum-obsidian, Light Force gold & Vaati's wrath","story":"Hyrule Castle after Vaati breaks the Sanctuary seal: warm bruised plum-obsidian stone (`bg`) lit by Flame-Lantern braziers (`accentString`), Four-Sword sanctuary violet (`accentKeyword`), Ezlo's steadfast sage-green cap (`accentStorage`), and the golden Light Force (`accentType`) still shining inside the petrified castle.","t":{"bg":"#170816","fg":"#E2D2BA","bgLine":"#21101F","bgWidget":"#261525","bgSidebar":"#1C0C1D","bgPanel":"#1B0B1C","bgActivity":"#200E21","tintSelect":"#391943","borderSubtle":"#2F1C2E","borderStrong":"#6E586B","fgSecondary":"#AF9F86","fgMuted":"#796D5B","fgVariable":"#DBC8AA","fgPunct":"#A69680","fgComment":"#9889A2","fgParameter":"#B2B2E4","fgProperty":"#D0B78B","kw":"#AB8EFF","stor":"#60B37D","str":"#FF8346","rx":"#FB615A","fn":"#ADE4FF","fnDim":"#B8E2F7","type":"#FCCF3A","iface":"#F8DE6B","num":"#59EAC8","dec":"#F470C9","ns":"#A398B8","cur":"#BA68FF","foc":"#BA68FF","badge":"#E852B8","status":"#4A1B59","err":"#EB364D","warn":"#FFAD3F","info":"#55CAF4","gitAdd":"#69D27D","gitDel":"#EB364D"},"ansi":{"black":"#21101F","red":"#EA354C","green":"#77CF85","yellow":"#FBCE39","blue":"#6EB6FF","magenta":"#AB8EFF","cyan":"#3BD1F8","white":"#AF9F86","brightBlack":"#9889A2","brightRed":"#EB364D","brightGreen":"#86E495","brightYellow":"#F9DC8A","brightBlue":"#95C9FF","brightMagenta":"#BCA8FF","brightCyan":"#72DFFF","brightWhite":"#E2D2BA"}},{"slug":"twilight-princess-light","label":"Twilight Princess Light","game":"Twilight Princess","shortGame":"Twilight Princess","era":"N64 & GameCube","year":2006,"mode":"light","subtitle":"Ordon golden-hour oil glaze, weathered bronze & Midna flame-orange","story":"Twilight Princess traded Wind Waker's pure gouache for naturalistic, chiaroscuro oil-painting realism bathed in late-afternoon golden bloom. Using OKLCH chroma restraint (`C ~ 0.08-0.14`) rather than muddy darkening, every token keeps crisp WCAG >=4.6:1 legibility while feeling authentically earthy and weathered: Ordon moss-olive, saddle umber, aged shield carmine, Zora slate-blue, and oxidized Spinner bronze-teal -- threaded already by Midna's unmistakable flame-orange (`accentCursor`/`accentFocus`).","t":{"bg":"#EDE4D2","fg":"#261E12","bgLine":"#E3DAC6","bgWidget":"#F2ECDE","bgSidebar":"#E9DDC7","bgPanel":"#E6DAC3","bgActivity":"#E1D4BB","tintSelect":"#E2C39D","borderSubtle":"#D0C5AF","borderStrong":"#8D826C","fgSecondary":"#53483A","fgMuted":"#797064","fgVariable":"#322717","fgPunct":"#564B3D","fgComment":"#5F5341","fgParameter":"#34492C","fgProperty":"#523524","kw":"#486C37","stor":"#572A09","str":"#B22F30","rx":"#94430B","fn":"#004B79","fnDim":"#2D5A7F","type":"#106E70","iface":"#165D63","num":"#895B00","dec":"#5C3679","ns":"#62533B","cur":"#CC580A","foc":"#CC580A","badge":"#B86B0B","status":"#3D3524","err":"#711029","warn":"#8D4F00","info":"#145D8B","gitAdd":"#335C1B","gitDel":"#711029"},"ansi":{"black":"#261E12","red":"#660020","green":"#335C1B","yellow":"#835A00","blue":"#004E7D","magenta":"#5C3679","cyan":"#006E6D","white":"#564B3D","brightBlack":"#5F5341","brightRed":"#711029","brightGreen":"#39651F","brightYellow":"#885D00","brightBlue":"#1A5987","brightMagenta":"#663D85","brightCyan":"#157170","brightWhite":"#322717"}},{"slug":"twilight-princess-dark","label":"Twilight Princess Dark","game":"Twilight Princess","shortGame":"Twilight Princess","era":"N64 & GameCube","year":2006,"mode":"dark","subtitle":"Palace of Twilight shale-obsidian, smoky low-chroma & blazing Midna orange","story":"Inside the Twilight Realm, colors drain into smoky sepia-shale monochrome except for two luminous exceptions: the glowing turquoise-cyan Sol circuitry etched into the Palace of Twilight (`accentType`) and Midna's blazing imp-hair orange (`accentCursor`/`accentFocus`/`accentBadge`, the single highest-chroma token in the file at C ~ 0.19). Crucially, desaturation is achieved in OKLCH by lowering *chroma* (`C ~ 0.03-0.11`) while keeping *lightness* (`L ~ 0.70-0.86`) cleanly above comments -- preserving both the brooding atmosphere and effortless 6:1-10:1 code legibility.","t":{"bg":"#150F08","fg":"#DFD2C0","bgLine":"#1E1710","bgWidget":"#231C15","bgSidebar":"#1A130C","bgPanel":"#19120B","bgActivity":"#1E160E","tintSelect":"#422107","borderSubtle":"#2C241C","borderStrong":"#685E55","fgSecondary":"#ACA08C","fgMuted":"#766D5F","fgVariable":"#D7C8B2","fgPunct":"#A59986","fgComment":"#9A8E80","fgParameter":"#A2C1A2","fgProperty":"#D1B598","kw":"#AED5A1","stor":"#ADA397","str":"#EC8E72","rx":"#E69E72","fn":"#7AAFD4","fnDim":"#99C2E0","type":"#37E2DD","iface":"#71F0F4","num":"#EEC87B","dec":"#B79DD6","ns":"#A89986","cur":"#FF781F","foc":"#FF781F","badge":"#FF781F","status":"#2B2218","err":"#C75E5E","warn":"#FAB048","info":"#7BBEE1","gitAdd":"#98BE8B","gitDel":"#C75E5E"},"ansi":{"black":"#1E1710","red":"#C75E5E","green":"#98BE8B","yellow":"#EBC578","blue":"#7AAFD4","magenta":"#B79DD6","cyan":"#5BDFDA","white":"#ACA08C","brightBlack":"#9A8E80","brightRed":"#C75E5E","brightGreen":"#A9D29B","brightYellow":"#FDD584","brightBlue":"#91C2E4","brightMagenta":"#C9B1E8","brightCyan":"#7AEEE9","brightWhite":"#DFD2C0"}},{"slug":"phantomhourglass-light","label":"Phantom Hourglass Light","game":"Phantom Hourglass","shortGame":"Phantom Hourglass","era":"Nintendo DS","year":2007,"mode":"light","subtitle":"DS sunlit lagoon chart, stylus route-red & Hourglass sand-gold","story":"Wind Waker's DS sequel swaps warm parchment for crisp, aquatic lagoon-cyan (`bg`) and celebrates the DS's touch-screen cartography: `accentString` wears the red dotted course-line you draw with the stylus (and Leaf, Spirit of Power), `fgComment` takes the graphite-blue of handwritten map margin notes, `accentFunction` channels Neri (Spirit of Wisdom), and `accentNumber` holds the golden Sand of Hours inside the Phantom Hourglass.","t":{"bg":"#DAF3F5","fg":"#07232D","bgLine":"#CDE9EB","bgWidget":"#E6F9FA","bgSidebar":"#D3EEE2","bgPanel":"#CFEBDF","bgActivity":"#C7E6D9","tintSelect":"#9BDEE6","borderSubtle":"#B6D5D8","borderStrong":"#708F92","fgSecondary":"#304F5C","fgMuted":"#5E7680","fgVariable":"#072E3A","fgPunct":"#395662","fgComment":"#3F5F6A","fgParameter":"#004E40","fgProperty":"#12425D","kw":"#32632D","stor":"#5B2B04","str":"#B01A2D","rx":"#9A4300","fn":"#003E7C","fnDim":"#274F80","type":"#077578","iface":"#14646B","num":"#8D5F00","dec":"#632C8F","ns":"#345B6C","cur":"#0084BD","foc":"#0084BD","badge":"#D9720B","status":"#0C6A99","err":"#600019","warn":"#915100","info":"#005F9A","gitAdd":"#006430","gitDel":"#600019"},"ansi":{"black":"#07232D","red":"#510013","green":"#006430","yellow":"#895C00","blue":"#00498F","magenta":"#632C8F","cyan":"#007273","white":"#395662","brightBlack":"#3F5F6A","brightRed":"#600019","brightGreen":"#026E36","brightYellow":"#906100","brightBlue":"#195598","brightMagenta":"#6D329C","brightCyan":"#1C7778","brightWhite":"#072E3A"}},{"slug":"phantomhourglass-dark","label":"Phantom Hourglass Dark","game":"Phantom Hourglass","shortGame":"Phantom Hourglass","era":"Nintendo DS","year":2007,"mode":"dark","subtitle":"Temple of the Ocean King gunmetal armor, Safe-Zone cyan & Sand of Hours","story":"Descending the thirteen cursed floors of the Temple of the Ocean King as the Sand of Hours (`accentNumber`) ticks toward zero: cold wet gunmetal-slate (`bg`) echoes plated Phantom armor, punctuated by Safe-Zone sanctuary emerald (`accentKeyword`), Torch-Phantom coral (`accentString`), Phantom-Sword cyan (`accentType`), and Bellum's eye-violet (`accentDecorator`).","t":{"bg":"#091117","fg":"#C7D8DE","bgLine":"#101921","bgWidget":"#161F26","bgSidebar":"#0B161D","bgPanel":"#0A151C","bgActivity":"#0D1921","tintSelect":"#003040","borderSubtle":"#1D272F","borderStrong":"#56616B","fgSecondary":"#93A5AB","fgMuted":"#647176","fgVariable":"#BACFD6","fgPunct":"#8C9DA3","fgComment":"#7A939D","fgParameter":"#92C3B7","fgProperty":"#9BC1D6","kw":"#9BF4A2","stor":"#C0A37B","str":"#FF6E46","rx":"#FF9044","fn":"#54AEFE","fnDim":"#83C2FF","type":"#02DFDE","iface":"#63EDF4","num":"#FFBF00","dec":"#CB8AF8","ns":"#83A4B6","cur":"#38C4FA","foc":"#38C4FA","badge":"#F5A638","status":"#184963","err":"#EB364D","warn":"#FFAE34","info":"#69C1FC","gitAdd":"#4CCE7B","gitDel":"#EB364D"},"ansi":{"black":"#101921","red":"#EB364D","green":"#4CCE7B","yellow":"#D7B584","blue":"#54AEFE","magenta":"#CB8AF8","cyan":"#1FE6E5","white":"#93A5AB","brightBlack":"#7A939D","brightRed":"#EB364D","brightGreen":"#5AE38A","brightYellow":"#E9C591","brightBlue":"#7FC1FF","brightMagenta":"#D9A4FF","brightCyan":"#56F2F0","brightWhite":"#C7D8DE"}},{"slug":"spirittracks-light","label":"Spirit Tracks Light","game":"Spirit Tracks","shortGame":"Spirit Tracks","era":"Nintendo DS","year":2009,"mode":"light","subtitle":"New Hyrule meadow, Spirit Train brass, Engineer cobalt & Ghost-Zelda","story":"Viewed from the cab of the Spirit Train rolling across New Hyrule's sunlit meadows (`bg`) toward the sandstone Tower of Spirits (`bgSidebar`): Link's Royal Engineer tunic supplies `accentFunction` cobalt, the golden Spirit Tracks themselves gleam in `accentNumber`, and Princess Zelda contributes both her rose-pink Phantom armor (`accentString`) and her translucent ghost-spirit blue (`accentCursor`/`accentFocus`), kept constant into Dark.","t":{"bg":"#E8EED2","fg":"#1E210F","bgLine":"#DDE4C5","bgWidget":"#F0F5E0","bgSidebar":"#EEE4C5","bgPanel":"#EBE0C0","bgActivity":"#E6DAB7","tintSelect":"#DECD98","borderSubtle":"#C8D0AE","borderStrong":"#838B68","fgSecondary":"#484D37","fgMuted":"#707462","fgVariable":"#272C14","fgPunct":"#4D523D","fgComment":"#555B40","fgParameter":"#264C31","fgProperty":"#1C4158","kw":"#296524","stor":"#5B2C00","str":"#951362","rx":"#A33100","fn":"#004C86","fnDim":"#2E5C8A","type":"#00747E","iface":"#136370","num":"#8D5F00","dec":"#602E90","ns":"#475C40","cur":"#0E86B5","foc":"#0E86B5","badge":"#C8780A","status":"#2E5924","err":"#6F0C1F","warn":"#915100","info":"#006191","gitAdd":"#006216","gitDel":"#6F0C1F"},"ansi":{"black":"#1E210F","red":"#630017","green":"#006216","yellow":"#895C00","blue":"#004C86","magenta":"#602E90","cyan":"#00717B","white":"#4D523D","brightBlack":"#555B40","brightRed":"#6F0C1F","brightGreen":"#036C1A","brightYellow":"#8F6000","brightBlue":"#1A5890","brightMagenta":"#6A349D","brightCyan":"#18747E","brightWhite":"#272C14"}},{"slug":"spirittracks-dark","label":"Spirit Tracks Dark","game":"Spirit Tracks","shortGame":"Spirit Tracks","era":"Nintendo DS","year":2009,"mode":"dark","subtitle":"Dark Realm coal-maroon, Possessed-Phantom rose & Demon Train Malladus","story":"Chasing the armored Demon Train across the soot-and-maroon Dark Realm (`bg`): golden Spirit Tracks (`accentNumber`) and steam-boiler brass (`accentStorage`) gleam against coal-dark stone, while Princess Zelda's dual presence -- her rose-pink Phantom suit (`accentString`) and her glowing spirit-blue ghost form (`accentType`/`accentCursor`/`accentFocus`) -- lights the dark.","t":{"bg":"#190810","fg":"#E0CFD7","bgLine":"#230F19","bgWidget":"#29151F","bgSidebar":"#1F0C17","bgPanel":"#1D0A15","bgActivity":"#230D1A","tintSelect":"#421632","borderSubtle":"#331C27","borderStrong":"#725763","fgSecondary":"#AE9CA4","fgMuted":"#776A70","fgVariable":"#D9C4CE","fgPunct":"#A5949C","fgComment":"#9F8896","fgParameter":"#93C3B5","fgProperty":"#C9B1CF","kw":"#8DE69A","stor":"#BB9266","str":"#F56BBD","rx":"#FF8F4B","fn":"#4EAFFD","fnDim":"#7EC3FF","type":"#00E3FD","iface":"#99EBFF","num":"#FDC956","dec":"#B58FFF","ns":"#AE95AF","cur":"#66DCFA","foc":"#66DCFA","badge":"#F2A438","status":"#4D1838","err":"#F92141","warn":"#FFAD3F","info":"#62C8F9","gitAdd":"#5FCC74","gitDel":"#F92141"},"ansi":{"black":"#230F19","red":"#F51B3E","green":"#5FCC74","yellow":"#E1B57A","blue":"#4EAFFD","magenta":"#F56BBD","cyan":"#52E1FB","white":"#AE9CA4","brightBlack":"#9F8896","brightRed":"#F92141","brightGreen":"#6DE183","brightYellow":"#F3C586","brightBlue":"#7BC2FF","brightMagenta":"#FF8ACD","brightCyan":"#92E8F9","brightWhite":"#E0CFD7"}},{"slug":"skywardsword-light","label":"Skyward Sword Light","game":"Skyward Sword","shortGame":"Skyward Sword","era":"Modern","year":2011,"mode":"light","subtitle":"Impressionist Skyloft cloud-ivory, Crimson Loftwing & Timeshift cyan","story":"Modeled on Skyward Sword's Impressionist painterly direction (inspired by Cézanne and Monet): warm sunlit Skyloft cloud-ivory (`bg`), Faron watercolor viridian (`accentKeyword`), Crimson Loftwing vermilion (`accentString`), open-sky ultramarine (`accentFunction`), Lanayru's electric Timeshift-Stone teal (`accentType`), Goddess-Harp gold (`accentNumber`), and Fi's metallic periwinkle-violet (`accentDecorator`), with Fi's sapphire guiding cursor/focus.","t":{"bg":"#F6E9CD","fg":"#0F212E","bgLine":"#EDDFBF","bgWidget":"#FBF1DC","bgSidebar":"#F2E2C3","bgPanel":"#EFDFBF","bgActivity":"#EBD9B5","tintSelect":"#E9C994","borderSubtle":"#DACAA7","borderStrong":"#958461","fgSecondary":"#384D5E","fgMuted":"#637482","fgVariable":"#142B3D","fgPunct":"#3D5262","fgComment":"#5A5A42","fgParameter":"#004D4B","fgProperty":"#1B415B","kw":"#003B20","stor":"#5E2E03","str":"#B43E37","rx":"#9D4000","fn":"#094C83","fnDim":"#305C88","type":"#007275","iface":"#0F6168","num":"#896100","dec":"#552E94","ns":"#385A6E","cur":"#1F7AC4","foc":"#1F7AC4","badge":"#D64D1B","status":"#22608C","err":"#891137","warn":"#925000","info":"#005F9A","gitAdd":"#006434","gitDel":"#891137"},"ansi":{"black":"#0F212E","red":"#7D002E","green":"#006434","yellow":"#5B2F09","blue":"#004C86","magenta":"#552E94","cyan":"#007174","white":"#3D5262","brightBlack":"#5A5A42","brightRed":"#891137","brightGreen":"#026E3A","brightYellow":"#613108","brightBlue":"#1A5890","brightMagenta":"#5E34A2","brightCyan":"#167477","brightWhite":"#142B3D"}},{"slug":"skywardsword-dark","label":"Skyward Sword Dark","game":"Skyward Sword","shortGame":"Skyward Sword","era":"Modern","year":2011,"mode":"dark","subtitle":"Eldin volcanic obsidian, Sacred Flames, Timeshift turquoise & Demise","story":"Diving beneath the cloud barrier to the sealed Surface: Eldin's volcanic obsidian and ember-warm UI surfaces (`bg`, `tintHover`, `tintSelect`) frame the three Sacred Flames -- Farore emerald (`accentKeyword`), Din magma (`accentString`), and Nayru sapphire (`accentFunction`) -- alongside Timeshift turquoise (`accentType`), Gate-of-Time gold (`accentNumber`), and Ghirahim/Demise amethyst (`accentDecorator`), while Fi's sapphire holds cursor and focus.","t":{"bg":"#1A0904","fg":"#DFD2C0","bgLine":"#24110A","bgWidget":"#2A170F","bgSidebar":"#200D07","bgPanel":"#1F0C06","bgActivity":"#240F08","tintSelect":"#461A03","borderSubtle":"#331E16","borderStrong":"#72594F","fgSecondary":"#ACA08C","fgMuted":"#766D5F","fgVariable":"#D7C8B2","fgPunct":"#A39785","fgComment":"#9E8B77","fgParameter":"#8FC4BD","fgProperty":"#9CC0D7","kw":"#73DF9A","stor":"#E3A06D","str":"#F36633","rx":"#FF903C","fn":"#49B0FC","fnDim":"#7BC4FF","type":"#00FEF4","iface":"#57F9FA","num":"#FFC83C","dec":"#BE84FF","ns":"#84A4B7","cur":"#47B5FF","foc":"#47B5FF","badge":"#FA642E","status":"#4A2054","err":"#F1235B","warn":"#FFAD49","info":"#66C2FB","gitAdd":"#44CF7F","gitDel":"#F1235B"},"ansi":{"black":"#24110A","red":"#F0215A","green":"#44CF7F","yellow":"#DEAD78","blue":"#49B0FC","magenta":"#BE84FF","cyan":"#00E7DE","white":"#ACA08C","brightBlack":"#9E8B77","brightRed":"#F1235B","brightGreen":"#52E48F","brightYellow":"#F0BC85","brightBlue":"#77C3FF","brightMagenta":"#CBA1FF","brightCyan":"#4CF1E8","brightWhite":"#DFD2C0"}},{"slug":"albw-light","label":"A Link Between Worlds Light","game":"A Link Between Worlds","shortGame":"Link Between Worlds","era":"Modern","year":2013,"mode":"light","subtitle":"Sunlit Hyrule chalk-fresco, Yuga's pigments & Ravio's Bracelet violet","story":"Hyrule rendered like a sunlit fresco that Link can flatten directly into: warm plaster-meadow (`bg`) meets a subtle lavender-tinted sidebar hinting at Lorule waiting just behind every cracked stone wall. Ravio's Bracelet violet (#7A45BE -> #B278FF) powers `accentDecorator`, `accentCursor`, and `accentFocus`, connecting Hyrule and Lorule across the wall-merge.","t":{"bg":"#EAEED6","fg":"#1A2212","bgLine":"#E0E4C9","bgWidget":"#F2F5E3","bgSidebar":"#E7E1F4","bgPanel":"#E4DEF1","bgActivity":"#DED7ED","tintSelect":"#D5C5F5","borderSubtle":"#CBD0B2","borderStrong":"#868A6C","fgSecondary":"#434F3B","fgMuted":"#6C7565","fgVariable":"#212D18","fgPunct":"#495441","fgComment":"#585B43","fgParameter":"#114D40","fgProperty":"#1C4158","kw":"#115D23","stor":"#5E2E00","str":"#A82327","rx":"#9A4300","fn":"#004982","fnDim":"#2C5986","type":"#067576","iface":"#136469","num":"#875D00","dec":"#552793","ns":"#3B5970","cur":"#7A45BE","foc":"#7A45BE","badge":"#D64818","status":"#5E3496","err":"#5C0018","warn":"#925000","info":"#005F9A","gitAdd":"#00642B","gitDel":"#5C0018"},"ansi":{"black":"#1A2212","red":"#4D0012","green":"#00642B","yellow":"#5B300C","blue":"#004C86","magenta":"#552793","cyan":"#007271","white":"#495441","brightBlack":"#585B43","brightRed":"#5C0018","brightGreen":"#026E30","brightYellow":"#60330B","brightBlue":"#1A5890","brightMagenta":"#5E2DA1","brightCyan":"#197675","brightWhite":"#212D18"}},{"slug":"albw-dark","label":"A Link Between Worlds Dark","game":"A Link Between Worlds","shortGame":"Link Between Worlds","era":"Modern","year":2013,"mode":"dark","subtitle":"Crumbling Lorule plum-abyss, Hilda rose-magenta & Ravio wall-merge","story":"Slipping through a glowing fissure into crumbling Lorule: bruised plum-black castle stone (`bg`), Yuga and Princess Hilda's signature rose-magenta (`accentString`), cracked wall-plaster (`accentStorage`), Ice-Ruins cerulean (`accentFunction`), Ravio's Bracelet violet (`accentDecorator`, cursor, and focus), and the warm gold of Lorule's finally-restored Triforce (`accentNumber`).","t":{"bg":"#180716","fg":"#DDCFDD","bgLine":"#220F20","bgWidget":"#281525","bgSidebar":"#1E0B1D","bgPanel":"#1C0A1C","bgActivity":"#210D21","tintSelect":"#361B46","borderSubtle":"#311C2E","borderStrong":"#70576B","fgSecondary":"#AB9CAB","fgMuted":"#756B75","fgVariable":"#D6C4D6","fgPunct":"#A294A2","fgComment":"#9B889E","fgParameter":"#92C3B7","fgProperty":"#A0BFD9","kw":"#7EDB74","stor":"#BFA283","str":"#F167BC","rx":"#FF8F51","fn":"#3FA7FF","fnDim":"#74BCFF","type":"#00FBEB","iface":"#58FAF5","num":"#F4BA00","dec":"#B793FF","ns":"#A597B8","cur":"#B278FF","foc":"#B278FF","badge":"#EE529C","status":"#481E5E","err":"#EF3B4A","warn":"#FFAD3F","info":"#6DC4FF","gitAdd":"#5ED075","gitDel":"#EF3B4A"},"ansi":{"black":"#220F20","red":"#E93546","green":"#5ED075","yellow":"#DAB791","blue":"#56AEFC","magenta":"#F167BC","cyan":"#13E7D8","white":"#AB9CAB","brightBlack":"#9B889E","brightRed":"#EF3B4A","brightGreen":"#6CE584","brightYellow":"#ECC79F","brightBlue":"#7FC1FF","brightMagenta":"#FF82CD","brightCyan":"#50F1E2","brightWhite":"#DDCFDD"}},{"slug":"botw-light","label":"Breath of the Wild Light","game":"Breath of the Wild","shortGame":"Breath of the Wild","era":"Modern","year":2017,"mode":"light","subtitle":"Plein-air Great Plateau mist, Champion's Tunic blue & Sheikah Slate","story":"Open-air plein-air gouache: pale atmospheric-perspective sage mist (`bg`) paired with the colors that actually broke series convention in 2017 -- Link's Champion's Tunic cerulean (`accentKeyword`), unactivated Sheikah-shrine terracotta-orange (`accentString`) answering activated Sheikah-Slate cyan (`accentFunction` and the shared cursor/focus beacon), Stamina-Wheel green (`accentType`), and a dark streak of Calamity Malice (`accentDecorator`).","t":{"bg":"#E3F0E6","fg":"#11241C","bgLine":"#D8E5DB","bgWidget":"#EDF6EF","bgSidebar":"#DAEAE0","bgPanel":"#D6E7DC","bgActivity":"#CFE1D6","tintSelect":"#9ADEDC","borderSubtle":"#C3D1C6","borderStrong":"#7D8C81","fgSecondary":"#3A5046","fgMuted":"#64776E","fgVariable":"#152F24","fgPunct":"#40564C","fgComment":"#4F5D4D","fgParameter":"#0D4C4B","fgProperty":"#1D4255","kw":"#005087","stor":"#543104","str":"#A84B35","rx":"#9D0026","fn":"#007579","fnDim":"#007384","type":"#004427","iface":"#0C4530","num":"#855E00","dec":"#7E1A6E","ns":"#385A6C","cur":"#0E8A8C","foc":"#0E8A8C","badge":"#D45218","status":"#14666E","err":"#910633","warn":"#944E00","info":"#006A76","gitAdd":"#006425","gitDel":"#910633"},"ansi":{"black":"#11241C","red":"#82002C","green":"#006425","yellow":"#553415","blue":"#005087","magenta":"#7E1A6E","cyan":"#006E75","white":"#40564C","brightBlack":"#4F5D4D","brightRed":"#910633","brightGreen":"#026E2A","brightYellow":"#5A3815","brightBlue":"#1B5C91","brightMagenta":"#8A1F79","brightCyan":"#1E757C","brightWhite":"#152F24"}},{"slug":"botw-dark","label":"Breath of the Wild Dark","game":"Breath of the Wild","shortGame":"Breath of the Wild","era":"Modern","year":2017,"mode":"dark","subtitle":"Blood-Moon crimson sky, Calamity Malice magenta & Sheikah cyan beacon","story":"Midnight under a rising Blood Moon: ash-crimson night (`bg`) and ember-lit chrome frame Calamity Ganon's magenta-pink Malice (`accentString`) and Guardian laser lock-on scarlet (`colorError`), while ancient Sheikah constellation cyan (`accentKeyword`, `accentCursor`, `accentFocus`) and Champion azure (`accentFunction`) cut cleanly across the dark.","t":{"bg":"#1A0607","fg":"#E3CFCE","bgLine":"#250E0E","bgWidget":"#2A1314","bgSidebar":"#210A0B","bgPanel":"#1F080A","bgActivity":"#250C0D","tintSelect":"#461419","borderSubtle":"#341A1A","borderStrong":"#765656","fgSecondary":"#B09C9B","fgMuted":"#796B6A","fgVariable":"#DCC4C2","fgPunct":"#A69392","fgComment":"#A58686","fgParameter":"#8EC3C0","fgProperty":"#9CC0D6","kw":"#1AE9EF","stor":"#AB8456","str":"#E866C8","rx":"#FF894D","fn":"#2BA5FD","fnDim":"#68BAFF","type":"#64D281","iface":"#7BE2A5","num":"#FFC83C","dec":"#BBDF4B","ns":"#BB938F","cur":"#2CE0D8","foc":"#2CE0D8","badge":"#EE463B","status":"#59161C","err":"#F41F3E","warn":"#FFA842","info":"#41DCE4","gitAdd":"#5AD07B","gitDel":"#F41F3E"},"ansi":{"black":"#250E0E","red":"#F21F3E","green":"#5AD07B","yellow":"#D5AB84","blue":"#51AFFB","magenta":"#EB69CB","cyan":"#04E5EB","white":"#B09C9B","brightBlack":"#A58686","brightRed":"#F41F3E","brightGreen":"#68E58A","brightYellow":"#E7BA91","brightBlue":"#7BC2FF","brightMagenta":"#FD80DD","brightCyan":"#4DEFF4","brightWhite":"#E3CFCE"}},{"slug":"totk-light","label":"Tears of the Kingdom Light","game":"Tears of the Kingdom","shortGame":"Tears of the Kingdom","era":"Modern","year":2023,"mode":"light","subtitle":"Great Sky Island cloud-stone, Zonai spiral jade & ginkgo gold","story":"High atop the Great Sky Island: pale sun-bleached cloud-limestone (`bg`) contrasts unmistakably with Breath of the Wild's Sheikah-cyan world. Where Sheikah tech was blue-cyan, Rauru's Zonai magic and Ultrahand spiral in luminous dragon jade-emerald (`accentKeyword`, `accentCursor`, `accentFocus`), paired with Recall's chrono-gold (`accentType`), autumnal Sky-Island ginkgo russet (`accentString`), Mineru violet (`accentDecorator`), and a sharp crimson vein of Ganondorf's Gloom (`accentRegex`/`colorError`).","t":{"bg":"#F2EFE0","fg":"#182218","bgLine":"#E8E4D4","bgWidget":"#F8F6EB","bgSidebar":"#EBE9D7","bgPanel":"#E8E6D3","bgActivity":"#E2E0CB","tintSelect":"#A9E0C6","borderSubtle":"#D3D0BE","borderStrong":"#8E8A78","fgSecondary":"#414F41","fgMuted":"#6A756A","fgVariable":"#1F2D1F","fgPunct":"#495649","fgComment":"#615A46","fgParameter":"#204C3E","fgProperty":"#264056","kw":"#006F4E","stor":"#512F00","str":"#A65433","rx":"#930027","fn":"#005087","fnDim":"#30608B","type":"#845F00","iface":"#6D550C","num":"#6D003E","dec":"#552E94","ns":"#375B6C","cur":"#12855E","foc":"#12855E","badge":"#C96A14","status":"#196952","err":"#9E1330","warn":"#8D5400","info":"#006093","gitAdd":"#006547","gitDel":"#9E1330"},"ansi":{"black":"#182218","red":"#910027","green":"#006547","yellow":"#57360B","blue":"#005087","magenta":"#552E94","cyan":"#006C66","white":"#495649","brightBlack":"#615A46","brightRed":"#9E1330","brightGreen":"#026F4E","brightYellow":"#5C3909","brightBlue":"#1B5C91","brightMagenta":"#5E34A2","brightCyan":"#1E746E","brightWhite":"#1F2D1F"}},{"slug":"totk-dark","label":"Tears of the Kingdom Dark","game":"Tears of the Kingdom","shortGame":"Tears of the Kingdom","era":"Modern","year":2023,"mode":"dark","subtitle":"Pitch-black Depths basalt, Zonai Lightroot jade, Poes & crimson Gloom","story":"Dropping through a Chasm into the pitch-black Depths (`bg: #0A0C0D`): unlike BotW's magenta Malice, Ganondorf's Gloom veins the abyssal floor in visceral crimson-scarlet (`accentString`). Everything else that shines down here is an actual light source players rely on to navigate the dark: Zonai Lightroot spiral jade (`accentKeyword`, cursor, focus), thrown Brightbloom Seed lime (`accentDecorator`), drifting Poe wisp ice-blue (`accentFunction`), Recall gold (`accentType`), and Zonaite ore (`accentStorage`).","t":{"bg":"#080D0D","fg":"#C8D9D2","bgLine":"#0F1516","bgWidget":"#151A1B","bgSidebar":"#0A1212","bgPanel":"#091111","bgActivity":"#0C1515","tintSelect":"#002E1F","borderSubtle":"#192325","borderStrong":"#526164","fgSecondary":"#95A69F","fgMuted":"#65726D","fgVariable":"#BBD0C8","fgPunct":"#8B9C95","fgComment":"#7B928B","fgParameter":"#96C3B1","fgProperty":"#9CC0D6","kw":"#50FEB7","stor":"#A8C3CE","str":"#F6597C","rx":"#FF9044","fn":"#399FC8","fnDim":"#6AB1D2","type":"#FFC83E","iface":"#FEDB6E","num":"#B97AFD","dec":"#B1E664","ns":"#8C9DB3","cur":"#38E096","foc":"#38E096","badge":"#F03E58","status":"#144536","err":"#F3182E","warn":"#FFAE33","info":"#54C9FF","gitAdd":"#28E5A0","gitDel":"#F3182E"},"ansi":{"black":"#0F1516","red":"#F12231","green":"#1EE19C","yellow":"#FFC83E","blue":"#54C9FF","magenta":"#BF8AFB","cyan":"#5CE3D2","white":"#95A69F","brightBlack":"#7B928B","brightRed":"#F3182E","brightGreen":"#28F3A9","brightYellow":"#FBD98F","brightBlue":"#90D9FF","brightMagenta":"#CDA4FF","brightCyan":"#76EDDD","brightWhite":"#C8D9D2"}},{"slug":"echoes-light","label":"Echoes of Wisdom Light","game":"Echoes of Wisdom","shortGame":"Echoes of Wisdom","era":"Modern","year":2024,"mode":"light","subtitle":"Princess Zelda's royal cloak, Tri's golden triangles & Suthorn diorama","story":"The first mainline entry starring Princess Zelda herself, set in Nintendo's official Downfall chronology between Tri Force Heroes and the original Legend of Zelda. Over sunlit Suthorn diorama ivory (`bg`), Zelda's hooded traveling cloak claims `accentKeyword` in royal indigo, her priestess gown colors `accentString` in rose-crimson, everyone's first Old-Bed/Table Echo grounds `accentStorage` in carved walnut, Swordfighter-Form spectral energy drives `accentFunction`, jagged Still-World rift fractures edge `accentDecorator` in amethyst, and Tri's floating golden triangles shine in `accentNumber` and the shared cursor beacon.","t":{"bg":"#F5EEDE","fg":"#1B1D30","bgLine":"#EBE3D2","bgWidget":"#FBF5EA","bgSidebar":"#F2E6D5","bgPanel":"#EFE3D1","bgActivity":"#EADDC9","tintSelect":"#E9CE9C","borderSubtle":"#D7CFBC","borderStrong":"#918875","fgSecondary":"#454860","fgMuted":"#6D7084","fgVariable":"#24263F","fgPunct":"#4E5168","fgComment":"#695844","fgParameter":"#004D4E","fgProperty":"#2A3D5F","kw":"#003CAF","stor":"#683600","str":"#A9226E","rx":"#9E3F00","fn":"#004648","fnDim":"#295354","type":"#24793E","iface":"#15693F","num":"#876206","dec":"#5D2190","ns":"#495473","cur":"#C98A08","foc":"#264EB5","badge":"#8A34B8","status":"#2E438C","err":"#690019","warn":"#8D5400","info":"#006B74","gitAdd":"#00642B","gitDel":"#690019"},"ansi":{"black":"#1B1D30","red":"#5A0014","green":"#00642B","yellow":"#5E320D","blue":"#1041A2","magenta":"#5D2190","cyan":"#006E71","white":"#4E5168","brightBlack":"#695844","brightRed":"#690019","brightGreen":"#026E30","brightYellow":"#64330B","brightBlue":"#204EAB","brightMagenta":"#67279E","brightCyan":"#1F7679","brightWhite":"#24263F"}},{"slug":"echoes-dark","label":"Echoes of Wisdom Dark","game":"Echoes of Wisdom","shortGame":"Echoes of Wisdom","era":"Modern","year":2024,"mode":"dark","subtitle":"The Still World's rift-violet void, Tri's golden Echoes & Swordfighter cyan","story":"Stepping through Tri's portal into the Still World: an eerie geometric violet-indigo void (`bg`) where uprooted trees float upside-down (`accentType`), townsfolk stand petrified in pale stone (`accentStorage`, `fgComment`), magenta fractures (`accentString`) rim the abyss, blue Might Crystals (`accentNumber`) glint in dungeon chests, Swordfighter-Form cyan (`accentFunction`) channels Link's lost blade, and Tri's golden triangles (`accentKeyword`, `accentCursor`, `accentFocus`) lead Zelda home.","t":{"bg":"#0F091F","fg":"#D3D2E5","bgLine":"#18112A","bgWidget":"#1D172F","bgSidebar":"#140E26","bgPanel":"#120D25","bgActivity":"#16102B","tintSelect":"#2D1D4D","borderSubtle":"#251E3A","borderStrong":"#615A7A","fgSecondary":"#A09FB3","fgMuted":"#6E6D7B","fgVariable":"#C9C8DF","fgPunct":"#9796A9","fgComment":"#8C8CA2","fgParameter":"#8EC3C3","fgProperty":"#C9B996","kw":"#FFC83C","stor":"#B9C1D2","str":"#EB64C0","rx":"#FF9044","fn":"#3DF6FF","fnDim":"#77F1F7","type":"#4CD283","iface":"#69E1A7","num":"#69A9FF","dec":"#B793FF","ns":"#999BBD","cur":"#FFD147","foc":"#FFD147","badge":"#E84CA2","status":"#3B1E66","err":"#F03948","warn":"#FFA838","info":"#00E0E9","gitAdd":"#4CD283","gitDel":"#F03948"},"ansi":{"black":"#18112A","red":"#EA3244","green":"#4CD283","yellow":"#FFC83C","blue":"#69A9FF","magenta":"#EF67C3","cyan":"#00E2EB","white":"#A09FB3","brightBlack":"#8C8CA2","brightRed":"#F03948","brightGreen":"#5AE793","brightYellow":"#FCDA8F","brightBlue":"#8CBDFF","brightMagenta":"#FF80D4","brightCyan":"#4FEFF7","brightWhite":"#D3D2E5"}}];
+      const ERAS = [{"era":"8-bit & 16-bit","games":["The Legend of Zelda","Zelda II: The Adventure of Link","A Link to the Past"]},{"era":"Handheld","games":["Link's Awakening","Oracle of Seasons","Oracle of Ages","The Minish Cap"]},{"era":"N64 & GameCube","games":["Ocarina of Time","Majora's Mask","The Wind Waker","Twilight Princess"]},{"era":"Nintendo DS","games":["Phantom Hourglass","Spirit Tracks"]},{"era":"Modern","games":["Skyward Sword","A Link Between Worlds","Breath of the Wild","Tears of the Kingdom","Echoes of Wisdom"]}];
+      const IS_WEB = document.body.dataset.target === 'web';
+      const vscodeApi = (!IS_WEB && typeof acquireVsCodeApi === 'function') ? acquireVsCodeApi() : null;
+
+      // --- Colorimetry Math ---
+      function hexToRgb(hex) {
+        const h = hex.replace('#', '');
+        return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+      }
+      function rgbToHex(r, g, b) {
+        const c = (v) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0').toUpperCase();
+        return '#' + c(r) + c(g) + c(b);
+      }
+      function srgbToLin(c) {
+        const u = c / 255;
+        return u <= 0.04045 ? u / 12.92 : Math.pow((u + 0.055) / 1.055, 2.4);
+      }
+      function linToSrgb(u) {
+        const x = Math.max(0, Math.min(1, u));
+        return (x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055) * 255;
+      }
+      const CVD_MATRICES = {
+        protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
+        deutan: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.011820, 0.042940, 0.968881]],
+        tritan: [[1.255528, -0.076749, -0.178779], [-0.078411, 0.930809, 0.147602], [0.004733, 0.691367, 0.303900]],
+      };
+      function simHex(hex, mode) {
+        if (!mode || mode === 'normal') return hex;
+        const [r, g, b] = hexToRgb(hex).map(srgbToLin);
+        const m = CVD_MATRICES[mode];
+        return rgbToHex(
+          linToSrgb(m[0][0] * r + m[0][1] * g + m[0][2] * b),
+          linToSrgb(m[1][0] * r + m[1][1] * g + m[1][2] * b),
+          linToSrgb(m[2][0] * r + m[2][1] * g + m[2][2] * b)
+        );
+      }
+      function hexToOklch(hex) {
+        const [r, g, b] = hexToRgb(hex).map(srgbToLin);
+        const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+        const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+        const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+        const L = 0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s;
+        const a = 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s;
+        const b2 = 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s;
+        return { L, C: Math.hypot(a, b2), H: (Math.atan2(b2, a) * 180 / Math.PI + 360) % 360, a, b: b2 };
+      }
+      function hexToLab(hex) {
+        const [r, g, b] = hexToRgb(hex).map(srgbToLin);
+        const x = (0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / 0.95047;
+        const y = (0.2126729 * r + 0.7151522 * g + 0.0721750 * b);
+        const z = (0.0193339 * r + 0.1191920 * g + 0.9503041 * b) / 1.08883;
+        const f = (t) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+        const fx = f(x), fy = f(y), fz = f(z);
+        return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
+      }
+      function deltaE76(h1, h2) {
+        const a = hexToLab(h1), b = hexToLab(h2);
+        return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+      }
+      function relLum(hex) {
+        const [r, g, b] = hexToRgb(hex).map(srgbToLin);
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      }
+      function wcag(h1, h2) {
+        const l1 = relLum(h1), l2 = relLum(h2);
+        return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      }
+      function apcaLc(txtHex, bgHex) {
+        const lin = (h) => hexToRgb(h).map((c) => Math.pow(c / 255, 2.4));
+        const yOf = ([r, g, b]) => {
+          const y = 0.2126729 * r + 0.7151522 * g + 0.0721750 * b;
+          return y > 0.022 ? y : y + Math.pow(0.022 - y, 1.414);
+        };
+        const yt = yOf(lin(txtHex)), yb = yOf(lin(bgHex));
+        if (Math.abs(yb - yt) < 0.0005) return 0;
+        if (yb > yt) {
+          const s = (Math.pow(yb, 0.56) - Math.pow(yt, 0.57)) * 1.14;
+          return s < 0.1 ? 0 : (s - 0.027) * 100;
+        }
+        const s = (Math.pow(yb, 0.65) - Math.pow(yt, 0.62)) * 1.14;
+        return s > -0.1 ? 0 : (s + 0.027) * 100;
+      }
+
+      // --- State ---
+      let activeSlug = 'echoes-dark';
+      let workbenchActiveLabel = document.body.dataset.initialTheme || '';
+      let activeLang = 'r';
+      let activeCvd = 'normal';
+      let liveSyncWorkbench = false;
+
+      // Initialize starting theme from VS Code active theme or URL hash
+      if (workbenchActiveLabel) {
+        const match = THEMES.find((t) => t.label === workbenchActiveLabel);
+        if (match) activeSlug = match.slug;
+      } else if (IS_WEB && window.location.hash) {
+        const slugHash = window.location.hash.slice(1).trim();
+        if (THEMES.some((t) => t.slug === slugHash)) activeSlug = slugHash;
+      }
+
+      let toastTimer = null;
+      function showToast(msg) {
+        const el = document.getElementById('toast');
+        el.textContent = msg;
+        el.dataset.visible = 'true';
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => { el.dataset.visible = 'false'; }, 1900);
+      }
+
+      function copyText(txt, label) {
+        const toastMsg = label || ('Copied ' + txt);
+        if (vscodeApi) {
+          vscodeApi.postMessage({ type: 'copyText', text: txt });
+          showToast(toastMsg);
+          return;
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(txt).then(() => showToast(toastMsg)).catch(() => {});
+        }
+      }
+
+      function findSibling(th) {
+        const other = th.mode === 'light' ? 'dark' : 'light';
+        return THEMES.find((x) => x.game === th.game && x.mode === other);
+      }
+
+      // Environment-specific action buttons
+      const envWrap = document.getElementById('env-actions');
+      const footLinks = document.getElementById('footer-links');
+      if (vscodeApi) {
+        envWrap.innerHTML =
+          '<button type="button" id="btn-apply-vscode">Apply to Workbench</button> ' +
+          '<label class="sync-toggle" title="Automatically apply every clicked theme to your Positron / VS Code window">' +
+          '<input type="checkbox" id="chk-live-sync" /> Live-sync IDE</label>';
+        footLinks.textContent = 'Running inside VS Code / Positron Webview · Strict offline CSP';
+
+        document.getElementById('btn-apply-vscode').addEventListener('click', () => {
+          const cur = THEMES.find((x) => x.slug === activeSlug);
+          if (cur) {
+            workbenchActiveLabel = cur.label;
+            vscodeApi.postMessage({ type: 'applyTheme', label: cur.label });
+            showToast('Applied "' + cur.label + '" to Workbench');
+            render();
+          }
+        });
+        document.getElementById('chk-live-sync').addEventListener('change', (e) => {
+          liveSyncWorkbench = !!e.target.checked;
+          if (liveSyncWorkbench) {
+            const cur = THEMES.find((x) => x.slug === activeSlug);
+            if (cur) {
+              workbenchActiveLabel = cur.label;
+              vscodeApi.postMessage({ type: 'applyTheme', label: cur.label });
+            }
+          }
+          render();
+        });
+        window.addEventListener('message', (event) => {
+          const msg = event.data;
+          if (msg && msg.type === 'activeThemeChanged' && msg.label) {
+            workbenchActiveLabel = msg.label;
+            const match = THEMES.find((t) => t.label === msg.label);
+            if (match && match.slug !== activeSlug) {
+              activeSlug = match.slug;
+            }
+            render();
+          }
+        });
+      } else {
+        envWrap.innerHTML =
+          '<button type="button" id="btn-copy-setting" title="Copy workbench.colorTheme JSON setting">Copy settings.json</button> ' +
+          '<button type="button" id="btn-share-url" title="Copy direct link to this theme">Share Link</button> ' +
+          '<a class="btn-link" href="vscode:extension/karlmakepeace.positron-hylian-palette" title="Open extension in VS Code">Install in VS Code</a> ' +
+          '<a class="btn-link" href="https://github.com/karlmakepeace/positron-hylian-palette" target="_blank" rel="noopener">GitHub ↗</a>';
+        footLinks.innerHTML =
+          '<a href="https://github.com/karlmakepeace/positron-hylian-palette#color-science" target="_blank" rel="noopener">Color-Science Write-Up</a> · ' +
+          '<a href="https://github.com/karlmakepeace/positron-hylian-palette" target="_blank" rel="noopener">MIT License</a>';
+
+        document.getElementById('btn-copy-setting').addEventListener('click', () => {
+          const cur = THEMES.find((x) => x.slug === activeSlug);
+          if (cur) copyText('"workbench.colorTheme": "' + cur.label + '"', 'Copied settings.json line for ' + cur.label);
+        });
+        document.getElementById('btn-share-url').addEventListener('click', () => {
+          const url = window.location.origin + window.location.pathname + '#' + activeSlug;
+          copyText(url, 'Copied direct link to ' + activeSlug);
+        });
+      }
+
+      function selectSlug(slug, fromUserAction) {
+        activeSlug = slug;
+        const cur = THEMES.find((x) => x.slug === activeSlug) || THEMES[0];
+        if (IS_WEB && window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', '#' + cur.slug);
+        }
+        if (fromUserAction && vscodeApi && liveSyncWorkbench) {
+          workbenchActiveLabel = cur.label;
+          vscodeApi.postMessage({ type: 'applyTheme', label: cur.label });
+        }
+        render();
+      }
+
+      // Render 5-era chronological selector strip
+      function renderEraRail(cur) {
+        const container = document.getElementById('era-groups');
+        container.innerHTML = '';
+        ERAS.forEach((group) => {
+          const block = document.createElement('div');
+          block.className = 'era-block';
+          const lbl = document.createElement('div');
+          lbl.className = 'era-label';
+          lbl.textContent = group.era;
+          block.appendChild(lbl);
+
+          const pills = document.createElement('div');
+          pills.className = 'era-pills';
+          group.games.forEach((gameName) => {
+            const target = THEMES.find((t) => t.game === gameName && t.mode === cur.mode) || THEMES.find((t) => t.game === gameName);
+            if (!target) return;
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'game-pill';
+            btn.setAttribute('aria-pressed', String(target.game === cur.game));
+            btn.title = target.game + ' (' + target.year + ') — ' + target.subtitle;
+
+            const strip = document.createElement('span');
+            strip.className = 'mini-strip';
+            [target.t.bg, target.t.kw, target.t.str, target.t.fn, target.t.type].forEach((hx) => {
+              const s = document.createElement('span');
+              s.style.backgroundColor = simHex(hx, activeCvd);
+              strip.appendChild(s);
+            });
+            btn.appendChild(strip);
+            btn.appendChild(document.createTextNode(target.shortGame));
+            btn.addEventListener('click', () => selectSlug(target.slug, true));
+            pills.appendChild(btn);
+          });
+          block.appendChild(pills);
+          container.appendChild(block);
+        });
+      }
+
+      function sp(color, text, extra) {
+        return '<span style="color:' + color + (extra ? ';' + extra : '') + '">' + text + '</span>';
+      }
+
+      function buildCodeSample(c, lang, th) {
+        const cur = '<span class="sim-cursor" style="background:' + c.cur + '"></span>';
+        if (lang === 'r') {
+          return [
+            sp(c.fgComment, '# Hylian Palette · Perceptual OKLCH & CIEDE2000 audit in Positron', 'font-style:italic'),
+            sp(c.fn, 'library') + sp(c.fgPunct, '(') + sp(c.ns, 'tidyverse') + sp(c.fgPunct, ')'),
+            '',
+            sp(c.dec, '#| label: verify-' + th.slug, 'font-style:italic'),
+            sp(c.fn, 'audit_theme') + ' ' + sp(c.kw, '<-', 'font-weight:700') + ' ' + sp(c.kw, 'function', 'font-weight:700') + sp(c.fgPunct, '(') + sp(c.fgParameter, 'palette_df', 'font-style:italic') + sp(c.fgPunct, ', ') + sp(c.fgParameter, 'min_aa', 'font-style:italic') + ' ' + sp(c.fgPunct, '=') + ' ' + sp(c.num, '4.5') + sp(c.fgPunct, ') {'),
+            '  ' + sp(c.fgVariable, 'verified') + ' ' + sp(c.kw, '<-', 'font-weight:700') + ' ' + sp(c.fgParameter, 'palette_df', 'font-style:italic') + ' ' + sp(c.kw, '|>', 'font-weight:700'),
+            '    ' + sp(c.ns, 'dplyr') + sp(c.fgPunct, '::') + sp(c.fn, 'filter') + sp(c.fgPunct, '(') + sp(c.fgProperty, 'game') + ' ' + sp(c.fgPunct, '==') + ' ' + sp(c.str, '"' + th.game + '"') + sp(c.fgPunct, ')') + ' ' + sp(c.kw, '|>', 'font-weight:700'),
+            '    ' + sp(c.fn, 'mutate') + sp(c.fgPunct, '(') + sp(c.fgProperty, 'aa_ok') + ' ' + sp(c.fgPunct, '=') + ' ' + sp(c.fgVariable, 'wcag_ratio') + ' ' + sp(c.fgPunct, '>=') + ' ' + sp(c.fgParameter, 'min_aa', 'font-style:italic') + sp(c.fgPunct, ', ') + sp(c.fgProperty, 'year') + ' ' + sp(c.fgPunct, '=') + ' ' + sp(c.num, String(th.year) + 'L') + sp(c.fgPunct, ')'),
+            '  ' + sp(c.kw, 'return', 'font-weight:700') + sp(c.fgPunct, '(') + sp(c.fgVariable, 'verified') + sp(c.fgPunct, ')') + cur,
+            sp(c.fgPunct, '}'),
+          ];
+        }
+        if (lang === 'py') {
+          return [
+            sp(c.fgComment, '# Binary-search OKLCH gamut mapper & Machado (2009) cone transform', 'font-style:italic'),
+            sp(c.kw, 'from', 'font-weight:700') + ' ' + sp(c.ns, 'dataclasses') + ' ' + sp(c.kw, 'import', 'font-weight:700') + ' ' + sp(c.fn, 'dataclass'),
+            sp(c.kw, 'import', 'font-weight:700') + ' ' + sp(c.ns, 're'),
+            '',
+            sp(c.dec, '@dataclass(frozen=True)', 'font-style:italic'),
+            sp(c.stor, 'class', 'font-style:italic') + ' ' + sp(c.type, 'StoryPalette', 'font-weight:700') + sp(c.fgPunct, ':'),
+            '    ' + sp(c.fgProperty, 'slug') + sp(c.fgPunct, ':') + ' ' + sp(c.iface, 'str', 'font-style:italic') + ' ' + sp(c.fgPunct, '=') + ' ' + sp(c.str, '"' + th.slug + '"'),
+            '    ' + sp(c.fgProperty, 'release_year') + sp(c.fgPunct, ':') + ' ' + sp(c.iface, 'int', 'font-style:italic') + ' ' + sp(c.fgPunct, '=') + ' ' + sp(c.num, String(th.year)),
+            '',
+            sp(c.stor, 'def', 'font-style:italic') + ' ' + sp(c.fn, 'is_valid_hex') + sp(c.fgPunct, '(') + sp(c.fgParameter, 'token', 'font-style:italic') + sp(c.fgPunct, ':') + ' ' + sp(c.iface, 'str', 'font-style:italic') + sp(c.fgPunct, ') ->') + ' ' + sp(c.iface, 'bool', 'font-style:italic') + sp(c.fgPunct, ':'),
+            '    ' + sp(c.kw, 'return', 'font-weight:700') + ' ' + sp(c.ns, 're') + sp(c.fgPunct, '.') + sp(c.fn, 'match') + sp(c.fgPunct, '(') + sp(c.rx, 'r"^#[0-9A-F]{6}$"') + sp(c.fgPunct, ', ') + sp(c.fgParameter, 'token', 'font-style:italic') + sp(c.fgPunct, ')') + ' ' + sp(c.kw, 'is not', 'font-weight:700') + ' ' + sp(c.num, 'None') + cur,
+          ];
+        }
+        if (lang === 'ts') {
+          return [
+            sp(c.fgComment, '// Live-preview QuickPick & smart per-game Light/Dark toggle', 'font-style:italic'),
+            sp(c.kw, 'export', 'font-weight:700') + ' ' + sp(c.stor, 'interface', 'font-style:italic') + ' ' + sp(c.iface, 'HylianThemeEntry', 'font-style:italic') + ' ' + sp(c.fgPunct, '{'),
+            '  ' + sp(c.stor, 'readonly', 'font-style:italic') + ' ' + sp(c.fgProperty, 'label') + sp(c.fgPunct, ':') + ' ' + sp(c.type, 'string', 'font-weight:700') + sp(c.fgPunct, ';'),
+            '  ' + sp(c.fgProperty, 'mode') + sp(c.fgPunct, ':') + ' ' + sp(c.str, '"light"') + ' ' + sp(c.kw, '|', 'font-weight:700') + ' ' + sp(c.str, '"dark"') + sp(c.fgPunct, ';'),
+            sp(c.fgPunct, '}'),
+            '',
+            sp(c.dec, '@command', 'font-style:italic') + sp(c.fgPunct, '(') + sp(c.str, '"hylianPalette.toggleTheme"') + sp(c.fgPunct, ')'),
+            sp(c.kw, 'export async', 'font-weight:700') + ' ' + sp(c.stor, 'function', 'font-style:italic') + ' ' + sp(c.fn, 'activatePair') + sp(c.fgPunct, '(') + sp(c.fgParameter, 'entry', 'font-style:italic') + sp(c.fgPunct, ':') + ' ' + sp(c.iface, 'HylianThemeEntry', 'font-style:italic') + sp(c.fgPunct, ') {'),
+            '  ' + sp(c.stor, 'const', 'font-style:italic') + ' ' + sp(c.fgVariable, 'themesTotal') + ' ' + sp(c.fgPunct, '=') + ' ' + sp(c.num, '36') + sp(c.fgPunct, ';'),
+            '  ' + sp(c.kw, 'await', 'font-weight:700') + ' ' + sp(c.ns, 'workbench') + sp(c.fgPunct, '.') + sp(c.fn, 'setColorTheme') + sp(c.fgPunct, '(') + sp(c.str, '"' + th.label + '"') + sp(c.fgPunct, ')') + cur,
+            sp(c.fgPunct, '}'),
+          ];
+        }
+        return [
+          sp(c.fgPunct, '---'),
+          sp(c.fgProperty, 'title') + sp(c.fgPunct, ': ') + sp(c.str, '"' + th.label + ' — Colorimetry Report"'),
+          sp(c.fgProperty, 'format') + sp(c.fgPunct, ': ') + sp(c.type, 'html', 'font-weight:700'),
+          sp(c.fgPunct, '---'),
+          '',
+          sp(c.kw, '## ' + th.game + ' (' + th.year + ')', 'font-weight:700'),
+          '',
+          sp(c.fg, 'Every foreground & syntax token clears ') + sp(c.fg, '**WCAG 2.1 AA (4.5:1)**', 'font-weight:700') + sp(c.fg, ' on ') + sp(c.type, '\x60editor.background\x60') + sp(c.fg, '.'),
+          '',
+          sp(c.dec, '\x60\x60\x60{sql}', 'font-style:italic'),
+          sp(c.kw, 'SELECT', 'font-weight:700') + ' ' + sp(c.fgProperty, 'slug') + sp(c.fgPunct, ', ') + sp(c.fn, 'MIN') + sp(c.fgPunct, '(') + sp(c.fgProperty, 'wcag_ratio') + sp(c.fgPunct, ') ') + sp(c.kw, 'AS', 'font-weight:700') + ' ' + sp(c.fgVariable, 'tightest_role') + ' ' + sp(c.kw, 'FROM', 'font-weight:700') + ' ' + sp(c.type, 'palettes', 'font-weight:700') + ' ' + sp(c.kw, 'WHERE', 'font-weight:700') + ' ' + sp(c.fgProperty, 'year') + ' ' + sp(c.fgPunct, '=') + ' ' + sp(c.num, String(th.year)) + sp(c.fgPunct, ';') + cur,
+          sp(c.dec, '\x60\x60\x60', 'font-style:italic'),
+        ];
+      }
+
+      const AUDIT_ROLES = [
+        ['Editor Text (fg)', 'fg'],
+        ['Secondary UI Text', 'fgSecondary'],
+        ['Comment (fgComment)', 'fgComment'],
+        ['Variable', 'fgVariable'],
+        ['Parameter (italic)', 'fgParameter'],
+        ['Property', 'fgProperty'],
+        ['Keyword (bold)', 'kw'],
+        ['Storage / Modifier', 'stor'],
+        ['String Literal', 'str'],
+        ['Regex / Escape', 'rx'],
+        ['Function / Method', 'fn'],
+        ['Type / Class (bold)', 'type'],
+        ['Interface / Trait', 'iface'],
+        ['Number / Constant', 'num'],
+        ['Decorator / Macro', 'dec'],
+        ['Namespace / Module', 'ns'],
+        ['Diagnostic Error', 'err'],
+        ['Diagnostic Warning', 'warn'],
+      ];
+
+      const POLY_KEYS = ['kw', 'stor', 'str', 'rx', 'fn', 'type', 'iface', 'num', 'dec', 'ns'];
+      const POLY_NAMES = ['kw', 'sto', 'str', 'rgx', 'fn', 'typ', 'ifc', 'num', 'dec', 'ns'];
+      const CRITICAL_KEYS = ['kw', 'stor', 'str', 'fn', 'type', 'num', 'err'];
+
+      function drawChromaCanvas(simCur, simSib, isLightShell) {
+        const canvas = document.getElementById('canvas-chroma');
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+        const w = 320, h = 260;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, w, h);
+
+        const cx = w / 2, cy = h / 2;
+        const maxC = 0.27;
+        const scale = 108 / maxC;
+        const gridColor = isLightShell ? 'rgba(24,27,32,0.12)' : 'rgba(236,239,244,0.12)';
+        const labelColor = isLightShell ? 'rgba(24,27,32,0.58)' : 'rgba(236,239,244,0.58)';
+
+        ctx.strokeStyle = gridColor;
+        ctx.lineWidth = 1;
+        [0.08, 0.16, 0.24].forEach((r) => {
+          ctx.beginPath();
+          ctx.arc(cx, cy, r * scale, 0, Math.PI * 2);
+          ctx.stroke();
+        });
+        ctx.beginPath();
+        ctx.moveTo(16, cy); ctx.lineTo(w - 16, cy);
+        ctx.moveTo(cx, 12); ctx.lineTo(cx, h - 12);
+        ctx.stroke();
+
+        ctx.fillStyle = labelColor;
+        ctx.font = '10px ui-monospace, monospace';
+        ctx.fillText('+a (red)', w - 58, cy - 5);
+        ctx.fillText('-a (green)', 14, cy - 5);
+        ctx.fillText('+b (yellow)', cx + 5, 20);
+        ctx.fillText('-b (blue)', cx + 5, h - 10);
+
+        if (simSib) {
+          const sibPts = POLY_KEYS.map((k) => {
+            const ok = hexToOklch(simSib[k]);
+            return { x: cx + ok.a * scale, y: cy - ok.b * scale };
+          });
+          ctx.save();
+          ctx.setLineDash([4, 4]);
+          ctx.strokeStyle = isLightShell ? 'rgba(24,27,32,0.32)' : 'rgba(236,239,244,0.32)';
+          ctx.lineWidth = 1.25;
+          ctx.beginPath();
+          sibPts.forEach((p, i) => (i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)));
+          ctx.closePath();
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        const pts = POLY_KEYS.map((k, idx) => {
+          const hex = simCur[k];
+          const ok = hexToOklch(hex);
+          return { x: cx + ok.a * scale, y: cy - ok.b * scale, hex, lbl: POLY_NAMES[idx] };
+        });
+
+        ctx.beginPath();
+        pts.forEach((p, i) => (i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)));
+        ctx.closePath();
+        ctx.strokeStyle = simCur.foc;
+        ctx.lineWidth = 1.9;
+        ctx.stroke();
+
+        pts.forEach((p) => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 5.2, 0, Math.PI * 2);
+          ctx.fillStyle = p.hex;
+          ctx.fill();
+          ctx.lineWidth = 1.3;
+          ctx.strokeStyle = simCur.bg;
+          ctx.stroke();
+        });
+      }
+
+      function drawLightnessCanvas(simCur, isLightShell) {
+        const canvas = document.getElementById('canvas-lightness');
+        const ctx = canvas.getContext('2d');
+        const dpr = window.devicePixelRatio || 1;
+        const w = 320, h = 190;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, w, h);
+
+        const padL = 34, padR = 14, padT = 16, padB = 28;
+        const plotW = w - padL - padR;
+        const plotH = h - padT - padB;
+        const yOfL = (L) => padT + (1 - L) * plotH;
+
+        const gridColor = isLightShell ? 'rgba(24,27,32,0.12)' : 'rgba(236,239,244,0.12)';
+        const txtColor = isLightShell ? 'rgba(24,27,32,0.62)' : 'rgba(236,239,244,0.62)';
+
+        ctx.font = '10px ui-monospace, monospace';
+        [0, 0.25, 0.5, 0.75, 1].forEach((lv) => {
+          const y = yOfL(lv);
+          ctx.strokeStyle = gridColor;
+          ctx.beginPath();
+          ctx.moveTo(padL, y); ctx.lineTo(w - padR, y);
+          ctx.stroke();
+          ctx.fillStyle = txtColor;
+          ctx.fillText(Math.round(lv * 100) + '%', 4, y + 3);
+        });
+
+        // Background & comment reference lines
+        const bgL = hexToOklch(simCur.bg).L;
+        const cmtL = hexToOklch(simCur.fgComment).L;
+        ctx.save();
+        ctx.setLineDash([3, 3]);
+        ctx.strokeStyle = simCur.fgComment;
+        ctx.beginPath();
+        ctx.moveTo(padL, yOfL(cmtL)); ctx.lineTo(w - padR, yOfL(cmtL));
+        ctx.stroke();
+        ctx.restore();
+
+        const step = plotW / POLY_KEYS.length;
+        POLY_KEYS.forEach((k, i) => {
+          const hex = simCur[k];
+          const L = hexToOklch(hex).L;
+          const x = padL + step * (i + 0.5);
+          const y = yOfL(L);
+          const yBg = yOfL(bgL);
+
+          ctx.strokeStyle = hex;
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          ctx.moveTo(x, yBg);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.arc(x, y, 5, 0, Math.PI * 2);
+          ctx.fillStyle = hex;
+          ctx.fill();
+          ctx.lineWidth = 1.2;
+          ctx.strokeStyle = simCur.bg;
+          ctx.stroke();
+
+          ctx.fillStyle = txtColor;
+          ctx.fillText(POLY_NAMES[i], x - 9, h - 10);
+        });
+      }
+
+      function render() {
+        const th = THEMES.find((x) => x.slug === activeSlug) || THEMES[0];
+        const sib = findSibling(th);
+        const isLightShell = th.mode === 'light';
+        document.body.dataset.shellMode = th.mode;
+
+        // Gem brand colors reflect active pair's identity accents
+        document.getElementById('gem-left').setAttribute('fill', th.t.cur);
+        document.getElementById('gem-right').setAttribute('fill', sib ? sib.t.foc : th.t.foc);
+
+        document.getElementById('toggle-mode-label').textContent =
+          th.mode === 'light' ? 'Switch to Dark' : 'Switch to Light';
+
+        const applyBtn = document.getElementById('btn-apply-vscode');
+        if (applyBtn) {
+          const isApplied = workbenchActiveLabel === th.label;
+          applyBtn.textContent = isApplied ? '✓ Active in Workbench' : 'Apply to Workbench';
+        }
+
+        renderEraRail(th);
+
+        document.getElementById('active-theme-heading').textContent = th.label + ' (' + th.year + ')';
+        document.getElementById('active-theme-subtitle').textContent = th.subtitle;
+        document.getElementById('active-theme-story').textContent = th.story;
+
+        document.querySelectorAll('.cvd-btn').forEach((btn) => {
+          btn.setAttribute('aria-selected', String(btn.dataset.cvd === activeCvd));
+        });
+
+        // Simulate tokens
+        const c = {};
+        for (const [k, v] of Object.entries(th.t)) c[k] = simHex(v, activeCvd);
+        const simSib = sib ? Object.fromEntries(Object.entries(sib.t).map(([k, v]) => [k, simHex(v, activeCvd)])) : null;
+
+        // Workbench styling
+        const wb = document.getElementById('workbench');
+        wb.style.backgroundColor = c.bg;
+        wb.style.color = c.fg;
+
+        const titlebar = document.getElementById('wb-titlebar');
+        titlebar.style.backgroundColor = c.bgActivity;
+        titlebar.style.borderBottomColor = c.borderSubtle;
+        document.getElementById('dot-close').style.backgroundColor = c.str;
+        document.getElementById('dot-min').style.backgroundColor = c.num;
+        document.getElementById('dot-max').style.backgroundColor = c.kw;
+
+        document.querySelectorAll('.lang-tab').forEach((tab) => {
+          const isAct = tab.dataset.lang === activeLang;
+          tab.style.backgroundColor = isAct ? c.bg : 'transparent';
+          tab.style.color = isAct ? c.fg : c.fgMuted;
+          tab.style.borderTopColor = isAct ? c.foc : 'transparent';
+          tab.style.fontWeight = isAct ? '600' : '400';
+        });
+
+        const pill = document.getElementById('wb-vision-pill');
+        const cvdTitle = { normal: 'Normal Trichromacy', protan: 'Simulated Protanopia', deutan: 'Simulated Deuteranopia', tritan: 'Simulated Tritanopia' }[activeCvd];
+        pill.textContent = cvdTitle;
+        pill.style.backgroundColor = c.bgLine;
+        pill.style.color = c.fgSecondary;
+
+        const actBar = document.getElementById('wb-activity');
+        actBar.style.backgroundColor = c.bgActivity;
+        actBar.style.borderRightColor = c.borderSubtle;
+        actBar.style.color = c.fgMuted;
+        const actIcon = document.getElementById('act-icon-active');
+        actIcon.style.color = c.fg;
+        actIcon.style.borderLeftColor = c.foc;
+
+        const sidebar = document.getElementById('wb-sidebar');
+        sidebar.style.backgroundColor = c.bgSidebar;
+        sidebar.style.borderRightColor = c.borderSubtle;
+        document.getElementById('wb-exp-head').style.color = c.fgMuted;
+        document.getElementById('wb-var-head').style.color = c.fgMuted;
+        document.getElementById('wb-positron-pane').style.borderTopColor = c.borderSubtle;
+
+        const files = [
+          ['color_science.R', 'r', 'R'],
+          ['oklch_gamut.py', 'py', 'PY'],
+          ['extension.ts', 'ts', 'TS'],
+          ['report.qmd', 'qmd', 'QMD'],
+        ];
+        const fileList = document.getElementById('wb-file-list');
+        fileList.innerHTML = '';
+        files.forEach(([fname, code, tag]) => {
+          const row = document.createElement('div');
+          row.className = 'wb-file-item';
+          const isCur = activeLang === code;
+          row.style.backgroundColor = isCur ? c.tintSelect : 'transparent';
+          row.style.color = isCur ? c.fg : c.fgSecondary;
+          row.innerHTML = '<span>' + fname + '</span><span style="font-size:10px;color:' + c.type + '">' + tag + '</span>';
+          row.addEventListener('click', () => { activeLang = code; render(); });
+          fileList.appendChild(row);
+        });
+
+        // Compute minimum critical pair DeltaE76 under current vision mode
+        let minCritDe = Infinity;
+        let minPairNames = '';
+        for (let i = 0; i < CRITICAL_KEYS.length; i++) {
+          for (let j = i + 1; j < CRITICAL_KEYS.length; j++) {
+            const k1 = CRITICAL_KEYS[i], k2 = CRITICAL_KEYS[j];
+            const d = deltaE76(c[k1], c[k2]);
+            if (d < minCritDe) {
+              minCritDe = d;
+              minPairNames = k1 + '/' + k2;
+            }
+          }
+        }
+
+        document.getElementById('wb-var-list').innerHTML = [
+          '<div class="wb-var-row"><span style="color:' + c.fgVariable + '">active_slug</span><span style="color:' + c.str + '">"' + th.slug + '"</span></div>',
+          '<div class="wb-var-row"><span style="color:' + c.fgVariable + '">release_yr</span><span style="color:' + c.num + '">' + th.year + 'L</span></div>',
+          '<div class="wb-var-row"><span style="color:' + c.fgVariable + '">min_de76</span><span style="color:' + c.fn + '">' + minCritDe.toFixed(1) + '</span></div>',
+          '<div class="wb-var-row"><span style="color:' + c.fgVariable + '">wcag_gate</span><span style="color:' + c.kw + ';font-weight:700">TRUE</span></div>',
+        ].join('');
+
+        // Editor code lines
+        const codeLines = buildCodeSample(c, activeLang, th);
+        const ed = document.getElementById('wb-editor');
+        ed.style.backgroundColor = c.bg;
+        ed.innerHTML = codeLines.map((ln, idx) => {
+          const hi = idx === 5;
+          return '<div class="code-line" style="background:' + (hi ? c.bgLine : 'transparent') + '">' +
+            '<span class="line-num" style="color:' + (hi ? c.fgSecondary : c.fgMuted) + '">' + (idx + 1) + '</span>' +
+            '<span>' + (ln || ' ') + '</span></div>';
+        }).join('');
+
+        // Console + 16 ANSI strip
+        const con = document.getElementById('wb-console');
+        con.style.backgroundColor = c.bgPanel;
+        con.style.borderTopColor = c.borderSubtle;
+        document.getElementById('wb-ansi-head').style.color = c.fgMuted;
+
+        const fgW = wcag(c.fg, c.bg).toFixed(2);
+        const fgLc = Math.abs(apcaLc(c.fg, c.bg)).toFixed(1);
+        document.getElementById('wb-console-lines').innerHTML =
+          '<div><span style="color:' + c.kw + ';font-weight:700">&gt;</span> <span style="color:' + c.fn + '">audit_palette</span><span style="color:' + c.fgPunct + '">(</span><span style="color:' + c.str + '">"' + th.slug + '"</span><span style="color:' + c.fgPunct + ')</span></div>' +
+          '<div style="color:' + c.fgSecondary + ';margin-top:2px">✔ fg/bg = <span style="color:' + c.num + '">' + fgW + ':1</span> (APCA |Lc| <span style="color:' + c.num + '">' + fgLc + '</span>) · min critical pair ΔE*ab = <span style="color:' + c.type + '">' + minCritDe.toFixed(1) + '</span> (' + minPairNames + ')</div>';
+
+        const ansiOrder = [
+          'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white',
+          'brightBlack', 'brightRed', 'brightGreen', 'brightYellow', 'brightBlue', 'brightMagenta', 'brightCyan', 'brightWhite'
+        ];
+        const ansiStrip = document.getElementById('ansi-strip');
+        ansiStrip.innerHTML = '';
+        ansiOrder.forEach((slot) => {
+          const rawHex = th.ansi[slot];
+          const sHex = simHex(rawHex, activeCvd);
+          const cell = document.createElement('button');
+          cell.type = 'button';
+          cell.className = 'ansi-cell';
+          cell.style.backgroundColor = sHex;
+          cell.title = 'ansi.' + slot + ': ' + sHex + ' (WCAG ' + wcag(sHex, c.bgPanel).toFixed(2) + ':1) — click to copy';
+          cell.addEventListener('click', () => copyText(sHex, 'Copied ansi.' + slot + ' (' + sHex + ')'));
+          ansiStrip.appendChild(cell);
+        });
+
+        // Status Bar
+        const sb = document.getElementById('wb-statusbar');
+        sb.style.backgroundColor = c.status;
+        sb.style.color = relLum(c.status) > 0.24 ? '#11161C' : '#F6F7FA';
+        document.getElementById('sb-cvd-gate').textContent =
+          th.slug === 'linksawakening-dark'
+            ? 'DMG-01 Monochrome Hardware Tribute'
+            : 'Critical CVD min ΔE*ab: ' + minCritDe.toFixed(1);
+        document.getElementById('sb-contrast').textContent = 'WCAG ' + fgW + ':1 · |Lc| ' + fgLc;
+        document.getElementById('sb-label').textContent = th.label;
+
+        // Audit Table
+        const tbody = document.getElementById('audit-tbody');
+        tbody.innerHTML = '';
+        let minRoleW = Infinity;
+        AUDIT_ROLES.forEach(([roleLabel, key]) => {
+          const hex = c[key];
+          const ok = hexToOklch(hex);
+          const wBg = wcag(hex, c.bg);
+          const wLine = wcag(hex, c.bgLine);
+          const lc = Math.abs(apcaLc(hex, c.bg));
+          if (wBg < minRoleW) minRoleW = wBg;
+
+          const tr = document.createElement('tr');
+          tr.className = 'token-row';
+          tr.title = 'Click to copy ' + hex;
+          tr.innerHTML =
+            '<td class="role-cell">' + roleLabel + '</td>' +
+            '<td><span class="swatch-chip"><span class="swatch-box" style="background:' + hex + '"></span>' + hex + '</span></td>' +
+            '<td>' + (ok.L * 100).toFixed(1) + '% · ' + ok.C.toFixed(3) + ' · ' + ok.H.toFixed(0) + '°</td>' +
+            '<td><strong>' + wBg.toFixed(2) + ':1</strong></td>' +
+            '<td>' + wLine.toFixed(2) + ':1</td>' +
+            '<td>' + lc.toFixed(1) + '</td>';
+          tr.addEventListener('click', () => copyText(hex, 'Copied ' + roleLabel + ' (' + hex + ')'));
+          tbody.appendChild(tr);
+        });
+
+        document.getElementById('audit-summary-badge').textContent =
+          '18/18 roles >= 4.5:1 · Floor: ' + minRoleW.toFixed(2) + ':1';
+        document.getElementById('cvd-min-readout').textContent =
+          'Min critical ΔE*ab (' + activeCvd + '): ' + minCritDe.toFixed(1) + ' (' + minPairNames + ')';
+
+        // Pair comparison box
+        const pairBox = document.getElementById('pair-compare-box');
+        if (sib) {
+          pairBox.innerHTML =
+            '<span>Paired variant: <strong>' + sib.label + '</strong></span>' +
+            '<span class="swatch-chip">Identity cursor: <span class="swatch-box" style="background:' + c.cur + '"></span><code>' + c.cur + '</code> ↔ <span class="swatch-box" style="background:' + simSib.cur + '"></span><code>' + simSib.cur + '</code></span>';
+        }
+
+        drawChromaCanvas(c, simSib, isLightShell);
+        drawLightnessCanvas(c, isLightShell);
+      }
+
+      // Controls & Keyboard Shortcuts
+      document.getElementById('btn-toggle-mode').addEventListener('click', () => {
+        const cur = THEMES.find((x) => x.slug === activeSlug) || THEMES[0];
+        const sib = findSibling(cur);
+        if (sib) selectSlug(sib.slug, true);
+      });
+
+      document.getElementById('btn-prev-theme').addEventListener('click', () => {
+        const idx = THEMES.findIndex((x) => x.slug === activeSlug);
+        const nextIdx = (idx - 1 + THEMES.length) % THEMES.length;
+        selectSlug(THEMES[nextIdx].slug, true);
+      });
+
+      document.getElementById('btn-next-theme').addEventListener('click', () => {
+        const idx = THEMES.findIndex((x) => x.slug === activeSlug);
+        const nextIdx = (idx + 1) % THEMES.length;
+        selectSlug(THEMES[nextIdx].slug, true);
+      });
+
+      document.getElementById('btn-random-theme').addEventListener('click', () => {
+        const pool = THEMES.filter((x) => x.slug !== activeSlug);
+        selectSlug(pool[Math.floor(Math.random() * pool.length)].slug, true);
+      });
+
+      document.querySelectorAll('.lang-tab').forEach((tab) => {
+        tab.addEventListener('click', () => { activeLang = tab.dataset.lang; render(); });
+      });
+
+      document.querySelectorAll('.cvd-btn').forEach((btn) => {
+        btn.addEventListener('click', () => { activeCvd = btn.dataset.cvd; render(); });
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA')) return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        const k = e.key.toLowerCase();
+        if (k === 't') {
+          document.getElementById('btn-toggle-mode').click();
+        } else if (k === 'r') {
+          document.getElementById('btn-random-theme').click();
+        } else if (e.key === 'ArrowLeft') {
+          document.getElementById('btn-prev-theme').click();
+        } else if (e.key === 'ArrowRight') {
+          document.getElementById('btn-next-theme').click();
+        } else if (k === '1') { activeCvd = 'normal'; render(); }
+        else if (k === '2') { activeCvd = 'protan'; render(); }
+        else if (k === '3') { activeCvd = 'deutan'; render(); }
+        else if (k === '4') { activeCvd = 'tritan'; render(); }
+      });
+
+      window.addEventListener('hashchange', () => {
+        if (!IS_WEB) return;
+        const slugHash = window.location.hash.slice(1).trim();
+        if (THEMES.some((t) => t.slug === slugHash) && slugHash !== activeSlug) {
+          activeSlug = slugHash;
+          render();
+        }
+      });
+
+      window.addEventListener('resize', () => render());
+      render();
+    })();
+  </script>
+</body>
+</html>

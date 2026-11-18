@@ -1,55 +1,34 @@
 #!/usr/bin/env node
 'use strict';
 
-// Dev-only build tool. Expands a compact per-game "story palette" (~35 named
-// tokens with real rationale) into full VS Code/Positron theme JSON files.
+// Dev-only build tool. Expands a compact per-game "story palette" (~42 named
+// tokens with documented lore & perceptual rationale) into full VS Code /
+// Positron theme JSON files, using OKLCH perceptual color operations and
+// enforcing multi-gate colorimetric validation (WCAG 2.1, APCA, CIEDE2000, CVD).
 // Not shipped as a runtime dependency of the extension -- the extension itself
-// stays a plain, dependency-free package (see extension.js). Run with:
+// stays a plain, zero-dependency package (see extension.js). Run with:
 //   node scripts/generate-themes.js
 
 const fs = require('fs');
 const path = require('path');
+const cs = require('./color-science');
 
 const THEMES_DIR = path.join(__dirname, '..', 'themes');
 const PALETTES_DIR = path.join(__dirname, '..', 'palettes');
 const PACKAGE_JSON = path.join(__dirname, '..', 'package.json');
 
-// ---------- color helpers ----------
+// ---------- perceptual OKLCH color helpers ----------
 
-function hexToRgb(hex) {
-  const h = hex.replace('#', '');
-  return { r: parseInt(h.slice(0, 2), 16), g: parseInt(h.slice(2, 4), 16), b: parseInt(h.slice(4, 6), 16) };
-}
-function rgbToHex({ r, g, b }) {
-  const c = (n) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0');
-  return `#${c(r)}${c(g)}${c(b)}`.toUpperCase();
-}
 function alpha(hex, aa) {
-  return `${hex}${aa}`;
+  return `${hex.slice(0, 7).toUpperCase()}${aa.toUpperCase()}`;
 }
-function mix(hexA, hexB, t) {
-  const a = hexToRgb(hexA), b = hexToRgb(hexB);
-  return rgbToHex({ r: a.r + (b.r - a.r) * t, g: a.g + (b.g - a.g) * t, b: a.b + (b.b - a.b) * t });
-}
-function lighten(hex, t) { return mix(hex, '#FFFFFF', t); }
-function darken(hex, t) { return mix(hex, '#000000', t); }
 
-function relLuminance(hex) {
-  const { r, g, b } = hexToRgb(hex);
-  const chan = (c) => {
-    c /= 255;
-    return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-  };
-  const [R, G, B] = [chan(r), chan(g), chan(b)];
-  return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+function oklchLighten(hex, dL) {
+  return cs.oklchShift(hex, { dL: +Math.abs(dL) });
 }
-function contrastRatio(hexA, hexB) {
-  const L1 = relLuminance(hexA), L2 = relLuminance(hexB);
-  const [light, dark] = L1 > L2 ? [L1, L2] : [L2, L1];
-  return (light + 0.05) / (dark + 0.05);
-}
-function readableTextOn(bgHex) {
-  return contrastRatio(bgHex, '#000000') >= contrastRatio(bgHex, '#FFFFFF') ? '#000000' : '#FFFFFF';
+
+function oklchDarken(hex, dL) {
+  return cs.oklchShift(hex, { dL: -Math.abs(dL) });
 }
 
 // ---------- ANSI defaults (overridable per palette via t.ansi) ----------
@@ -57,32 +36,50 @@ function readableTextOn(bgHex) {
 function defaultAnsi(t) {
   return {
     black: t.borderStrong,
-    red: darken(t.colorError, 0.12),
-    green: t.accentKeyword,
+    red: oklchDarken(t.colorError, 0.04),
+    green: t.gitAdd,
     yellow: t.accentNumber,
     blue: t.accentFunction,
     magenta: t.accentDecorator,
     cyan: t.accentType,
     white: t.fgSecondary,
-    brightBlack: t.fgMuted,
+    brightBlack: t.fgComment,
     brightRed: t.colorError,
-    brightGreen: lighten(t.accentKeyword, 0.15),
-    brightYellow: darken(t.accentNumber, 0.05),
+    brightGreen: oklchLighten(t.gitAdd, 0.05),
+    brightYellow: t.colorWarning,
     brightBlue: t.accentFunctionDim,
-    brightMagenta: lighten(t.accentDecorator, 0.1),
+    brightMagenta: oklchLighten(t.accentDecorator, 0.05),
     brightCyan: t.accentInterface,
     brightWhite: t.fg,
   };
 }
 
-// ---------- colors block ----------
+// ---------- workbench + Positron colors block ----------
 
 function buildColors(p) {
   const t = p.tokens;
+  const isLight = t.mode === 'light';
   const ansi = { ...defaultAnsi(t), ...(t.ansi || {}) };
-  const statusBarBorder = darken(t.accentStatusBar, 0.18);
+  const statusBarFg = cs.readableTextOn(t.accentStatusBar, '#FAF8F5', '#141418');
+  const statusBarHover = cs.relLuminance(statusBarFg) > 0.4 ? '#FFFFFF22' : '#00000018';
+  const statusBarBorder = oklchDarken(t.accentStatusBar, 0.06);
+  const buttonHover = isLight ? oklchDarken(t.accentButton, 0.05) : oklchLighten(t.accentButton, 0.05);
+  const fnHover = isLight ? oklchDarken(t.accentFunction, 0.05) : oklchLighten(t.accentFunction, 0.05);
+  const errHover = isLight ? oklchDarken(t.colorError, 0.05) : oklchLighten(t.colorError, 0.05);
 
   return {
+    // Base workbench defaults
+    foreground: t.fg,
+    descriptionForeground: t.fgSecondary,
+    disabledForeground: t.fgMuted,
+    errorForeground: t.colorError,
+    'icon.foreground': t.fgSecondary,
+    focusBorder: t.accentFocus,
+    'widget.shadow': isLight ? '#0000001F' : '#00000055',
+    'sash.hoverBorder': t.accentFocus,
+    'selection.background': alpha(t.accentFocus, '40'),
+
+    // Core editor canvas & cursor
     'editor.background': t.bg,
     'editor.foreground': t.fg,
     'editor.lineHighlightBackground': t.bgLine,
@@ -90,15 +87,33 @@ function buildColors(p) {
     'editorLineNumber.foreground': t.borderStrong,
     'editorLineNumber.activeForeground': t.fg,
     'editorCursor.foreground': t.accentCursor,
+    'editorCursor.background': t.bg,
     'editor.selectionBackground': alpha(t.accentFocus, '40'),
-    'editor.selectionHighlightBackground': alpha(t.accentFocus, '1F'),
+    'editor.selectionHighlightBackground': alpha(t.accentFocus, '20'),
     'editor.inactiveSelectionBackground': alpha(t.accentFocus, '1A'),
     'editor.wordHighlightBackground': alpha(t.accentFunction, '22'),
     'editor.wordHighlightStrongBackground': alpha(t.accentFunction, '38'),
-    'editor.findMatchBackground': alpha(t.accentBadge, '66'),
-    'editor.findMatchHighlightBackground': alpha(t.accentBadge, '33'),
+    'editor.findMatchBackground': alpha(t.accentBadge, '58'),
+    'editor.findMatchHighlightBackground': alpha(t.accentBadge, '2E'),
     'editor.findMatchBorder': t.accentBadge,
-    'editorBracketMatch.background': alpha(t.accentFocus, '2A'),
+    'editor.hoverHighlightBackground': alpha(t.accentFocus, '1A'),
+    'editorLink.activeForeground': t.accentFocus,
+
+    // Sticky scroll, inlay hints, ghost text & code lens
+    'editorStickyScroll.background': t.bg,
+    'editorStickyScrollHover.background': t.bgLine,
+    'editorStickyScroll.border': t.borderSubtle,
+    'editorInlayHint.foreground': t.fgSecondary,
+    'editorInlayHint.background': alpha(t.borderSubtle, '66'),
+    'editorInlayHint.typeForeground': t.accentInterface,
+    'editorInlayHint.parameterForeground': t.fgParameter,
+    'editorGhostText.foreground': t.fgMuted,
+    'editorCodeLens.foreground': t.fgComment,
+    'editorLightBulb.foreground': t.colorWarning,
+    'editorLightBulbAutoFix.foreground': t.accentType,
+
+    // Brackets, guides, gutter & overview ruler
+    'editorBracketMatch.background': alpha(t.accentFocus, '28'),
     'editorBracketMatch.border': t.accentFocus,
     'editorBracketHighlight.foreground1': t.accentKeyword,
     'editorBracketHighlight.foreground2': t.accentFunction,
@@ -115,7 +130,20 @@ function buildColors(p) {
     'editorIndentGuide.activeBackground1': t.borderStrong,
     'editorWhitespace.foreground': t.borderSubtle,
     'editorRuler.foreground': t.borderSubtle,
+    'editorGutter.background': t.bg,
+    'editorGutter.addedBackground': t.gitAdd,
+    'editorGutter.modifiedBackground': t.accentFunction,
+    'editorGutter.deletedBackground': t.gitDelete,
+    'editorOverviewRuler.border': t.borderSubtle,
+    'editorOverviewRuler.errorForeground': t.colorError,
+    'editorOverviewRuler.warningForeground': t.colorWarning,
+    'editorOverviewRuler.infoForeground': t.colorInfo,
+    'editorOverviewRuler.addedForeground': alpha(t.gitAdd, 'CC'),
+    'editorOverviewRuler.modifiedForeground': alpha(t.accentFunction, 'CC'),
+    'editorOverviewRuler.deletedForeground': alpha(t.gitDelete, 'CC'),
+    'editorOverviewRuler.findMatchForeground': alpha(t.accentBadge, 'CC'),
 
+    // Tabs & breadcrumbs
     'editorGroup.border': t.borderSubtle,
     'editorGroupHeader.tabsBackground': t.bgActivity,
     'editorGroupHeader.tabsBorder': t.borderSubtle,
@@ -123,28 +151,38 @@ function buildColors(p) {
     'tab.activeForeground': t.fg,
     'tab.inactiveBackground': t.bgActivity,
     'tab.inactiveForeground': t.fgSecondary,
+    'tab.hoverBackground': t.tintHover,
     'tab.border': t.borderSubtle,
     'tab.activeBorderTop': t.accentFocus,
+    'tab.activeModifiedBorder': t.accentBadge,
     'tab.unfocusedActiveForeground': t.fgSecondary,
+    'breadcrumb.background': t.bg,
+    'breadcrumb.foreground': t.fgSecondary,
+    'breadcrumb.focusForeground': t.fg,
+    'breadcrumb.activeSelectionForeground': t.accentFunction,
 
+    // Minimap & scrollbars
     'minimap.background': t.bg,
     'minimap.selectionHighlight': alpha(t.accentFocus, '55'),
     'minimap.findMatchHighlight': alpha(t.accentBadge, 'AA'),
     'minimap.errorHighlight': alpha(t.colorError, 'AA'),
     'minimap.warningHighlight': alpha(t.colorWarning, 'AA'),
-    'minimapSlider.background': alpha(t.fg, '22'),
-    'minimapSlider.hoverBackground': alpha(t.fg, '38'),
-    'minimapSlider.activeBackground': alpha(t.fg, '50'),
+    'minimapSlider.background': alpha(t.fg, '1F'),
+    'minimapSlider.hoverBackground': alpha(t.fg, '36'),
+    'minimapSlider.activeBackground': alpha(t.fg, '4D'),
+    'scrollbar.shadow': isLight ? '#00000014' : '#00000044',
     'scrollbarSlider.background': alpha(t.fg, '22'),
     'scrollbarSlider.hoverBackground': alpha(t.fg, '38'),
     'scrollbarSlider.activeBackground': alpha(t.fg, '50'),
 
+    // Sidebar, activity bar, status bar & title bar
     'sideBar.background': t.bgSidebar,
     'sideBar.foreground': t.fg,
     'sideBar.border': t.borderSubtle,
     'sideBarTitle.foreground': t.fg,
     'sideBarSectionHeader.background': t.bgPanel,
     'sideBarSectionHeader.foreground': t.fg,
+    'sideBarSectionHeader.border': t.borderSubtle,
 
     'activityBar.background': t.bgActivity,
     'activityBar.foreground': t.accentFocus,
@@ -152,17 +190,18 @@ function buildColors(p) {
     'activityBar.border': t.borderSubtle,
     'activityBar.activeBorder': t.accentFocus,
     'activityBarBadge.background': t.accentBadge,
-    'activityBarBadge.foreground': readableTextOn(t.accentBadge),
+    'activityBarBadge.foreground': cs.readableTextOn(t.accentBadge),
 
     'statusBar.background': t.accentStatusBar,
-    'statusBar.foreground': readableTextOn(t.accentStatusBar),
+    'statusBar.foreground': statusBarFg,
     'statusBar.border': statusBarBorder,
     'statusBar.noFolderBackground': t.accentKeyword,
+    'statusBar.noFolderForeground': cs.readableTextOn(t.accentKeyword),
     'statusBar.debuggingBackground': t.colorError,
-    'statusBar.debuggingForeground': readableTextOn(t.colorError),
-    'statusBarItem.hoverBackground': '#FFFFFF22',
+    'statusBar.debuggingForeground': cs.readableTextOn(t.colorError),
+    'statusBarItem.hoverBackground': statusBarHover,
     'statusBarItem.remoteBackground': t.accentType,
-    'statusBarItem.remoteForeground': readableTextOn(t.accentType),
+    'statusBarItem.remoteForeground': cs.readableTextOn(t.accentType),
 
     'titleBar.activeBackground': t.bgActivity,
     'titleBar.activeForeground': t.fg,
@@ -170,6 +209,7 @@ function buildColors(p) {
     'titleBar.inactiveForeground': t.fgSecondary,
     'titleBar.border': t.borderSubtle,
 
+    // Panels & integrated terminal
     'panel.background': t.bgPanel,
     'panel.border': t.borderSubtle,
     'panelTitle.activeForeground': t.fg,
@@ -177,6 +217,7 @@ function buildColors(p) {
     'panelTitle.inactiveForeground': t.fgSecondary,
     'terminal.background': t.bg,
     'terminal.foreground': t.fg,
+    'terminal.border': t.borderSubtle,
     'terminal.selectionBackground': alpha(t.accentFocus, '40'),
     'terminalCursor.foreground': t.accentCursor,
     'terminal.ansiBlack': ansi.black,
@@ -196,32 +237,42 @@ function buildColors(p) {
     'terminal.ansiBrightCyan': ansi.brightCyan,
     'terminal.ansiBrightWhite': ansi.brightWhite,
 
+    // Lists & trees
     'list.activeSelectionBackground': t.tintSelect,
     'list.activeSelectionForeground': t.fg,
-    'list.inactiveSelectionBackground': mix(t.tintSelect, t.bgSidebar, 0.4),
+    'list.inactiveSelectionBackground': cs.oklchMix(t.tintSelect, t.bgSidebar, 0.42),
+    'list.inactiveSelectionForeground': t.fg,
     'list.hoverBackground': t.tintHover,
+    'list.hoverForeground': t.fg,
     'list.focusOutline': t.accentFocus,
     'list.highlightForeground': t.accentFunction,
     'list.errorForeground': t.colorError,
-    'list.warningForeground': t.accentNumber,
+    'list.warningForeground': t.colorWarning,
+    'tree.indentGuidesStroke': t.borderSubtle,
 
+    // Inputs, dropdowns, buttons & badges
     'input.background': t.bgInput,
     'input.foreground': t.fg,
     'input.border': t.borderSubtle,
     'input.placeholderForeground': t.fgMuted,
+    'inputOption.activeBorder': t.accentFocus,
+    'inputOption.activeBackground': alpha(t.accentFocus, '26'),
+    'inputOption.activeForeground': t.fg,
     'dropdown.background': t.bgWidget,
     'dropdown.foreground': t.fg,
     'dropdown.border': t.borderSubtle,
 
     'button.background': t.accentButton,
-    'button.foreground': readableTextOn(t.accentButton),
-    'button.hoverBackground': lighten(t.accentButton, 0.12),
+    'button.foreground': cs.readableTextOn(t.accentButton),
+    'button.hoverBackground': buttonHover,
     'button.secondaryBackground': t.bgPanel,
     'button.secondaryForeground': t.fg,
+    'button.secondaryHoverBackground': t.tintHover,
     'badge.background': t.accentBadge,
-    'badge.foreground': readableTextOn(t.accentBadge),
+    'badge.foreground': cs.readableTextOn(t.accentBadge),
     'progressBar.background': t.accentFocus,
 
+    // Popups, hover, suggest, quick input & peek view
     'notifications.background': t.bgWidget,
     'notifications.foreground': t.fg,
     'notifications.border': t.borderSubtle,
@@ -230,29 +281,80 @@ function buildColors(p) {
     'notificationsInfoIcon.foreground': t.colorInfo,
 
     'editorWidget.background': t.bgWidget,
+    'editorWidget.foreground': t.fg,
     'editorWidget.border': t.borderSubtle,
+    'editorHoverWidget.background': t.bgWidget,
+    'editorHoverWidget.foreground': t.fg,
+    'editorHoverWidget.border': t.borderSubtle,
+    'editorSuggestWidget.background': t.bgWidget,
+    'editorSuggestWidget.foreground': t.fg,
+    'editorSuggestWidget.border': t.borderSubtle,
+    'editorSuggestWidget.selectedBackground': t.tintSelect,
+    'editorSuggestWidget.selectedForeground': t.fg,
+    'editorSuggestWidget.highlightForeground': t.accentFunction,
     'quickInput.background': t.bgWidget,
     'quickInput.foreground': t.fg,
     'quickInputList.focusBackground': t.tintSelect,
+    'quickInputList.focusForeground': t.fg,
     'pickerGroup.foreground': t.accentFunction,
     'pickerGroup.border': t.borderSubtle,
-    focusBorder: t.accentFocus,
 
+    'peekView.border': t.accentFocus,
+    'peekViewEditor.background': t.bgSidebar,
+    'peekViewEditor.matchHighlightBackground': alpha(t.accentBadge, '44'),
+    'peekViewResult.background': t.bgPanel,
+    'peekViewResult.fileForeground': t.fg,
+    'peekViewResult.lineForeground': t.fgSecondary,
+    'peekViewResult.selectionBackground': t.tintSelect,
+    'peekViewResult.selectionForeground': t.fg,
+    'peekViewTitle.background': t.bgActivity,
+    'peekViewTitleLabel.foreground': t.fg,
+    'peekViewTitleDescription.foreground': t.fgSecondary,
+
+    // Diff, merge, git, notebooks & charts
     'diffEditor.insertedTextBackground': alpha(t.gitAdd, '26'),
     'diffEditor.removedTextBackground': alpha(t.gitDelete, '26'),
-    'diffEditor.insertedLineBackground': alpha(t.gitAdd, '1A'),
-    'diffEditor.removedLineBackground': alpha(t.gitDelete, '1A'),
+    'diffEditor.insertedLineBackground': alpha(t.gitAdd, '18'),
+    'diffEditor.removedLineBackground': alpha(t.gitDelete, '18'),
     'diffEditor.border': t.borderSubtle,
+    'merge.currentHeaderBackground': alpha(t.gitAdd, '44'),
+    'merge.currentContentBackground': alpha(t.gitAdd, '1C'),
+    'merge.incomingHeaderBackground': alpha(t.accentFunction, '44'),
+    'merge.incomingContentBackground': alpha(t.accentFunction, '1C'),
     'gitDecoration.addedResourceForeground': t.gitAdd,
     'gitDecoration.modifiedResourceForeground': t.accentFunction,
     'gitDecoration.deletedResourceForeground': t.gitDelete,
     'gitDecoration.untrackedResourceForeground': t.accentType,
     'gitDecoration.ignoredResourceForeground': t.fgMuted,
-    'gitDecoration.conflictingResourceForeground': t.accentNumber,
+    'gitDecoration.conflictingResourceForeground': t.colorWarning,
+    'gitDecoration.stageModifiedResourceForeground': t.accentInterface,
+    'gitDecoration.stageDeletedResourceForeground': t.colorError,
 
-    'textLink.foreground': t.accentFocus,
+    'notebook.editorBackground': t.bg,
+    'notebook.cellEditorBackground': t.bg,
+    'notebook.cellBorderColor': t.borderSubtle,
+    'notebook.focusedCellBorder': t.accentFocus,
+    'notebook.cellStatusBarItemHoverBackground': t.tintHover,
+    'notebookStatusSuccessIcon.foreground': t.gitAdd,
+    'notebookStatusErrorIcon.foreground': t.colorError,
+    'notebookStatusRunningIcon.foreground': t.accentFunction,
+
+    'charts.foreground': t.fg,
+    'charts.lines': t.borderStrong,
+    'charts.red': t.colorError,
+    'charts.blue': t.accentFunction,
+    'charts.yellow': t.colorWarning,
+    'charts.orange': t.accentRegex,
+    'charts.green': t.gitAdd,
+    'charts.purple': t.accentDecorator,
+
+    'textLink.foreground': t.accentFunction,
     'textLink.activeForeground': t.accentInterface,
+    'textPreformat.foreground': t.accentType,
+    'textBlockQuote.background': t.bgSidebar,
+    'textBlockQuote.border': t.accentFocus,
 
+    // Confirmed Positron IDE workbench tokens (validated against posit-dev/positron)
     'positronError.foreground': t.colorError,
     'positronScrollBar.border': t.borderSubtle,
     'positronSplitterExpandCollapseButton.background': t.bgActivity,
@@ -301,16 +403,16 @@ function buildColors(p) {
     'positronModalDialog.titleBarBackground': t.bgActivity,
     'positronModalDialog.titleBarForeground': t.fg,
     'positronModalDialog.buttonBackground': t.accentButton,
-    'positronModalDialog.buttonHoverBackground': lighten(t.accentButton, 0.12),
+    'positronModalDialog.buttonHoverBackground': buttonHover,
     'positronModalDialog.defaultButtonBackground': t.accentFunction,
-    'positronModalDialog.defaultButtonHoverBackground': lighten(t.accentFunction, 0.12),
-    'positronModalDialog.buttonActiveBackground': darken(t.accentButton, 0.18),
+    'positronModalDialog.defaultButtonHoverBackground': fnHover,
+    'positronModalDialog.buttonActiveBackground': oklchDarken(t.accentButton, 0.08),
     'positronModalDialog.buttonDisabledBackground': alpha(t.fgMuted, '40'),
-    'positronModalDialog.buttonForeground': readableTextOn(t.accentButton),
-    'positronModalDialog.defaultButtonForeground': readableTextOn(t.accentFunction),
+    'positronModalDialog.buttonForeground': cs.readableTextOn(t.accentButton),
+    'positronModalDialog.defaultButtonForeground': cs.readableTextOn(t.accentFunction),
     'positronModalDialog.buttonDestructiveBackground': t.colorError,
-    'positronModalDialog.buttonDestructiveHoverBackground': lighten(t.colorError, 0.12),
-    'positronModalDialog.buttonDestructiveForeground': readableTextOn(t.colorError),
+    'positronModalDialog.buttonDestructiveHoverBackground': errHover,
+    'positronModalDialog.buttonDestructiveForeground': cs.readableTextOn(t.colorError),
     'positronModalDialog.buttonDisabledForeground': t.fgMuted,
     'positronModalDialog.buttonBorder': t.borderSubtle,
     'positronModalDialog.buttonDisabledBorder': t.borderSubtle,
@@ -390,7 +492,7 @@ function buildColors(p) {
     'positronVariables.rowHoverForeground': t.fg,
     'positronVariables.activeSelectionBackground': alpha(t.accentFocus, '40'),
     'positronVariables.activeSelectionForeground': t.fg,
-    'positronVariables.inactiveSelectionBackground': mix(t.tintSelect, t.bgSidebar, 0.4),
+    'positronVariables.inactiveSelectionBackground': cs.oklchMix(t.tintSelect, t.bgSidebar, 0.42),
     'positronVariables.inactiveSelectionForeground': t.fgSecondary,
 
     'positronPackages.background': t.bgSidebar,
@@ -418,49 +520,55 @@ function buildColors(p) {
   };
 }
 
-// ---------- tokenColors / semanticTokenColors (shared shape, tokens vary) ----------
+// ---------- tokenColors / semanticTokenColors ----------
 
 function buildTokenColors(t) {
   return [
     { scope: ['comment', 'comment.line', 'comment.block'], settings: { foreground: t.fgComment, fontStyle: 'italic' } },
-    { scope: ['comment.block.documentation', 'comment.documentation'], settings: { foreground: t.fgComment, fontStyle: 'italic' } },
-    { scope: ['comment.block.documentation storage.type.class', 'comment.block.documentation keyword', 'punctuation.definition.tag.documentation'], settings: { foreground: t.accentType, fontStyle: 'bold italic' } },
-    { scope: ['keyword.control', 'keyword.control.flow', 'keyword.control.import', 'keyword.control.export', 'keyword', 'keyword.other'], settings: { foreground: t.accentKeyword, fontStyle: 'bold' } },
+    { scope: ['comment.block.documentation', 'comment.documentation', 'comment.line.roxygen.r'], settings: { foreground: t.fgComment, fontStyle: 'italic' } },
+    { scope: ['comment.block.documentation storage.type.class', 'comment.block.documentation keyword', 'punctuation.definition.tag.documentation', 'keyword.other.documentation.roxygen.r'], settings: { foreground: t.accentType, fontStyle: 'bold italic' } },
+    { scope: ['keyword.control', 'keyword.control.flow', 'keyword.control.import', 'keyword.control.export', 'keyword.control.conditional', 'keyword.control.loop', 'keyword', 'keyword.other'], settings: { foreground: t.accentKeyword, fontStyle: 'bold' } },
+    { scope: ['keyword.operator.pipe.r', 'keyword.operator.pipe', 'keyword.operator.new', 'keyword.operator.expression', 'keyword.operator.wordlike'], settings: { foreground: t.accentKeyword, fontStyle: 'bold' } },
     { scope: ['keyword.operator', 'keyword.operator.assignment', 'keyword.operator.comparison', 'keyword.operator.logical', 'keyword.operator.arithmetic'], settings: { foreground: t.fgPunct } },
     { scope: ['storage.type', 'storage'], settings: { foreground: t.accentStorage, fontStyle: 'bold' } },
     { scope: ['storage.modifier'], settings: { foreground: t.accentStorage, fontStyle: 'italic' } },
     { scope: ['string.quoted', 'string.template', 'string', 'string.interpolated'], settings: { foreground: t.accentString } },
     { scope: ['string.regexp'], settings: { foreground: t.accentRegex } },
-    { scope: ['constant.character.escape'], settings: { foreground: t.accentFunctionDim } },
-    { scope: ['constant.numeric'], settings: { foreground: t.accentNumber } },
-    { scope: ['constant.language.boolean', 'constant.language'], settings: { foreground: t.accentNumber, fontStyle: 'bold' } },
-    { scope: ['constant.other', 'constant.other.enummember'], settings: { foreground: t.accentType } },
-    { scope: ['entity.name.function', 'meta.function-call', 'support.function'], settings: { foreground: t.accentFunction } },
-    { scope: ['support.function.builtin', 'support.function.magic'], settings: { foreground: t.accentFunctionDim } },
+    { scope: ['constant.character.escape', 'punctuation.definition.template-expression'], settings: { foreground: t.accentFunctionDim } },
+    { scope: ['constant.numeric', 'constant.numeric.integer', 'constant.numeric.float', 'constant.numeric.hex'], settings: { foreground: t.accentNumber } },
+    { scope: ['constant.language.boolean', 'constant.language', 'constant.language.r', 'constant.language.python'], settings: { foreground: t.accentNumber, fontStyle: 'bold' } },
+    { scope: ['constant.other', 'constant.other.enummember', 'constant.other.symbol', 'constant.other.color.rgb-value.hex.css'], settings: { foreground: t.accentType } },
+    { scope: ['entity.name.function', 'meta.function-call', 'support.function', 'support.function.r'], settings: { foreground: t.accentFunction } },
+    { scope: ['support.function.builtin', 'support.function.magic', 'support.function.magic.python'], settings: { foreground: t.accentFunctionDim } },
     { scope: ['entity.name.function.member', 'meta.method', 'meta.function-call.method'], settings: { foreground: t.accentFunction } },
-    { scope: ['variable', 'variable.other.readwrite', 'variable.other.object'], settings: { foreground: t.fgVariable } },
-    { scope: ['variable.language', 'variable.language.this', 'variable.language.self'], settings: { foreground: t.fgVariable, fontStyle: 'italic bold' } },
-    { scope: ['variable.parameter'], settings: { foreground: t.fgParameter, fontStyle: 'italic' } },
-    { scope: ['variable.other.property', 'variable.other.object.property', 'meta.object-literal.key'], settings: { foreground: t.fgProperty } },
+    { scope: ['variable', 'variable.other.readwrite', 'variable.other.object', 'variable.other.r'], settings: { foreground: t.fgVariable } },
+    { scope: ['variable.language', 'variable.language.this', 'variable.language.self', 'variable.parameter.function.language.special.self.python'], settings: { foreground: t.fgVariable, fontStyle: 'italic bold' } },
+    { scope: ['variable.parameter', 'variable.parameter.function', 'variable.parameter.r'], settings: { foreground: t.fgParameter, fontStyle: 'italic' } },
+    { scope: ['variable.other.property', 'variable.other.object.property', 'meta.object-literal.key', 'variable.other.member'], settings: { foreground: t.fgProperty } },
     { scope: ['entity.name.type.class', 'entity.name.class', 'support.class'], settings: { foreground: t.accentType, fontStyle: 'bold' } },
-    { scope: ['entity.name.type', 'support.type'], settings: { foreground: t.accentType } },
-    { scope: ['entity.name.type.interface'], settings: { foreground: t.accentInterface, fontStyle: 'italic' } },
+    { scope: ['entity.name.type', 'support.type', 'support.type.python'], settings: { foreground: t.accentType } },
+    { scope: ['entity.name.type.interface', 'entity.name.type.type-parameter'], settings: { foreground: t.accentInterface, fontStyle: 'italic' } },
     { scope: ['entity.name.type.enum'], settings: { foreground: t.accentType, fontStyle: 'bold' } },
-    { scope: ['entity.name.namespace', 'entity.name.type.module', 'entity.name.type.namespace'], settings: { foreground: t.accentNamespace } },
+    { scope: ['entity.name.namespace', 'entity.name.type.module', 'entity.name.type.namespace', 'support.other.namespace.r'], settings: { foreground: t.accentNamespace } },
     { scope: ['meta.decorator', 'punctuation.decorator', 'entity.name.function.decorator'], settings: { foreground: t.accentDecorator, fontStyle: 'italic' } },
     { scope: ['punctuation', 'punctuation.separator', 'punctuation.terminator', 'punctuation.definition'], settings: { foreground: t.fgPunct } },
     { scope: ['punctuation.definition.tag'], settings: { foreground: t.fgPunct } },
-    { scope: ['entity.name.tag'], settings: { foreground: t.accentFunction } },
+    { scope: ['entity.name.tag', 'entity.name.tag.yaml'], settings: { foreground: t.accentFunction } },
     { scope: ['entity.other.attribute-name'], settings: { foreground: t.accentNumber, fontStyle: 'italic' } },
-    { scope: ['support.type.property-name.json', 'support.type.property-name'], settings: { foreground: t.accentFunction } },
-    { scope: ['markup.heading'], settings: { foreground: t.accentKeyword, fontStyle: 'bold' } },
+    { scope: ['support.type.property-name.json', 'support.type.property-name', 'support.type.property-name.toml', 'support.type.property-name.css'], settings: { foreground: t.accentFunction } },
+    { scope: ['markup.heading', 'punctuation.definition.heading.markdown'], settings: { foreground: t.accentKeyword, fontStyle: 'bold' } },
     { scope: ['markup.bold'], settings: { foreground: t.fg, fontStyle: 'bold' } },
     { scope: ['markup.italic'], settings: { foreground: t.fg, fontStyle: 'italic' } },
-    { scope: ['markup.underline.link'], settings: { foreground: t.accentFunction, fontStyle: 'underline' } },
+    { scope: ['markup.underline.link', 'string.other.link.title.markdown'], settings: { foreground: t.accentFunction, fontStyle: 'underline' } },
     { scope: ['markup.quote'], settings: { foreground: t.fgComment, fontStyle: 'italic' } },
     { scope: ['markup.list'], settings: { foreground: t.fgPunct } },
     { scope: ['markup.inline.raw', 'markup.raw'], settings: { foreground: t.accentType } },
     { scope: ['markup.fenced_code.block', 'markup.code'], settings: { foreground: t.accentString } },
+    { scope: ['fenced_code.block.language', 'fenced_code.block.language.markdown'], settings: { foreground: t.accentInterface, fontStyle: 'italic' } },
+    { scope: ['markup.inserted', 'punctuation.definition.inserted'], settings: { foreground: t.gitAdd } },
+    { scope: ['markup.deleted', 'punctuation.definition.deleted'], settings: { foreground: t.gitDelete } },
+    { scope: ['markup.changed', 'punctuation.definition.changed'], settings: { foreground: t.colorWarning } },
+    { scope: ['invalid', 'invalid.illegal'], settings: { foreground: t.colorError } },
     { scope: ['keyword.other.DML', 'keyword.other.DDL', 'keyword.other.sql'], settings: { foreground: t.accentKeyword, fontStyle: 'bold' } },
     { scope: ['support.function.sql'], settings: { foreground: t.accentFunction } },
     { scope: ['variable.other.normal.shell', 'variable.other.readwrite.shell'], settings: { foreground: t.fgVariable, fontStyle: 'bold' } },
@@ -501,24 +609,34 @@ function buildSemanticTokenColors(t) {
   };
 }
 
-// ---------- contrast QA ----------
-
-function checkContrast(slug, t) {
-  const failures = [];
-  const fgBg = contrastRatio(t.fg, t.bg);
-  const commentBg = contrastRatio(t.fgComment, t.bg);
-  const sidebarFgBg = contrastRatio(t.fg, t.bgSidebar);
-  if (fgBg < 4.5) failures.push(`${slug}: editor fg/bg contrast ${fgBg.toFixed(2)}:1 < 4.5:1 minimum`);
-  if (commentBg < 4.5) failures.push(`${slug}: comment fg/bg contrast ${commentBg.toFixed(2)}:1 < 4.5:1 minimum`);
-  if (sidebarFgBg < 4.5) failures.push(`${slug}: sidebar fg/bg contrast ${sidebarFgBg.toFixed(2)}:1 < 4.5:1 minimum`);
-  return { failures, fgBg, commentBg, sidebarFgBg };
-}
-
 // ---------- driver ----------
+
+// Release-date tiebreaker for same-year releases (Oracle of Seasons & Ages, Feb 2001)
+const GAME_CHRONO_ORDER = [
+  'The Legend of Zelda',
+  'Zelda II: The Adventure of Link',
+  'A Link to the Past',
+  "Link's Awakening",
+  'Ocarina of Time',
+  "Majora's Mask",
+  'Oracle of Seasons',
+  'Oracle of Ages',
+  'The Wind Waker',
+  'The Minish Cap',
+  'Twilight Princess',
+  'Phantom Hourglass',
+  'Spirit Tracks',
+  'Skyward Sword',
+  'A Link Between Worlds',
+  'Breath of the Wild',
+  'Tears of the Kingdom',
+  'Echoes of Wisdom',
+];
 
 function loadPalettes() {
   return fs.readdirSync(PALETTES_DIR)
     .filter((f) => f.endsWith('.js'))
+    .sort()
     .map((f) => require(path.join(PALETTES_DIR, f)));
 }
 
@@ -530,8 +648,8 @@ function main() {
   if (!fs.existsSync(THEMES_DIR)) fs.mkdirSync(THEMES_DIR, { recursive: true });
 
   for (const p of palettes) {
-    const { failures, fgBg, commentBg, sidebarFgBg } = checkContrast(p.slug, p.tokens);
-    allFailures.push(...failures);
+    const audit = cs.auditPalette(p);
+    allFailures.push(...audit.errors);
 
     const theme = {
       name: p.label,
@@ -543,6 +661,8 @@ function main() {
     };
     const fileName = `${p.slug}-color-theme.json`;
     fs.writeFileSync(path.join(THEMES_DIR, fileName), JSON.stringify(theme, null, 2) + '\n');
+
+    const m = audit.metrics;
     themeEntries.push({
       label: p.label,
       uiTheme: p.tokens.mode === 'light' ? 'vs' : 'vs-dark',
@@ -551,28 +671,38 @@ function main() {
       year: p.year,
       mode: p.tokens.mode,
       slug: p.slug,
-      contrast: { fgBg: fgBg.toFixed(2), commentBg: commentBg.toFixed(2), sidebarFgBg: sidebarFgBg.toFixed(2) },
+      subtitle: p.subtitle || '',
     });
-    console.log(`generated ${fileName}  (fg/bg ${fgBg.toFixed(2)}:1, comment ${commentBg.toFixed(2)}:1)`);
+    console.log(
+      `generated ${fileName.padEnd(40)} (fg/bg ${m.fgBg.toFixed(2)}:1, Lc ${m.fgLc.toFixed(1)}, comment ${m.commentBg.toFixed(2)}:1, minSyntax ${m.minSyntaxCr.toFixed(2)}:1)`
+    );
   }
 
   // Update package.json's contributes.themes to match, single source of truth.
   const pkg = JSON.parse(fs.readFileSync(PACKAGE_JSON, 'utf8'));
   pkg.contributes = pkg.contributes || {};
   pkg.contributes.themes = themeEntries
+    .slice()
     .sort((a, b) => a.label.localeCompare(b.label))
     .map(({ label, uiTheme, path: p }) => ({ label, uiTheme, path: p }));
   fs.writeFileSync(PACKAGE_JSON, JSON.stringify(pkg, null, 2) + '\n');
 
-  // Emit theme-list metadata for extension.js (smart toggle + quick pick).
+  // Emit theme-list metadata for extension.js (smart toggle + live-preview quick pick).
   const metaPath = path.join(__dirname, '..', 'theme-metadata.json');
   fs.writeFileSync(
     metaPath,
     JSON.stringify(
       themeEntries
         .slice()
-        .sort((a, b) => a.year - b.year || a.mode.localeCompare(b.mode))
-        .map(({ label, game, year, mode, slug }) => ({ label, game, year, mode, slug })),
+        .sort((a, b) => {
+          const giA = GAME_CHRONO_ORDER.indexOf(a.game);
+          const giB = GAME_CHRONO_ORDER.indexOf(b.game);
+          if (a.year !== b.year) return a.year - b.year;
+          if (giA !== giB) return giA - giB;
+          if (a.mode !== b.mode) return a.mode === 'light' ? -1 : 1; // Light before Dark
+          return a.label.localeCompare(b.label);
+        })
+        .map(({ label, game, year, mode, slug, subtitle }) => ({ label, game, year, mode, slug, subtitle })),
       null,
       2
     ) + '\n'
@@ -580,11 +710,11 @@ function main() {
 
   console.log(`\n${palettes.length} theme(s) generated.`);
   if (allFailures.length) {
-    console.error('\nCONTRAST FAILURES:');
+    console.error('\nPERCEPTUAL / CONTRAST AUDIT FAILURES:');
     allFailures.forEach((f) => console.error('  - ' + f));
     process.exitCode = 1;
   } else {
-    console.log('All contrast checks passed (>= 4.5:1 for editor fg/bg, comments, sidebar fg/bg).');
+    console.log('All perceptual gates passed (WCAG >= 4.5:1 across all 20 text/syntax roles + ANSI, APCA |Lc|, CIEDE2000 & CVD separation).');
   }
 }
 
