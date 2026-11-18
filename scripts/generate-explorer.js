@@ -887,9 +887,16 @@ function buildHtml({ dataset, target }) {
     <header class="topbar">
       <div class="brand">
         <svg class="brand-gem" viewBox="0 0 32 32" aria-hidden="true">
-          <polygon id="gem-left" points="16,2 28,16 16,30 4,16" fill="#C9A227" />
-          <polygon id="gem-right" points="16,2 28,16 16,30" fill="#264EB5" opacity="0.88" />
-          <polygon points="16,7 23,16 16,25 9,16" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="1.2" />
+          <g id="tri-top" fill="#E5AF24">
+            <polygon points="16,1.4 11.5,8.5 20.5,8.5" />
+            <polygon points="11.5,8.5 7,15.6 16,15.6" />
+            <polygon points="20.5,8.5 16,15.6 25,15.6" />
+          </g>
+          <g id="tri-bot" fill="#3C3252">
+            <polygon points="7,16.4 16,16.4 11.5,23.5" />
+            <polygon points="16,16.4 25,16.4 20.5,23.5" />
+            <polygon points="11.5,23.5 20.5,23.5 16,30.6" />
+          </g>
         </svg>
         <div>
           <h1>Hylian Palette</h1>
@@ -1544,9 +1551,9 @@ function buildHtml({ dataset, target }) {
         const isLightShell = th.mode === 'light';
         document.body.dataset.shellMode = th.mode;
 
-        // Gem brand colors reflect active pair's identity accents
-        document.getElementById('gem-left').setAttribute('fill', th.t.cur);
-        document.getElementById('gem-right').setAttribute('fill', sib ? sib.t.foc : th.t.foc);
+        // Mirrored Hyrule / Lorule triad brand mark reflects active pair's accents
+        document.getElementById('tri-top').setAttribute('fill', th.t.cur);
+        document.getElementById('tri-bot').setAttribute('fill', sib ? sib.t.status : th.t.status);
 
         document.getElementById('toggle-mode-label').textContent =
           th.mode === 'light' ? 'Switch to Dark' : 'Switch to Light';
