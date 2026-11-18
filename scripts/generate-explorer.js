@@ -162,7 +162,7 @@ function buildHtml({ dataset, target }) {
   const scriptOpen = isWeb ? '<script>' : '<script nonce="{{CSP_NONCE}}">';
   const seoTags = isWeb
     ? `
-  <meta name="description" content="Interactive workbench preview and perceptual colorimetry explorer for Hylian Palette — 36 scientifically tuned Light and Dark VS Code & Positron themes across all 18 mainline Legend of Zelda games (1986–2024)." />
+  <meta name="description" content="Interactive workbench preview and perceptual colorimetry explorer for Hylian Palette — a 40th anniversary tribute (1986–2026) featuring 36 scientifically tuned Light and Dark VS Code & Positron themes across all 18 mainline Legend of Zelda games." />
   <meta property="og:title" content="Hylian Palette — Interactive Workbench & Colorimetry Explorer" />
   <meta property="og:description" content="Explore all 36 OKLCH-calibrated Light and Dark themes for VS Code & Positron with live R/Python/TypeScript syntax previews, WCAG 2.1 + APCA contrast readouts, and real-time dichromacy simulation." />
   <meta property="og:type" content="website" />
@@ -900,7 +900,7 @@ function buildHtml({ dataset, target }) {
         </svg>
         <div>
           <h1>Hylian Palette</h1>
-          <p class="brand-sub">18 Mainline Zelda Games (1986–2024) · 36 OKLCH-Calibrated VS Code &amp; Positron Themes</p>
+          <p class="brand-sub">40th Anniversary Tribute (1986–2026) · 18 Mainline Zelda Games · 36 OKLCH-Calibrated Themes</p>
         </div>
       </div>
 

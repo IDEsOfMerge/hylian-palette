@@ -1,0 +1,47 @@
+name: Attach VSIX to GitHub Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to attach the built .vsix to (defaults to v<package.json version>)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  attach-vsix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate themes, Explorer bundles & Positron keys
+        run: node scripts/validate.js
+
+      - name: Package extension (.vsix)
+        run: npx --yes @vscode/vsce package
+
+      - name: Upload .vsix asset to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_TAG: ${{ inputs.tag }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          TAG="${RELEASE_TAG:-$INPUT_TAG}"
+          if [ -z "$TAG" ]; then
+            VERSION="$(node -p "require('./package.json').version")"
+            TAG="v${VERSION}"
+          fi
+          VSIX="$(ls -1 *.vsix | head -n 1)"
+          echo "Uploading ${VSIX} to release ${TAG}..."
+          gh release upload "$TAG" "$VSIX" --clobber
