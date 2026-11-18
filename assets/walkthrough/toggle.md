@@ -1,5 +1,5 @@
-Same game, two lighting conditions — not two unrelated palettes.
+Same game, two worlds or lighting conditions — never two unrelated palettes.
 
-Run **Hylian Palette: Toggle Theme** and watch the accent colors hold steady while the background swaps from day to night (or dungeon to overworld, or Hyrule to its mirror world, depending on the game).
+Run **Hylian Palette: Toggle Theme** (`Ctrl+K Ctrl+Z` / `Cmd+K Cmd+Z`) and watch each game's signature identity thread hold steady while the surrounding canvas shifts from sunlit overworld to dungeon obsidian, Great Sea starlight, Lorule's crumbling walls, the Depths, or the Still World.
 
-<a href="command:windwakerMajora.toggleTheme">Toggle Theme</a>
+<a href="command:hylianPalette.toggleTheme">Toggle Theme</a>

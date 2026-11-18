@@ -1,240 +1,290 @@
 [
   {
-    "label": "The Legend of Zelda Dark",
-    "game": "The Legend of Zelda",
-    "year": 1986,
-    "mode": "dark",
-    "slug": "zelda1-dark"
-  },
-  {
     "label": "The Legend of Zelda Light",
     "game": "The Legend of Zelda",
     "year": 1986,
     "mode": "light",
-    "slug": "zelda1-light"
+    "slug": "zelda1-light",
+    "subtitle": "NES 2C02 sandstone overworld, gold cartridge & starting-tunic emerald"
   },
   {
-    "label": "Zelda II Dark",
-    "game": "Zelda II: The Adventure of Link",
-    "year": 1987,
+    "label": "The Legend of Zelda Dark",
+    "game": "The Legend of Zelda",
+    "year": 1986,
     "mode": "dark",
-    "slug": "zelda2-dark"
+    "slug": "zelda1-dark",
+    "subtitle": "NES $0F torchlit dungeon obsidian & 8-bit sprite luminance"
   },
   {
     "label": "Zelda II Light",
     "game": "Zelda II: The Adventure of Link",
     "year": 1987,
     "mode": "light",
-    "slug": "zelda2-light"
+    "slug": "zelda2-light",
+    "subtitle": "Side-scrolling RPG spell meter, Red Tunic & sunlit Hyrule map"
   },
   {
-    "label": "A Link to the Past Dark",
-    "game": "A Link to the Past",
-    "year": 1991,
+    "label": "Zelda II Dark",
+    "game": "Zelda II: The Adventure of Link",
+    "year": 1987,
     "mode": "dark",
-    "slug": "alttp-dark"
+    "slug": "zelda2-dark",
+    "subtitle": "Great Palace magenta brickwork, Thunderbird azure & Dark Link shadow"
   },
   {
     "label": "A Link to the Past Light",
     "game": "A Link to the Past",
     "year": 1991,
     "mode": "light",
-    "slug": "alttp-light"
+    "slug": "alttp-light",
+    "subtitle": "SNES Light World celadon meadow, Three Pendants & pink-haired Link"
   },
   {
-    "label": "Link's Awakening Dark",
-    "game": "Link's Awakening",
-    "year": 1993,
+    "label": "A Link to the Past Dark",
+    "game": "A Link to the Past",
+    "year": 1991,
     "mode": "dark",
-    "slug": "linksawakening-dark"
+    "slug": "alttp-dark",
+    "subtitle": "Ganon's Dark World twilight plum, Bunny-Link pink & Maiden Crystals"
   },
   {
     "label": "Link's Awakening Light",
     "game": "Link's Awakening",
     "year": 1993,
     "mode": "light",
-    "slug": "linksawakening-light"
+    "slug": "linksawakening-light",
+    "subtitle": "Koholint tilt-shift toy diorama, Marin's hibiscus & Wind Fish's Egg"
   },
   {
-    "label": "Ocarina of Time Dark",
-    "game": "Ocarina of Time",
-    "year": 1998,
+    "label": "Link's Awakening Dark",
+    "game": "Link's Awakening",
+    "year": 1993,
     "mode": "dark",
-    "slug": "ocarina-dark"
+    "slug": "linksawakening-dark",
+    "subtitle": "1993 DMG-01 dot-matrix LCD phosphor green ramp — the Wind Fish's dream"
   },
   {
     "label": "Ocarina of Time Light",
     "game": "Ocarina of Time",
     "year": 1998,
     "mode": "light",
-    "slug": "ocarina-light"
+    "slug": "ocarina-light",
+    "subtitle": "Temple of Time limestone, three Spiritual Stones & royal-blue Ocarina"
   },
   {
-    "label": "Majora's Mask Dark",
-    "game": "Majora's Mask",
-    "year": 2000,
+    "label": "Ocarina of Time Dark",
+    "game": "Ocarina of Time",
+    "year": 1998,
     "mode": "dark",
-    "slug": "majora-dark"
+    "slug": "ocarina-dark",
+    "subtitle": "Nocturnal Hyrule Field, Six Medallions & dungeon torchlight"
   },
   {
     "label": "Majora's Mask Light",
     "game": "Majora's Mask",
     "year": 2000,
     "mode": "light",
-    "slug": "majora-light"
+    "slug": "majora-light",
+    "subtitle": "Clock Town Carnival dawn, Majora magenta & Fierce Deity cyan"
   },
   {
-    "label": "Oracle of Ages Dark",
-    "game": "Oracle of Ages",
-    "year": 2001,
+    "label": "Majora's Mask Dark",
+    "game": "Majora's Mask",
+    "year": 2000,
     "mode": "dark",
-    "slug": "oracleages-dark"
-  },
-  {
-    "label": "Oracle of Seasons Dark",
-    "game": "Oracle of Seasons",
-    "year": 2001,
-    "mode": "dark",
-    "slug": "oracleseasons-dark"
-  },
-  {
-    "label": "Oracle of Ages Light",
-    "game": "Oracle of Ages",
-    "year": 2001,
-    "mode": "light",
-    "slug": "oracleages-light"
+    "slug": "majora-dark",
+    "subtitle": "Final-Night cosmic void, acid-mask neon & Fierce Deity cyan"
   },
   {
     "label": "Oracle of Seasons Light",
     "game": "Oracle of Seasons",
     "year": 2001,
     "mode": "light",
-    "slug": "oracleseasons-light"
+    "slug": "oracleseasons-light",
+    "subtitle": "Holodrum Spring cherry-blossom cream, Four Seasons & Din's flame"
   },
   {
-    "label": "Wind Waker Dark",
-    "game": "The Wind Waker",
-    "year": 2002,
+    "label": "Oracle of Seasons Dark",
+    "game": "Oracle of Seasons",
+    "year": 2001,
     "mode": "dark",
-    "slug": "windwaker-dark"
+    "slug": "oracleseasons-dark",
+    "subtitle": "Woods of Winter frost on Subrosian volcanic obsidian & Autumn ember"
+  },
+  {
+    "label": "Oracle of Ages Light",
+    "game": "Oracle of Ages",
+    "year": 2001,
+    "mode": "light",
+    "slug": "oracleages-light",
+    "subtitle": "Labrynna's Ancient Past limestone, Nayru's sapphire & Harp of Ages"
+  },
+  {
+    "label": "Oracle of Ages Dark",
+    "game": "Oracle of Ages",
+    "year": 2001,
+    "mode": "dark",
+    "slug": "oracleages-dark",
+    "subtitle": "Veran's Black Tower graphite stone, Symmetry City & Time Portals"
   },
   {
     "label": "Wind Waker Light",
     "game": "The Wind Waker",
     "year": 2002,
     "mode": "light",
-    "slug": "windwaker-light"
+    "slug": "windwaker-light",
+    "subtitle": "Sunlit sea-chart parchment, cel-wake turquoise & King of Red Lions"
   },
   {
-    "label": "The Minish Cap Dark",
-    "game": "The Minish Cap",
-    "year": 2004,
+    "label": "Wind Waker Dark",
+    "game": "The Wind Waker",
+    "year": 2002,
     "mode": "dark",
-    "slug": "minishcap-dark"
+    "slug": "windwaker-dark",
+    "subtitle": "Starlit Great Sea, bioluminescent wake turquoise & Tower of the Gods"
   },
   {
     "label": "The Minish Cap Light",
     "game": "The Minish Cap",
     "year": 2004,
     "mode": "light",
-    "slug": "minishcap-light"
+    "slug": "minishcap-light",
+    "subtitle": "Oversized morning dewdrop, Ezlo clover-green & the Four Elements"
   },
   {
-    "label": "Twilight Princess Dark",
-    "game": "Twilight Princess",
-    "year": 2006,
+    "label": "The Minish Cap Dark",
+    "game": "The Minish Cap",
+    "year": 2004,
     "mode": "dark",
-    "slug": "twilight-princess-dark"
+    "slug": "minishcap-dark",
+    "subtitle": "Dark Hyrule Castle plum-obsidian, Light Force gold & Vaati's wrath"
   },
   {
     "label": "Twilight Princess Light",
     "game": "Twilight Princess",
     "year": 2006,
     "mode": "light",
-    "slug": "twilight-princess-light"
+    "slug": "twilight-princess-light",
+    "subtitle": "Ordon golden-hour oil glaze, weathered bronze & Midna flame-orange"
   },
   {
-    "label": "Phantom Hourglass Dark",
-    "game": "Phantom Hourglass",
-    "year": 2007,
+    "label": "Twilight Princess Dark",
+    "game": "Twilight Princess",
+    "year": 2006,
     "mode": "dark",
-    "slug": "phantomhourglass-dark"
+    "slug": "twilight-princess-dark",
+    "subtitle": "Palace of Twilight shale-obsidian, smoky low-chroma & blazing Midna orange"
   },
   {
     "label": "Phantom Hourglass Light",
     "game": "Phantom Hourglass",
     "year": 2007,
     "mode": "light",
-    "slug": "phantomhourglass-light"
+    "slug": "phantomhourglass-light",
+    "subtitle": "DS sunlit lagoon chart, stylus route-red & Hourglass sand-gold"
   },
   {
-    "label": "Spirit Tracks Dark",
-    "game": "Spirit Tracks",
-    "year": 2009,
+    "label": "Phantom Hourglass Dark",
+    "game": "Phantom Hourglass",
+    "year": 2007,
     "mode": "dark",
-    "slug": "spirittracks-dark"
+    "slug": "phantomhourglass-dark",
+    "subtitle": "Temple of the Ocean King gunmetal armor, Safe-Zone cyan & Sand of Hours"
   },
   {
     "label": "Spirit Tracks Light",
     "game": "Spirit Tracks",
     "year": 2009,
     "mode": "light",
-    "slug": "spirittracks-light"
+    "slug": "spirittracks-light",
+    "subtitle": "New Hyrule meadow, Spirit Train brass, Engineer cobalt & Ghost-Zelda"
   },
   {
-    "label": "Skyward Sword Dark",
-    "game": "Skyward Sword",
-    "year": 2011,
+    "label": "Spirit Tracks Dark",
+    "game": "Spirit Tracks",
+    "year": 2009,
     "mode": "dark",
-    "slug": "skywardsword-dark"
+    "slug": "spirittracks-dark",
+    "subtitle": "Dark Realm coal-maroon, Possessed-Phantom rose & Demon Train Malladus"
   },
   {
     "label": "Skyward Sword Light",
     "game": "Skyward Sword",
     "year": 2011,
     "mode": "light",
-    "slug": "skywardsword-light"
+    "slug": "skywardsword-light",
+    "subtitle": "Impressionist Skyloft cloud-ivory, Crimson Loftwing & Timeshift cyan"
   },
   {
-    "label": "A Link Between Worlds Dark",
-    "game": "A Link Between Worlds",
-    "year": 2013,
+    "label": "Skyward Sword Dark",
+    "game": "Skyward Sword",
+    "year": 2011,
     "mode": "dark",
-    "slug": "albw-dark"
+    "slug": "skywardsword-dark",
+    "subtitle": "Eldin volcanic obsidian, Sacred Flames, Timeshift turquoise & Demise"
   },
   {
     "label": "A Link Between Worlds Light",
     "game": "A Link Between Worlds",
     "year": 2013,
     "mode": "light",
-    "slug": "albw-light"
+    "slug": "albw-light",
+    "subtitle": "Sunlit Hyrule chalk-fresco, Yuga's pigments & Ravio's Bracelet violet"
   },
   {
-    "label": "Breath of the Wild Dark",
-    "game": "Breath of the Wild",
-    "year": 2017,
+    "label": "A Link Between Worlds Dark",
+    "game": "A Link Between Worlds",
+    "year": 2013,
     "mode": "dark",
-    "slug": "botw-dark"
+    "slug": "albw-dark",
+    "subtitle": "Crumbling Lorule plum-abyss, Hilda rose-magenta & Ravio wall-merge"
   },
   {
     "label": "Breath of the Wild Light",
     "game": "Breath of the Wild",
     "year": 2017,
     "mode": "light",
-    "slug": "botw-light"
+    "slug": "botw-light",
+    "subtitle": "Plein-air Great Plateau mist, Champion's Tunic blue & Sheikah Slate"
   },
   {
-    "label": "Tears of the Kingdom Dark",
-    "game": "Tears of the Kingdom",
-    "year": 2023,
+    "label": "Breath of the Wild Dark",
+    "game": "Breath of the Wild",
+    "year": 2017,
     "mode": "dark",
-    "slug": "totk-dark"
+    "slug": "botw-dark",
+    "subtitle": "Blood-Moon crimson sky, Calamity Malice magenta & Sheikah cyan beacon"
   },
   {
     "label": "Tears of the Kingdom Light",
     "game": "Tears of the Kingdom",
     "year": 2023,
     "mode": "light",
-    "slug": "totk-light"
+    "slug": "totk-light",
+    "subtitle": "Great Sky Island cloud-stone, Zonai spiral jade & ginkgo gold"
+  },
+  {
+    "label": "Tears of the Kingdom Dark",
+    "game": "Tears of the Kingdom",
+    "year": 2023,
+    "mode": "dark",
+    "slug": "totk-dark",
+    "subtitle": "Pitch-black Depths basalt, Zonai Lightroot jade, Poes & crimson Gloom"
+  },
+  {
+    "label": "Echoes of Wisdom Light",
+    "game": "Echoes of Wisdom",
+    "year": 2024,
+    "mode": "light",
+    "slug": "echoes-light",
+    "subtitle": "Princess Zelda's royal cloak, Tri's golden triangles & Suthorn diorama"
+  },
+  {
+    "label": "Echoes of Wisdom Dark",
+    "game": "Echoes of Wisdom",
+    "year": 2024,
+    "mode": "dark",
+    "slug": "echoes-dark",
+    "subtitle": "The Still World's rift-violet void, Tri's golden Echoes & Swordfighter cyan"
   }
 ]

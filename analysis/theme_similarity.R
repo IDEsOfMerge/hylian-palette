@@ -28,7 +28,7 @@ ERA_LABEL <- c(
   "Link's Awakening" = "Handheld", "Oracle of Seasons" = "Handheld", "Oracle of Ages" = "Handheld", "The Minish Cap" = "Handheld",
   "Ocarina of Time" = "N64 & GameCube", "Majora's Mask" = "N64 & GameCube", "The Wind Waker" = "N64 & GameCube", "Twilight Princess" = "N64 & GameCube",
   "Phantom Hourglass" = "Nintendo DS", "Spirit Tracks" = "Nintendo DS",
-  "Skyward Sword" = "Modern", "A Link Between Worlds" = "Modern", "Breath of the Wild" = "Modern", "Tears of the Kingdom" = "Modern"
+  "Skyward Sword" = "Modern", "A Link Between Worlds" = "Modern", "Breath of the Wild" = "Modern", "Tears of the Kingdom" = "Modern", "Echoes of Wisdom" = "Modern"
 )
 ERA_COLORS <- c(
   "8-bit & 16-bit" = "#8A5A24", "Handheld" = "#2E8B4A", "N64 & GameCube" = "#023E8A",
