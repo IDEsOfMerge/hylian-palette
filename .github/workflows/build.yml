@@ -39,5 +39,5 @@ jobs:
       - name: Upload .vsix artifact
         uses: actions/upload-artifact@v4
         with:
-          name: positron-hylian-palette-vsix
+          name: hylian-palette-vsix
           path: '*.vsix'

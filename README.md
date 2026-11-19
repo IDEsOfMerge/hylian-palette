@@ -32,8 +32,8 @@
 *Created to celebrate the **40th anniversary of The Legend of Zelda (1986–2026)** — an independent fan tribute to four decades of Hyrule's art direction and color craft.*
 
 ![40th anniversary](https://img.shields.io/badge/40th_anniversary-1986%E2%80%932026-C9A227?style=flat-square)
-[![explorer](https://img.shields.io/badge/live_explorer-interactive_workbench-B08515?style=flat-square)](https://idesofmerge.github.io/positron-hylian-palette/)
-[![build](https://github.com/idesofmerge/positron-hylian-palette/actions/workflows/build.yml/badge.svg)](https://github.com/idesofmerge/positron-hylian-palette/actions/workflows/build.yml)
+[![explorer](https://img.shields.io/badge/live_explorer-interactive_workbench-B08515?style=flat-square)](https://idesofmerge.github.io/hylian-palette/)
+[![build](https://github.com/idesofmerge/hylian-palette/actions/workflows/build.yml/badge.svg)](https://github.com/idesofmerge/hylian-palette/actions/workflows/build.yml)
 ![version](https://img.shields.io/badge/version-1.0.0-264EB5?style=flat-square)
 ![themes](https://img.shields.io/badge/themes-36-7209B7?style=flat-square)
 ![games](https://img.shields.io/badge/games-18-00A896?style=flat-square)
@@ -41,7 +41,7 @@
 ![perceptual](https://img.shields.io/badge/OKLCH_%C2%B7_APCA_%C2%B7_CIEDE2000-verified-1B5EA8?style=flat-square)
 ![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 
-**[Launch the Live Interactive Workbench & Colorimetry Explorer ↗](https://idesofmerge.github.io/positron-hylian-palette/)**
+**[Launch the Live Interactive Workbench & Colorimetry Explorer ↗](https://idesofmerge.github.io/hylian-palette/)**
 *(Or run **`Hylian Palette: Open Palette & Colorimetry Explorer`** directly inside VS Code / Positron!)*
 
 </div>
@@ -209,9 +209,9 @@ Each swatch strip reads left to right: **background · keywords · strings · fu
 Search for **Hylian Palette** in the Extensions view (`Ctrl+Shift+X` / `Cmd+Shift+X`) in VS Code, Positron, or any VS Code-compatible editor, or install from the command line:
 
 ```sh
-code --install-extension idesofmerge.positron-hylian-palette
+code --install-extension idesofmerge.hylian-palette
 # or in Positron:
-positron --install-extension idesofmerge.positron-hylian-palette
+positron --install-extension idesofmerge.hylian-palette
 ```
 
 ## Packaging & installing locally
@@ -220,18 +220,21 @@ From this repository root:
 
 ```sh
 npx --yes @vscode/vsce package
-positron --install-extension positron-hylian-palette-1.0.0.vsix
+code --install-extension hylian-palette-1.0.0.vsix
+# or in Positron:
+positron --install-extension hylian-palette-1.0.0.vsix
 ```
 
 Or launch an Extension Development Host without packaging:
 
 ```sh
-positron --extensionDevelopmentPath="<full path to this folder>"
+code --extensionDevelopmentPath="<full path to this folder>"
+# or: positron --extensionDevelopmentPath="<full path to this folder>"
 ```
 
 ## Selecting & previewing themes
 
-- **Hylian Palette: Open Palette & Colorimetry Explorer** (Command Palette or Welcome walkthrough): opens a 100% offline interactive workbench & colorimetry studio directly inside VS Code / Positron — preview R, Python, TypeScript, and Quarto/SQL buffers across all 36 themes, inspect live OKLCH / WCAG 2.1 / APCA readouts and OKLab chromaticity polygons, simulate Protanopia / Deuteranopia / Tritanopia in real time, and click **Apply to Workbench** (or toggle **Live-sync IDE**) to switch your editor theme on the fly. The exact same explorer is also hosted on the web via **[GitHub Pages](https://idesofmerge.github.io/positron-hylian-palette/)**.
+- **Hylian Palette: Open Palette & Colorimetry Explorer** (Command Palette or Welcome walkthrough): opens a 100% offline interactive workbench & colorimetry studio directly inside VS Code / Positron — preview R, Python, TypeScript, and Quarto/SQL buffers across all 36 themes, inspect live OKLCH / WCAG 2.1 / APCA readouts and OKLab chromaticity polygons, simulate Protanopia / Deuteranopia / Tritanopia in real time, and click **Apply to Workbench** (or toggle **Live-sync IDE**) to switch your editor theme on the fly. The exact same explorer is also hosted on the web via **[GitHub Pages](https://idesofmerge.github.io/hylian-palette/)**.
 - **Hylian Palette: Pick Zelda Theme** (Command Palette or click the active theme badge in the bottom-right status bar): opens a release-ordered quick-pick grouped by all 18 games with **live theme preview** as you arrow up/down, subtitle lore notes on every entry, an `Active` indicator on your current theme, and clean `Esc` rollback if you cancel.
 - **Preferences: Color Theme** (`Ctrl+K Ctrl+T` / `Cmd+K Cmd+T`): standard alphabetical VS Code / Positron picker across all 36 themes.
 - **Hylian Palette: Random Theme**: jumps to a random theme across the other 35 themes — great for touring the catalog.

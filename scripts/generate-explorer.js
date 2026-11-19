@@ -1238,11 +1238,11 @@ function buildHtml({ dataset, target }) {
         envWrap.innerHTML =
           '<button type="button" id="btn-copy-setting" title="Copy workbench.colorTheme JSON setting">Copy settings.json</button> ' +
           '<button type="button" id="btn-share-url" title="Copy direct link to this theme">Share Link</button> ' +
-          '<a class="btn-link" href="vscode:extension/idesofmerge.positron-hylian-palette" title="Open extension in VS Code">Install in VS Code</a> ' +
-          '<a class="btn-link" href="https://github.com/idesofmerge/positron-hylian-palette" target="_blank" rel="noopener">GitHub ↗</a>';
+          '<a class="btn-link" href="vscode:extension/idesofmerge.hylian-palette" title="Open extension in VS Code">Install in VS Code</a> ' +
+          '<a class="btn-link" href="https://github.com/idesofmerge/hylian-palette" target="_blank" rel="noopener">GitHub ↗</a>';
         footLinks.innerHTML =
-          '<a href="https://github.com/idesofmerge/positron-hylian-palette#color-science" target="_blank" rel="noopener">Color-Science Write-Up</a> · ' +
-          '<a href="https://github.com/idesofmerge/positron-hylian-palette" target="_blank" rel="noopener">MIT License</a>';
+          '<a href="https://github.com/idesofmerge/hylian-palette#color-science" target="_blank" rel="noopener">Color-Science Write-Up</a> · ' +
+          '<a href="https://github.com/idesofmerge/hylian-palette" target="_blank" rel="noopener">MIT License</a>';
 
         document.getElementById('btn-copy-setting').addEventListener('click', () => {
           const cur = THEMES.find((x) => x.slug === activeSlug);
