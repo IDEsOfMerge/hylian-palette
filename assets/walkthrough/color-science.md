@@ -4,4 +4,4 @@ Every one of the 36 themes passes a multi-stage perceptual colorimetry pipeline 
 - **100% WCAG 2.1 AA + APCA contrast** — all 20 foreground, syntax, comment, and diagnostic roles in every theme clear **4.5:1** on the editor canvas (`720 / 720` tokens passing), plus full 16-color ANSI terminal validation.
 - **CIEDE2000 & dichromacy resilience** — all 21 critical adjacent syntax-role pairs clear `≥ 10 ΔE*ab` under simulated protanopia, deuteranopia, and tritanopia across every polychromatic theme.
 
-Click **Open Interactive Explorer** on the left to test all 36 themes with live OKLCH/WCAG/APCA readouts and vision simulations right inside the editor, or <a href="https://karlmakepeace.github.io/positron-hylian-palette/">open the web explorer on GitHub Pages</a>.
+Click **Open Interactive Explorer** on the left to test all 36 themes with live OKLCH/WCAG/APCA readouts and vision simulations right inside the editor, or <a href="https://idesofmerge.github.io/hylian-palette/">open the web explorer on GitHub Pages</a>.
