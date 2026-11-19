@@ -38,38 +38,17 @@ Every pair in **Hylian Palette** is individually authored from its game's actual
 - **Twilight Princess Dark** desaturates its entire Twilight Realm syntax envelope into muted sage, dusk slate, and glowing cyan runes so Midna's `#FF781F` flame-orange cursor stands out exactly as she does on screen.
 - **Link's Awakening Dark** honors the 1993 DMG-01 Game Boy's iconic 4-shade olive-green reflective LCD (`#0F380F`–`#9BBC0F`) with a perceptually monotonic OKLCH lightness ramp that still clears WCAG AA across every role.
 
-Every palette is synthesized and verified in **OKLCH** perceptual color space against **WCAG 2.1**, **APCA-W3**, **CIEDE2000** ($\Delta E_{00}$), and **Machado et al. (2009)** dichromacy simulation. Design inspiration comes strictly from **color language and atmosphere** — no game artwork, logos, sprites, or copyrighted assets are included or referenced anywhere in this repository.
+Every palette is synthesized and verified in **OKLCH** perceptual color space against **WCAG 2.1**, **APCA-W3**, **CIEDE2000** (ΔE₀₀), and **Machado et al. (2009)** dichromacy simulation. Design inspiration comes strictly from **color language and atmosphere** — no game artwork, logos, sprites, or copyrighted assets are included or referenced anywhere in this repository.
 
 Named "Hylian" rather than "Hyrule" on purpose: several of these games aren't set in Hyrule at all (Termina, Koholint, Holodrum, Labrynna, the Great Sea, Lorule, the Still World). "Hylian" — the heritage, shield crest, and script that thread through every era — is the one name that spans the whole series.
 
 ## The 18 games, by release date
 
-```mermaid
-timeline
-    title The Legend of Zelda — 18 Mainline Games (1986–2024)
-    section 8-bit & 16-bit
-        1986 : The Legend of Zelda
-        1987 : Zelda II
-        1991 : A Link to the Past
-    section Handheld
-        1993 : Link's Awakening
-        2001 : Oracle of Seasons : Oracle of Ages
-        2004 : The Minish Cap
-    section N64 & GameCube
-        1998 : Ocarina of Time
-        2000 : Majora's Mask
-        2002 : The Wind Waker
-        2006 : Twilight Princess
-    section Nintendo DS
-        2007 : Phantom Hourglass
-        2009 : Spirit Tracks
-    section Modern
-        2011 : Skyward Sword
-        2013 : A Link Between Worlds
-        2017 : Breath of the Wild
-        2023 : Tears of the Kingdom
-        2024 : Echoes of Wisdom
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/diagrams/release-timeline-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/diagrams/release-timeline-light.png">
+  <img alt="The Legend of Zelda — 18 Mainline Games by Release Date (1986–2024) across 5 hardware eras: 8-bit &amp; 16-bit (1986 The Legend of Zelda, 1987 Zelda II, 1991 A Link to the Past), Handheld (1993 Link's Awakening, 2001 Oracle of Seasons &amp; Oracle of Ages, 2004 The Minish Cap), N64 &amp; GameCube (1998 Ocarina of Time, 2000 Majora's Mask, 2002 The Wind Waker, 2006 Twilight Princess), Nintendo DS (2007 Phantom Hourglass, 2009 Spirit Tracks), and Modern (2011 Skyward Sword, 2013 A Link Between Worlds, 2017 Breath of the Wild, 2023 Tears of the Kingdom, 2024 Echoes of Wisdom)" src="assets/diagrams/release-timeline-dark.png" width="900">
+</picture>
 
 ## ...and by in-universe story chronology
 
@@ -229,38 +208,28 @@ Run **Hylian Palette: Toggle Theme** from the Command Palette or press `Ctrl+K C
 
 ## How the themes are built
 
-```mermaid
-graph LR
-    P["palettes/*.js: 36 bespoke game palettes"] --> G["scripts/generate-themes.js"]
-    P --> X["scripts/generate-explorer.js"]
-    CS["scripts/color-science.js: OKLCH + WCAG + APCA + CIEDE2000 + CVD"] --> G
-    CS --> V["scripts/validate.js"]
-    G --> T["themes/*.json: 36 full VS Code + Positron themes"]
-    G --> K["package.json: contributes.themes"]
-    G --> M["theme-metadata.json: game, mode, slug, year, subtitle"]
-    X --> S["site/index.html: GitHub Pages Explorer"]
-    X --> W["assets/explorer/explorer.html: Webview Explorer"]
-    T --> V
-    S --> V
-    W --> V
-    V -->|"720/720 AA + zero-CDN CSP + 5472 Positron keys"| OK["CI & vsce package succeed"]
-    M -.-> E["extension.js: QuickPick + Webview Explorer + toggle + status bar"]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/diagrams/build-pipeline-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/diagrams/build-pipeline-light.png">
+  <img alt="Hylian Palette Build, Colorimetry &amp; Validation Pipeline: palettes/*.js (36 bespoke game palettes) and shared scripts/color-science.js (OKLCH, WCAG, APCA, CIEDE2000, Machado CVD) feed scripts/generate-themes.js and scripts/generate-explorer.js to emit theme-metadata.json, package.json, themes/*.json, site/index.html, and assets/explorer/explorer.html; theme-metadata.json is read at runtime by extension.js, while scripts/validate.js audits 720/720 WCAG AA + APCA-W3, CIEDE2000 + Machado CVD, zero-CDN Explorer CSP, and 5,472 verified Positron keys so CI and vsce package succeed" src="assets/diagrams/build-pipeline-dark.png" width="900">
+</picture>
 
 Hand-authoring ~350 workbench, TextMate, semantic-token, and Positron IDE keys across 36 themes doesn't scale by hand, so `scripts/generate-themes.js` expands each game's ~45-token story palette (`palettes/*.js`) using OKLCH perceptual mixing, `scripts/generate-explorer.js` compiles the self-contained GitHub Pages (`site/index.html`) and VS Code Webview (`assets/explorer/explorer.html`) interactive explorers from those same modules, and `scripts/validate.js` enforces multi-gate colorimetric and zero-CDN CSP verification on every build:
 
 ```sh
-node scripts/generate-themes.js    # regenerate themes/*.json + package.json + theme-metadata.json
-node scripts/generate-explorer.js  # regenerate site/index.html + assets/explorer/explorer.html
-node scripts/generate-swatches.js  # regenerate 345 local swatch PNGs in assets/swatches/
-node scripts/validate.js           # audit all 36 themes, Explorer CSP & Positron key provenance
+node scripts/generate-themes.js       # regenerate themes/*.json + package.json + theme-metadata.json
+node scripts/generate-explorer.js     # regenerate site/index.html + assets/explorer/explorer.html
+node scripts/generate-swatches.js     # regenerate 345 local swatch PNGs in assets/swatches/
+python3 scripts/generate-banner.py    # regenerate Dark/Light 2x Retina README banners
+python3 scripts/generate-diagrams.py  # regenerate Dark/Light 2x Retina timeline & pipeline diagrams
+node scripts/validate.js              # audit all 36 themes, Explorer CSP & Positron key provenance
 ```
 
 ## Accessibility & perceptual contrast
 
 Every single theme must clear strict automated perceptual gates before `generate-themes.js` or `validate.js` will succeed:
 
-- **100% WCAG 2.1 AA compliance (`720 / 720` foreground & syntax tokens)**: all 20 foreground/syntax tokens in all 36 themes clear **$\ge$ 4.5:1** on `editor.background` (actual range across the family: **`4.62:1` to `14.36:1`**) and **$\ge$ 3.8:1** on `editor.lineHighlightBackground`.
+- **100% WCAG 2.1 AA compliance (`720 / 720` foreground & syntax tokens)**: all 20 foreground/syntax tokens in all 36 themes clear **≥ 4.5:1** on `editor.background` (actual range across the family: **`4.62:1` to `14.36:1`**) and **≥ 3.8:1** on `editor.lineHighlightBackground`.
 - **APCA-W3 spatial contrast**: primary body text (`fg` on `bg`) achieves **`|Lc| = 79.4` to `93.7`** (`12.68:1`–`14.36:1` WCAG) across all 35 polychromatic themes, tuned to prevent halation on dark OLED displays while keeping warm paper-like light themes crisp and glare-free.
 - **Figure–ground hierarchy**: comments (`fgComment`) clear AA comfortably (`4.77:1`–`6.05:1`) while remaining perceptually subordinate to active code tokens so documentation never competes with control flow.
 - **576 / 576 ANSI terminal tokens verified**: all 16 ANSI colors in every integrated terminal / Positron console clear contrast gates while preserving canonical terminal hue bands (so red errors stay red and green diffs stay green even when a theme's syntax keywords are gold or indigo).
@@ -276,11 +245,11 @@ Every single theme must clear strict automated perceptual gates before `generate
 
 ## Color science
 
-Every theme's 13 adjacent syntax-relevant roles (`keyword`, `storage`, `string`, `regex`, `function`, `function-dim`, `type`, `interface`, `number`, `decorator`, `namespace`, `error`, `warning` — **468 syntax tokens** across 36 themes) are synthesized in Björn Ottosson's **OKLCH** perceptual color space and audited in **CIE 1976 $L^*a^*b^*$** (`CIEDE2000` $\Delta E_{00}$ for normal-vision categorical distinctness and **Machado, Oliveira & Fernandes (2009)** physiological cone-matrix simulation for protanopia, deuteranopia, and tritanopia).
+Every theme's 13 adjacent syntax-relevant roles (`keyword`, `storage`, `string`, `regex`, `function`, `function-dim`, `type`, `interface`, `number`, `decorator`, `namespace`, `error`, `warning` — **468 syntax tokens** across 36 themes) are synthesized in Björn Ottosson's **OKLCH** perceptual color space and audited in **CIE 1976 `L*a*b*`** (`CIEDE2000` ΔE₀₀ for normal-vision categorical distinctness and **Machado, Oliveira & Fernandes (2009)** physiological cone-matrix simulation for protanopia, deuteranopia, and tritanopia).
 
 <img src="assets/color-science/theme-colorspace-grid.png" alt="All 36 themes' 10 core syntax colors plotted in the CIE a*-b* plane, connected in fixed semantic order" width="900">
 
-Plotting each theme's 10 core syntax roles in the CIE $a^*$–$b^*$ chromaticity plane and connecting them in fixed role order reveals each game's chromatic "signature" at a glance: *Link's Awakening Dark* collapses into a tight olive-chartreuse needle near a single hue angle (authentic DMG-01 LCD), *Twilight Princess Dark* forms a restrained atmospheric envelope, and high-chroma worlds like *Majora's Mask Dark*, *Tears of the Kingdom Dark*, and *Echoes of Wisdom Dark* span wide, balanced polygons across all four quadrants.
+Plotting each theme's 10 core syntax roles in the CIE `a*`–`b*` chromaticity plane and connecting them in fixed role order reveals each game's chromatic "signature" at a glance: *Link's Awakening Dark* collapses into a tight olive-chartreuse needle near a single hue angle (authentic DMG-01 LCD), *Twilight Princess Dark* forms a restrained atmospheric envelope, and high-chroma worlds like *Majora's Mask Dark*, *Tears of the Kingdom Dark*, and *Echoes of Wisdom Dark* span wide, balanced polygons across all four quadrants.
 
 <img src="assets/color-science/family-fingerprint.png" alt="Chromatic polygons of all 36 themes faceted across the 5 hardware eras" width="900">
 
@@ -290,7 +259,7 @@ An unscaled global PCA across all **468 syntax tokens** (`PC1 = 50.1%`, `PC2 = 3
 
 ### Which themes look like each other
 
-Converting each theme's 13 syntax roles into a **39-dimensional CIE $L^*a^*b^*$ feature vector** (`analysis/theme_similarity.R`) lets us compare entire themes side-by-side via standardized PCA (`PC1 = 40.6%`, `PC2 = 15.4%`) and **Ward's minimum-variance hierarchical clustering**:
+Converting each theme's 13 syntax roles into a **39-dimensional CIE `L*a*b*` feature vector** (`analysis/theme_similarity.R`) lets us compare entire themes side-by-side via standardized PCA (`PC1 = 40.6%`, `PC2 = 15.4%`) and **Ward's minimum-variance hierarchical clustering**:
 
 <img src="assets/color-science/theme-pca.png" alt="Per-theme 39-D standardized CIE Lab PCA across all 36 themes, colored by hardware era and shaped by Light/Dark mode" width="900">
 
@@ -304,13 +273,13 @@ Three empirical patterns emerge directly from the geometry without any manual gr
 
 ### Color-vision-deficiency (CVD) resilience via OKLCH lightness staggering
 
-Categorical syntax palettes that rely purely on hue (such as an isoluminant red string next to a green keyword) collapse under protanopia or deuteranopia. To prevent this scientifically, every Hylian Palette staggers adjacent syntax roles across **OKLCH perceptual lightness ($L$)** as well as hue — because luminance contrast survives all three cone deficiencies even when chromatic axes collapse.
+Categorical syntax palettes that rely purely on hue (such as an isoluminant red string next to a green keyword) collapse under protanopia or deuteranopia. To prevent this scientifically, every Hylian Palette staggers adjacent syntax roles across **OKLCH perceptual lightness (`L`)** as well as hue — because luminance contrast survives all three cone deficiencies even when chromatic axes collapse.
 
 <img src="assets/color-science/cvd-swatch-grid.png" alt="Dichromacy simulation across 12 representative themes showing 10 syntax roles under Normal Vision, Protanopia, Deuteranopia, and Tritanopia" width="850">
 
 Across all **2,808 role-pairs** (`36 themes × 78 pairs`) and **756 critical adjacent syntax pairs** (`keyword`, `storage`, `string`, `function`, `type`, `number`, `error`):
 
-- **35 polychromatic themes (`735` critical pairs)**: **0 severe collisions** (`< 5 ΔE*ab`) and **0 moderate collisions** (`< 10 ΔE*ab`) under simulated protanopia, deuteranopia, or tritanopia. Every critical syntax pair stays $\ge 10\,\Delta E^*_{ab}$ apart across all three CVD simulations.
+- **35 polychromatic themes (`735` critical pairs)**: **0 severe collisions** (`< 5 ΔE*ab`) and **0 moderate collisions** (`< 10 ΔE*ab`) under simulated protanopia, deuteranopia, or tritanopia. Every critical syntax pair stays `≥ 10 ΔE*ab` apart across all three CVD simulations.
 - **Link's Awakening Dark (monochrome hardware tribute)**: accounts for the only **3** critical pairs below `10 ΔE*ab` in the entire 36-theme family (`accentStorage`/`colorError` at `2.04`, `accentKeyword`/`accentType` at `7.63`, and `accentKeyword`/`accentStorage` at `9.67`), preserved intentionally as a documented, faithful tribute to the 1993 Game Boy's single-hue olive LCD ramp while still clearing WCAG AA (`4.66:1`–`8.74:1`) on every token.
 
 ```sh
@@ -327,7 +296,7 @@ Rscript --vanilla analysis/timeline_metro.R
 - Created to commemorate the **40th anniversary of *The Legend of Zelda* (1986–2026)** — an independent, unofficial fan tribute not affiliated with or endorsed by Nintendo.
 - Zero runtime `npm` dependencies — `extension.js` uses only the built-in `vscode` API and static `theme-metadata.json`.
 - Positron-specific workbench tokens (`positronConsole.*`, `positronVariables.*`, `positronPlots.*`, `positronDataExplorer.*`, etc.) are strictly validated against Positron's upstream color registry (`5,472` verified usages across 36 themes).
-- No game artwork, logos, sprites, or copyrighted assets appear anywhere in this repository — every visual (extension icon, 345 swatch PNGs, timeline diagram, and color-science plots) is generated algorithmically from hex coordinates and geometric primitives.
+- No game artwork, logos, sprites, or copyrighted assets appear anywhere in this repository — every visual (extension icon, README banners, 345 swatch PNGs, timeline & architecture diagrams, and color-science plots) is generated algorithmically from hex coordinates and geometric primitives.
 
 ## License
 
