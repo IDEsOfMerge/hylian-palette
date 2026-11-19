@@ -1,28 +1,11 @@
 <!-- markdownlint-disable MD033 MD041 -->
-```text
-╔════════════════╤══════════════════════════════════════════════════════════════╗
-║  ── HYRULE ──  │        ──── 40TH ANNIVERSARY TRIBUTE · 1986–2026 ────        ║
-║       /\       │        ██╗  ██╗██╗   ██╗██╗     ██╗ █████╗ ███╗   ██╗        ║
-║      /█▒\      │        ██║  ██║╚██╗ ██╔╝██║     ██║██╔══██╗████╗  ██║        ║
-║     /██▒▒\     │        ███████║ ╚████╔╝ ██║     ██║███████║██╔██╗ ██║        ║
-║    /\    /\    │        ██╔══██║  ╚██╔╝  ██║     ██║██╔══██║██║╚██╗██║        ║
-║   /█▒\  /█▒\   │        ██║  ██║   ██║   ███████╗██║██║  ██║██║ ╚████║        ║
-║  /██▒▒\/██▒▒\  │        ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝        ║
-╟────────────────┼──────────────────────────────────────────────────────────────╢
-║  \▒▒░░/\▒▒░░/  │  ██████╗  █████╗ ██╗     ███████╗████████╗████████╗███████╗  ║
-║   \▒░/  \▒░/   │  ██╔══██╗██╔══██╗██║     ██╔════╝╚══██╔══╝╚══██╔══╝██╔════╝  ║
-║    \/    \/    │  ██████╔╝███████║██║     █████╗     ██║      ██║   █████╗    ║
-║     \▒▒░░/     │  ██╔═══╝ ██╔══██║██║     ██╔══╝     ██║      ██║   ██╔══╝    ║
-║      \▒░/      │  ██║     ██║  ██║███████╗███████╗   ██║      ██║   ███████╗  ║
-║       \/       │  ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝      ╚═╝   ╚══════╝  ║
-║  ── LORULE ──  │                                                              ║
-╠════════════════╧══════════════════════════════════════════════════════════════╣
-║   18 MAINLINE ZELDA GAMES  ·  36 LIGHT & DARK THEMES  ·  VS CODE / POSITRON   ║
-║   OKLCH COLORIMETRY  ·  100% WCAG AA  ·  APCA-W3  ·  CIEDE2000  ·  CVD SAFE   ║
-╚═══════════════════════════════════════════════════════════════════════════════╝
-```
-
 <div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner/banner-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/banner/banner-light.png">
+  <img alt="Hylian Palette — 40th Anniversary Tribute (1986–2026) · Hyrule &amp; Lorule · 18 Mainline Zelda Games · 36 Light &amp; Dark Themes · VS Code / Positron · OKLCH Colorimetry · 100% WCAG AA · APCA-W3 · CIEDE2000 · CVD Safe" src="assets/banner/banner-dark.png" width="900">
+</picture>
 
 # Hylian Palette
 
