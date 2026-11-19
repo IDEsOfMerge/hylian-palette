@@ -1,9 +1,9 @@
 {
-  "name": "positron-hylian-palette",
+  "name": "hylian-palette",
   "displayName": "Hylian Palette — Every Mainline Zelda Game",
   "description": "Created for the 40th anniversary of The Legend of Zelda (1986–2026) — scientifically tuned Light and Dark themes for all 18 mainline games (36 themes) for VS Code and Positron, crafted in OKLCH with 100% WCAG AA contrast, APCA hierarchy, and CVD resilience.",
   "version": "1.0.0",
-  "publisher": "karlmakepeace",
+  "publisher": "idesofmerge",
   "license": "MIT",
   "icon": "icon.png",
   "galleryBanner": {
@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/karlmakepeace/positron-hylian-palette.git"
+    "url": "https://github.com/idesofmerge/hylian-palette.git"
   },
   "bugs": {
-    "url": "https://github.com/karlmakepeace/positron-hylian-palette/issues"
+    "url": "https://github.com/idesofmerge/hylian-palette/issues"
   },
-  "homepage": "https://karlmakepeace.github.io/positron-hylian-palette/",
+  "homepage": "https://idesofmerge.github.io/hylian-palette/",
   "engines": {
     "vscode": "^1.90.0",
     "positron": ">=2025.1.0"
