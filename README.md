@@ -27,6 +27,10 @@
 **[Launch the Live Interactive Workbench & Colorimetry Explorer ↗](https://idesofmerge.github.io/hylian-palette/)**
 *(Or run **`Hylian Palette: Open Palette & Colorimetry Explorer`** directly inside VS Code / Positron!)*
 
+<br>
+
+<img src="assets/showcase/hylian-palette-demo.gif" alt="Animated preview of Hylian Palette themes running in a VS Code and Positron IDE workbench — cycling across Ocarina of Time, The Wind Waker, Majora's Mask, Link's Awakening, Tears of the Kingdom, and Echoes of Wisdom in Light and Dark modes with live WCAG contrast readouts and the Ctrl+K Ctrl+Z per-game toggle" width="900">
+
 </div>
 
 ---
@@ -217,12 +221,13 @@ Run **Hylian Palette: Toggle Theme** from the Command Palette or press `Ctrl+K C
 Hand-authoring ~350 workbench, TextMate, semantic-token, and Positron IDE keys across 36 themes doesn't scale by hand, so `scripts/generate-themes.js` expands each game's ~45-token story palette (`palettes/*.js`) using OKLCH perceptual mixing, `scripts/generate-explorer.js` compiles the self-contained GitHub Pages (`site/index.html`) and VS Code Webview (`assets/explorer/explorer.html`) interactive explorers from those same modules, and `scripts/validate.js` enforces multi-gate colorimetric and zero-CDN CSP verification on every build:
 
 ```sh
-node scripts/generate-themes.js       # regenerate themes/*.json + package.json + theme-metadata.json
-node scripts/generate-explorer.js     # regenerate site/index.html + assets/explorer/explorer.html
-node scripts/generate-swatches.js     # regenerate 345 local swatch PNGs in assets/swatches/
-python3 scripts/generate-banner.py    # regenerate Dark/Light 2x Retina README banners
-python3 scripts/generate-diagrams.py  # regenerate Dark/Light 2x Retina timeline & pipeline diagrams
-node scripts/validate.js              # audit all 36 themes, Explorer CSP & Positron key provenance
+node scripts/generate-themes.js          # regenerate themes/*.json + package.json + theme-metadata.json
+node scripts/generate-explorer.js        # regenerate site/index.html + assets/explorer/explorer.html
+node scripts/generate-swatches.js        # regenerate 345 local swatch PNGs in assets/swatches/
+python3 scripts/generate-banner.py       # regenerate Dark/Light 2x Retina README banners
+python3 scripts/generate-diagrams.py     # regenerate Dark/Light 2x Retina timeline & pipeline diagrams
+python3 scripts/generate-showcase-gif.py # regenerate animated VS Code / Positron IDE showcase GIF
+node scripts/validate.js                 # audit all 36 themes, Explorer CSP & Positron key provenance
 ```
 
 ## Accessibility & perceptual contrast
@@ -296,7 +301,7 @@ Rscript --vanilla analysis/timeline_metro.R
 - Created to commemorate the **40th anniversary of *The Legend of Zelda* (1986–2026)** — an independent, unofficial fan tribute not affiliated with or endorsed by Nintendo.
 - Zero runtime `npm` dependencies — `extension.js` uses only the built-in `vscode` API and static `theme-metadata.json`.
 - Positron-specific workbench tokens (`positronConsole.*`, `positronVariables.*`, `positronPlots.*`, `positronDataExplorer.*`, etc.) are strictly validated against Positron's upstream color registry (`5,472` verified usages across 36 themes).
-- No game artwork, logos, sprites, or copyrighted assets appear anywhere in this repository — every visual (extension icon, README banners, 345 swatch PNGs, timeline & architecture diagrams, and color-science plots) is generated algorithmically from hex coordinates and geometric primitives.
+- No game artwork, logos, sprites, or copyrighted assets appear anywhere in this repository — every visual (extension icon, README banners, animated IDE showcase GIF, 345 swatch PNGs, timeline & architecture diagrams, and color-science plots) is generated algorithmically from hex coordinates and geometric primitives.
 
 ## License
 
