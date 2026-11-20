@@ -2,6 +2,30 @@ name: Publish
 
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target registry to publish to'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - both
+          - openvsx
+          - marketplace
+      create_openvsx_namespace:
+        description: 'Create Open VSX namespace first (first-time publish only; requires OVSX_PAT)'
+        required: false
+        default: false
+        type: boolean
+      skip_duplicate:
+        description: 'Succeed if this version is already published on a target registry'
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   publish:
@@ -13,20 +37,82 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
-      - name: Regenerate themes (fails on any WCAG contrast violation)
-        run: node scripts/generate-themes.js
+      - name: Regenerate themes & Explorer and verify clean diff
+        run: |
+          node scripts/generate-themes.js
+          node scripts/generate-explorer.js
+          git diff --exit-code -- themes/ package.json theme-metadata.json site/index.html assets/explorer/explorer.html || {
+            echo "::error::Generated themes or Explorer bundles are out of date."
+            exit 1
+          }
 
-      - name: Validate theme JSON + positron* key provenance
+      - name: Validate themes, Explorer CSP & Positron keys
         run: node scripts/validate.js
 
-      - name: Publish to Visual Studio Marketplace
-        run: npx --yes @vscode/vsce publish
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      - name: Package extension (.vsix)
+        id: pkg
+        run: |
+          npx --yes @vscode/vsce package
+          VSIX="$(ls -1 *.vsix | head -n 1)"
+          PUBLISHER="$(node -p "require('./package.json').publisher")"
+          echo "vsix=${VSIX}" >> "$GITHUB_OUTPUT"
+          echo "publisher=${PUBLISHER}" >> "$GITHUB_OUTPUT"
+          echo "Packaged ${VSIX} for publisher ${PUBLISHER}"
 
-      - name: Publish to Open VSX Registry
-        run: npx --yes ovsx publish
+      - name: Upload packaged .vsix artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: published-vsix
+          path: ${{ steps.pkg.outputs.vsix }}
+
+      - name: Create Open VSX namespace (first-time publish)
+        if: ${{ (inputs.target == 'both' || inputs.target == 'openvsx') && inputs.create_openvsx_namespace }}
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
+          PUBLISHER: ${{ steps.pkg.outputs.publisher }}
+        run: |
+          if [ -z "$OVSX_PAT" ]; then
+            echo "::error::OVSX_PAT secret is required to create the Open VSX namespace."
+            exit 1
+          fi
+          npx --yes ovsx create-namespace "$PUBLISHER"
+
+      - name: Publish to Open VSX Registry
+        if: ${{ inputs.target == 'both' || inputs.target == 'openvsx' }}
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+          VSIX: ${{ steps.pkg.outputs.vsix }}
+          SKIP_DUP: ${{ inputs.skip_duplicate }}
+        run: |
+          EXTRA_ARGS=""
+          if [ "$SKIP_DUP" = "true" ]; then
+            EXTRA_ARGS="--skip-duplicate"
+          fi
+          if [ -n "$OVSX_PAT" ]; then
+            echo "Publishing ${VSIX} to Open VSX using OVSX_PAT..."
+            npx --yes ovsx publish "$VSIX" $EXTRA_ARGS
+          else
+            echo "Publishing ${VSIX} to Open VSX using OIDC Trusted Publishing..."
+            npx --yes ovsx publish --trusted-publishing "$VSIX" $EXTRA_ARGS
+          fi
+
+      - name: Publish to Visual Studio Marketplace
+        if: ${{ inputs.target == 'both' || inputs.target == 'marketplace' }}
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          VSIX: ${{ steps.pkg.outputs.vsix }}
+          SKIP_DUP: ${{ inputs.skip_duplicate }}
+        run: |
+          EXTRA_ARGS=""
+          if [ "$SKIP_DUP" = "true" ]; then
+            EXTRA_ARGS="--skip-duplicate"
+          fi
+          if [ -n "$VSCE_PAT" ]; then
+            echo "Publishing ${VSIX} to Visual Studio Marketplace using VSCE_PAT..."
+            npx --yes @vscode/vsce publish --packagePath "$VSIX" $EXTRA_ARGS
+          else
+            echo "Publishing ${VSIX} to Visual Studio Marketplace using OIDC Trusted Publishing..."
+            npx --yes @vscode/vsce publish --oidc --packagePath "$VSIX" $EXTRA_ARGS
+          fi
