@@ -1,0 +1,87 @@
+name: Request a Zelda Game or Palette Refinement
+description: Propose a new Legend of Zelda Light & Dark palette or refine an existing game's color craft in Hylian Palette
+title: "[Game / Palette]: "
+labels:
+  - enhancement
+  - palette-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing ideas to **Hylian Palette**!
+        Every game ships as a matched **Light & Dark** pair synthesized in **OKLCH** and verified against **WCAG 2.1 AA**, **APCA-W3**, **CIEDE2000**, and **Machado et al. (2009)** CVD gates.
+
+  - type: dropdown
+    id: request_type
+    attributes:
+      label: Request type
+      description: Are you proposing a title not currently in the 18-game mainline catalog, or tuning an existing palette?
+      options:
+        - Propose a new Legend of Zelda title (future mainline or spin-off)
+        - Refine an existing game's Light / Dark palette
+        - Accessibility, contrast, or CVD feedback
+    validations:
+      required: true
+
+  - type: input
+    id: game_title
+    attributes:
+      label: Game title
+      description: Full title of the Legend of Zelda game (and mode, if refining an existing Light or Dark theme).
+      placeholder: "e.g., Hyrule Warriors: Age of Calamity, Four Swords Adventures, or Twilight Princess Dark"
+    validations:
+      required: true
+
+  - type: input
+    id: release_year_era
+    attributes:
+      label: Release year, platform & timeline branch
+      description: Original launch year, console hardware, and official Zelda timeline placement (if applicable).
+      placeholder: "e.g., 2004 — GameCube (Child Timeline) · or 2015 — Nintendo 3DS (Downfall Timeline)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: light_mood
+    attributes:
+      label: Light mode color & atmosphere inspiration
+      description: Daytime world surfaces, architecture, parchment/UI chrome, or lighting palette that should anchor the Light theme background and syntax.
+      placeholder: "e.g., Sunlit stone courtyard parchment, verdant overworld greens, warm weathered gold accents"
+    validations:
+      required: true
+
+  - type: textarea
+    id: dark_mood
+    attributes:
+      label: Dark mode color & atmosphere inspiration
+      description: Nocturnal world, dungeon/shadow realm, or display hardware palette that should anchor the Dark theme.
+      placeholder: "e.g., Midnight twilight slate with luminous cyan rune highlights and restrained muted greens"
+    validations:
+      required: true
+
+  - type: textarea
+    id: accent_colors
+    attributes:
+      label: Iconic color accents & syntax mapping ideas
+      description: Signature atmospheric hues, cursor/focus identity colors, or syntax-role suggestions (keywords, strings, functions, types). Color descriptions or approximate hex values are welcome — please do not attach copyrighted artwork, screenshots, or logos.
+      placeholder: "e.g., Deep emerald keywords, ruby strings, sapphire functions, golden cursor/focus identity accent"
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra_context
+    attributes:
+      label: Additional context (optional)
+      description: Notes on display hardware characteristics, accessibility observations, or perceptual trade-offs.
+      placeholder: "Optional notes on hardware CRT/LCD mood, contrast feel, or Positron / VS Code UI elements"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: ip_guidelines
+    attributes:
+      label: Color-inspiration-only IP & trademark guidelines
+      description: Hylian Palette is an independent, unofficial fan tribute celebrating color craft exclusively without third-party intellectual property.
+      options:
+        - label: I understand that Hylian Palette draws strictly from color language, hardware display character, and atmosphere — zero copyrighted Nintendo logos, game sprites, character artwork, or trademarks will be included or requested.
+          required: true

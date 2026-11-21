@@ -458,28 +458,29 @@ def build_pipeline_svg(mode: str) -> str:
         for i, c in enumerate(swatch_colors)
     )
 
-    # Validation card (Column 4 middle) with explicit 4-gate checklist
+    # Validation card (Column 4 middle) with explicit 5-gate checklist
     a_val = acc["violet"]
-    val_x, val_y, val_w, val_h = c4_x, 180.0, c4_w, 122.0
+    val_x, val_y, val_w, val_h = c4_x, 176.0, c4_w, 134.0
     val_card = f'''  <rect x="{val_x:.1f}" y="{val_y:.1f}" width="{val_w:.1f}" height="{val_h:.1f}" rx="8" fill="{t["surface"]}" stroke="{a_val["bd"]}" stroke-width="1.5"/>
   <rect x="{val_x + 1:.1f}" y="{val_y + 6:.1f}" width="3.5" height="{val_h - 12:.1f}" rx="1.75" fill="{a_val["fg"]}"/>
   <rect x="{val_x + val_w - 76:.1f}" y="{val_y + 7:.1f}" width="68" height="15" rx="3.5" fill="{a_val["bg"]}" stroke="{a_val["bd"]}" stroke-width="0.8"/>
   <text x="{val_x + val_w - 42:.1f}" y="{val_y + 17.5:.1f}" text-anchor="middle" font-family="{FONT_MONO}" font-size="8" font-weight="700" letter-spacing="0.5" fill="{a_val["fg"]}">AUDIT GATE</text>
-  <text x="{val_x + 13:.1f}" y="{val_y + 34:.1f}" font-family="{FONT_MONO}" font-size="11.5" font-weight="700" fill="{t["text"]}">scripts/validate.js</text>
-  <line x1="{val_x + 13:.1f}" y1="{val_y + 44:.1f}" x2="{val_x + val_w - 12:.1f}" y2="{val_y + 44:.1f}" stroke="{t["border_soft"]}" stroke-width="1"/>
-  <text x="{val_x + 13:.1f}" y="{val_y + 61:.1f}" font-family="{FONT_SANS}" font-size="10.2" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> 720/720 WCAG AA + APCA-W3</text>
-  <text x="{val_x + 13:.1f}" y="{val_y + 78:.1f}" font-family="{FONT_SANS}" font-size="10.2" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> CIEDE2000 + Machado CVD</text>
-  <text x="{val_x + 13:.1f}" y="{val_y + 95:.1f}" font-family="{FONT_SANS}" font-size="10.2" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> Zero-CDN Explorer CSP</text>
-  <text x="{val_x + 13:.1f}" y="{val_y + 112:.1f}" font-family="{FONT_SANS}" font-size="10.2" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> 5,472 verified Positron keys</text>'''
+  <text x="{val_x + 13:.1f}" y="{val_y + 33:.1f}" font-family="{FONT_MONO}" font-size="11.5" font-weight="700" fill="{t["text"]}">scripts/validate.js</text>
+  <line x1="{val_x + 13:.1f}" y1="{val_y + 42:.1f}" x2="{val_x + val_w - 12:.1f}" y2="{val_y + 42:.1f}" stroke="{t["border_soft"]}" stroke-width="1"/>
+  <text x="{val_x + 13:.1f}" y="{val_y + 58:.1f}" font-family="{FONT_SANS}" font-size="10.0" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> 720/720 WCAG AA + APCA</text>
+  <text x="{val_x + 13:.1f}" y="{val_y + 74:.1f}" font-family="{FONT_SANS}" font-size="10.0" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> CIEDE2000 + Machado CVD</text>
+  <text x="{val_x + 13:.1f}" y="{val_y + 90:.1f}" font-family="{FONT_SANS}" font-size="10.0" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> Zero-CDN Explorer CSP</text>
+  <text x="{val_x + 13:.1f}" y="{val_y + 106:.1f}" font-family="{FONT_SANS}" font-size="10.0" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> 5,472 verified Positron keys</text>
+  <text x="{val_x + 13:.1f}" y="{val_y + 122:.1f}" font-family="{FONT_SANS}" font-size="10.0" fill="{t["text_sub"]}"><tspan fill="{green_c}" font-weight="700">✓</tspan> 60 unit tests (node --test)</text>'''
 
     # CI Success card (Column 4 bottom)
     a_ok = acc["emerald"]
-    ok_x, ok_y, ok_w, ok_h = c4_x, 346.0, c4_w, 66.0
+    ok_x, ok_y, ok_w, ok_h = c4_x, 352.0, c4_w, 64.0
     ok_card = f'''  <rect x="{ok_x:.1f}" y="{ok_y:.1f}" width="{ok_w:.1f}" height="{ok_h:.1f}" rx="8" fill="{a_ok["bg"]}" stroke="{a_ok["bd"]}" stroke-width="1.6"/>
   <rect x="{ok_x + 1:.1f}" y="{ok_y + 6:.1f}" width="3.5" height="{ok_h - 12:.1f}" rx="1.75" fill="{a_ok["fg"]}"/>
-  <text x="{ok_x + 13:.1f}" y="{ok_y + 25:.1f}" font-family="{FONT_SANS}" font-size="12" font-weight="700" fill="{a_ok["fg"]}">✓  CI &amp; vsce package succeed</text>
-  <text x="{ok_x + 13:.1f}" y="{ok_y + 43:.1f}" font-family="{FONT_SANS}" font-size="10.2" fill="{t["text_sub"]}">GitHub Actions green · .vsix built</text>
-  <text x="{ok_x + 13:.1f}" y="{ok_y + 57:.1f}" font-family="{FONT_MONO}" font-size="9.2" fill="{t["text_muted"]}">VS Code · Positron · Open VSX</text>'''
+  <text x="{ok_x + 13:.1f}" y="{ok_y + 24:.1f}" font-family="{FONT_SANS}" font-size="12" font-weight="700" fill="{a_ok["fg"]}">✓  CI &amp; vsce package succeed</text>
+  <text x="{ok_x + 13:.1f}" y="{ok_y + 42:.1f}" font-family="{FONT_SANS}" font-size="10.2" fill="{t["text_sub"]}">GitHub Actions green · .vsix built</text>
+  <text x="{ok_x + 13:.1f}" y="{ok_y + 56:.1f}" font-family="{FONT_MONO}" font-size="9.2" fill="{t["text_muted"]}">VS Code · Positron · Open VSX</text>'''
 
     # Connectors (100% planar — zero crossings anywhere!)
     connectors = f'''  <!-- 1. palettes/*.js -> generate-themes.js & generate-explorer.js -->
@@ -527,10 +528,10 @@ def build_pipeline_svg(mode: str) -> str:
         fill="none" stroke="{line_c}" stroke-width="1.6" marker-end="url(#arr-line-{mode})"/>
 
   <!-- 8. validate.js -> CI & vsce package succeed -->
-  <path d="M 823,302 L 823,343"
+  <path d="M 823,310 L 823,349"
         fill="none" stroke="{green_c}" stroke-width="2.2" marker-end="url(#arr-green-{mode})"/>
-  <rect x="774" y="313" width="98" height="17" rx="8.5" fill="{a_ok["bg"]}" stroke="{a_ok["bd"]}" stroke-width="0.9"/>
-  <text x="823" y="324.5" text-anchor="middle" font-family="{FONT_MONO}" font-size="8.5" font-weight="700" fill="{green_c}">ALL GATES PASS</text>'''
+  <rect x="774" y="320" width="98" height="17" rx="8.5" fill="{a_ok["bg"]}" stroke="{a_ok["bd"]}" stroke-width="0.9"/>
+  <text x="823" y="331.5" text-anchor="middle" font-family="{FONT_MONO}" font-size="8.5" font-weight="700" fill="{green_c}">ALL GATES PASS</text>'''
 
     def marker(mid: str, color: str) -> str:
         return (
@@ -574,7 +575,7 @@ def build_pipeline_svg(mode: str) -> str:
 {box_card(c2_x, 304, c2_w, 76, "generate-explorer.js", ["Zero-CDN self-contained", "interactive HTML bundles"], "teal", tag="SCRIPTS")}
 
   <!-- Column 3: Generated Artifacts -->
-{artifact_card(c3_x, 92,  c3_w, 44, "theme-metadata.json", "game · mode · slug · year · subtitle", "gold")}
+{artifact_card(c3_x, 92,  c3_w, 44, "theme-metadata.json", "game · era · timeline · ΔE₀₀ neighbors", "gold")}
 {artifact_card(c3_x, 144, c3_w, 44, "package.json", "contributes.themes (36 entries)", "sapphire")}
 {artifact_card(c3_x, 196, c3_w, 44, "themes/*.json", "36 full VS Code + Positron themes", "sapphire")}
 {artifact_card(c3_x, 272, c3_w, 44, "site/index.html", "GitHub Pages Explorer", "teal")}

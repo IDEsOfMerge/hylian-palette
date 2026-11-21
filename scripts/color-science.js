@@ -492,7 +492,7 @@ function auditPalette(palette) {
             errors.push(
               `${slug}: severe ${cvdType} collision between ${r1} (${t[r1]}) & ${r2} (${t[r2]}): dE76=${d76Cvd.toFixed(2)}, dE00=${d00Cvd.toFixed(2)}`
             );
-          } else if (d76Normal >= 15 && d76Cvd < 8.0) {
+          } else if (d76Normal >= 15 && d76Cvd < 10.0) {
             warnings.push(`${slug}: moderate ${cvdType} compression ${r1}/${r2} (dE76=${d76Cvd.toFixed(1)})`);
           }
         }

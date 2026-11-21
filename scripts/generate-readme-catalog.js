@@ -4,8 +4,8 @@
 // Dev-only tool: prints the era-grouped color-swatch catalog table for
 // README.md, reading directly from palettes/*.js so it can never drift from
 // the actual shipped colors. Run with:
-//   node scripts/generate-readme-catalog.js > /tmp/catalog.md
-// then paste the output into README.md between the CATALOG markers.
+//   node scripts/generate-readme-catalog.js
+// then place the output into README.md between the CATALOG markers.
 
 const fs = require('fs');
 const path = require('path');

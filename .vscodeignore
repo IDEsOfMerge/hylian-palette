@@ -7,3 +7,12 @@ palettes/**
 analysis/**
 site/**
 .github/**
+test/**
+CONTRIBUTING.md
+assets/banner/**
+assets/color-science/**
+assets/diagrams/**
+assets/showcase/**
+assets/swatches/**
+assets/timeline/**
+.agents/**

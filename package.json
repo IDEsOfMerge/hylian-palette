@@ -2,7 +2,7 @@
   "name": "hylian-palette",
   "displayName": "Hylian Palette — Every Mainline Zelda Game",
   "description": "Created for the 40th anniversary of The Legend of Zelda (1986–2026) — scientifically tuned Light and Dark themes for all 18 mainline games (36 themes) for VS Code and Positron, crafted in OKLCH with 100% WCAG AA contrast, APCA hierarchy, and CVD resilience.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "idesofmerge",
   "license": "MIT",
   "icon": "icon.png",
@@ -53,6 +53,15 @@
     "positron"
   ],
   "main": "./extension.js",
+  "scripts": {
+    "build": "node scripts/generate-themes.js && node scripts/generate-explorer.js",
+    "themes": "node scripts/generate-themes.js",
+    "explorer": "node scripts/generate-explorer.js",
+    "swatches": "node scripts/generate-swatches.js",
+    "validate": "node scripts/validate.js",
+    "test": "node --test test/*.test.js",
+    "package": "npx --yes @vscode/vsce package"
+  },
   "contributes": {
     "themes": [
       {
@@ -246,14 +255,46 @@
         "title": "Hylian Palette: Pick Zelda Theme"
       },
       {
+        "command": "hylianPalette.pickSimilarTheme",
+        "title": "Hylian Palette: Pick Similar Theme (CIEDE2000)"
+      },
+      {
         "command": "hylianPalette.randomTheme",
         "title": "Hylian Palette: Random Theme"
+      },
+      {
+        "command": "hylianPalette.randomThemeSameMode",
+        "title": "Hylian Palette: Random Theme (Same Mode)"
+      },
+      {
+        "command": "hylianPalette.syncOsThemePair",
+        "title": "Hylian Palette: Sync Current Game with OS Light/Dark"
       },
       {
         "command": "hylianPalette.openExplorer",
         "title": "Hylian Palette: Open Palette & Colorimetry Explorer"
       }
     ],
+    "configuration": {
+      "title": "Hylian Palette",
+      "properties": {
+        "hylianPalette.showStatusBarItem": {
+          "type": "string",
+          "enum": [
+            "always",
+            "whenActive",
+            "never"
+          ],
+          "enumDescriptions": [
+            "Always display the Hylian Palette quick-picker item in the status bar.",
+            "Only display the status bar item while a Hylian Palette theme is active.",
+            "Hide the Hylian Palette status bar item completely."
+          ],
+          "default": "always",
+          "markdownDescription": "Controls when the **Hylian Palette** theme picker item is visible in the status bar (`always`, `whenActive`, or `never`)."
+        }
+      }
+    },
     "keybindings": [
       {
         "command": "hylianPalette.toggleTheme",
@@ -272,8 +313,8 @@
             "title": "Pick your first theme (with live preview)",
             "description": "Every mainline Zelda game from 1986 to 2024 gets a Light and a Dark theme crafted in OKLCH from that game's authentic art direction. Arrow through the list to preview live before committing.\n[Pick a Zelda Theme](command:hylianPalette.pickTheme)",
             "media": {
-              "image": "assets/swatches/C9A227.png",
-              "altText": "Triforce gold swatch"
+              "image": "icon.png",
+              "altText": "Hylian Palette emblem"
             },
             "completionEvents": [
               "onCommand:hylianPalette.pickTheme"
@@ -296,8 +337,8 @@
             "title": "Every pair tells a story",
             "description": "Ocarina of Time's syntax colors are the three Spiritual Stones plus the royal-indigo Ocarina. Twilight Princess Dark lowers OKLCH chroma across every token except Midna's blazing orange. Link's Awakening Dark honors the real 1993 DMG-01 LCD green ramp, and Echoes of Wisdom steps from Zelda's cloak into the Still World.",
             "media": {
-              "image": "assets/swatches/1CEAD4.png",
-              "altText": "Fierce Deity cyan swatch"
+              "image": "icon.png",
+              "altText": "Hylian Palette Light and Dark emblem"
             }
           },
           {

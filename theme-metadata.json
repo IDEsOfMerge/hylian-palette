@@ -2,289 +2,1441 @@
   {
     "label": "The Legend of Zelda Light",
     "game": "The Legend of Zelda",
+    "era": "8-bit & 16-bit",
+    "timeline": "Downfall",
     "year": 1986,
     "mode": "light",
     "slug": "zelda1-light",
-    "subtitle": "NES 2C02 sandstone overworld, gold cartridge & starting-tunic emerald"
+    "subtitle": "NES 2C02 sandstone overworld, gold cartridge & starting-tunic emerald",
+    "neighbors": [
+      {
+        "slug": "alttp-light",
+        "de": 4
+      },
+      {
+        "slug": "albw-light",
+        "de": 4.1
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 4.1
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 5.1
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 5.4
+      },
+      {
+        "slug": "twilight-princess-light",
+        "de": 6.2
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 19.7
+    }
   },
   {
     "label": "The Legend of Zelda Dark",
     "game": "The Legend of Zelda",
+    "era": "8-bit & 16-bit",
+    "timeline": "Downfall",
     "year": 1986,
     "mode": "dark",
     "slug": "zelda1-dark",
-    "subtitle": "NES $0F torchlit dungeon obsidian & 8-bit sprite luminance"
+    "subtitle": "NES $0F torchlit dungeon obsidian & 8-bit sprite luminance",
+    "neighbors": [
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 5
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 6
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 6.1
+      },
+      {
+        "slug": "oracleseasons-dark",
+        "de": 8.5
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 9
+      },
+      {
+        "slug": "albw-dark",
+        "de": 10.1
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 27.6
+    }
   },
   {
     "label": "Zelda II Light",
     "game": "Zelda II: The Adventure of Link",
+    "era": "8-bit & 16-bit",
+    "timeline": "Downfall",
     "year": 1987,
     "mode": "light",
     "slug": "zelda2-light",
-    "subtitle": "Side-scrolling RPG spell meter, Red Tunic & sunlit Hyrule map"
+    "subtitle": "Side-scrolling RPG spell meter, Red Tunic & sunlit Hyrule map",
+    "neighbors": [
+      {
+        "slug": "skywardsword-light",
+        "de": 11.4
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 11.6
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 11.8
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 12.3
+      },
+      {
+        "slug": "albw-light",
+        "de": 12.6
+      },
+      {
+        "slug": "alttp-light",
+        "de": 13.7
+      }
+    ],
+    "farthest": {
+      "slug": "linksawakening-light",
+      "de": 20
+    }
   },
   {
     "label": "Zelda II Dark",
     "game": "Zelda II: The Adventure of Link",
+    "era": "8-bit & 16-bit",
+    "timeline": "Downfall",
     "year": 1987,
     "mode": "dark",
     "slug": "zelda2-dark",
-    "subtitle": "Great Palace magenta brickwork, Thunderbird azure & Dark Link shadow"
+    "subtitle": "Great Palace magenta brickwork, Thunderbird azure & Dark Link shadow",
+    "neighbors": [
+      {
+        "slug": "ocarina-dark",
+        "de": 19.2
+      },
+      {
+        "slug": "alttp-dark",
+        "de": 19.5
+      },
+      {
+        "slug": "majora-dark",
+        "de": 22.5
+      },
+      {
+        "slug": "oracleages-dark",
+        "de": 23.4
+      },
+      {
+        "slug": "minishcap-dark",
+        "de": 25.9
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 26.1
+      }
+    ],
+    "farthest": {
+      "slug": "echoes-dark",
+      "de": 33.5
+    }
   },
   {
     "label": "A Link to the Past Light",
     "game": "A Link to the Past",
+    "era": "8-bit & 16-bit",
+    "timeline": "Downfall",
     "year": 1991,
     "mode": "light",
     "slug": "alttp-light",
-    "subtitle": "SNES Light World celadon meadow, Three Pendants & pink-haired Link"
+    "subtitle": "SNES Light World celadon meadow, Three Pendants & pink-haired Link",
+    "neighbors": [
+      {
+        "slug": "zelda1-light",
+        "de": 4
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 5.6
+      },
+      {
+        "slug": "albw-light",
+        "de": 6
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 6.3
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 6.6
+      },
+      {
+        "slug": "twilight-princess-light",
+        "de": 7.1
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 20.3
+    }
   },
   {
     "label": "A Link to the Past Dark",
     "game": "A Link to the Past",
+    "era": "8-bit & 16-bit",
+    "timeline": "Downfall",
     "year": 1991,
     "mode": "dark",
     "slug": "alttp-dark",
-    "subtitle": "Ganon's Dark World twilight plum, Bunny-Link pink & Maiden Crystals"
+    "subtitle": "Ganon's Dark World twilight plum, Bunny-Link pink & Maiden Crystals",
+    "neighbors": [
+      {
+        "slug": "ocarina-dark",
+        "de": 10.4
+      },
+      {
+        "slug": "spirittracks-dark",
+        "de": 14
+      },
+      {
+        "slug": "albw-dark",
+        "de": 14.8
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 17.9
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 18.4
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 18.7
+      }
+    ],
+    "farthest": {
+      "slug": "minishcap-dark",
+      "de": 30.7
+    }
   },
   {
     "label": "Link's Awakening Light",
     "game": "Link's Awakening",
+    "era": "Handheld",
+    "timeline": "Downfall",
     "year": 1993,
     "mode": "light",
     "slug": "linksawakening-light",
-    "subtitle": "Koholint tilt-shift toy diorama, Marin's hibiscus & Wind Fish's Egg"
+    "subtitle": "Koholint tilt-shift toy diorama, Marin's hibiscus & Wind Fish's Egg",
+    "neighbors": [
+      {
+        "slug": "minishcap-light",
+        "de": 3.1
+      },
+      {
+        "slug": "ocarina-light",
+        "de": 6.1
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 10.7
+      },
+      {
+        "slug": "albw-light",
+        "de": 10.9
+      },
+      {
+        "slug": "alttp-light",
+        "de": 11.2
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 11.7
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 22.5
+    }
   },
   {
     "label": "Link's Awakening Dark",
     "game": "Link's Awakening",
+    "era": "Handheld",
+    "timeline": "Downfall",
     "year": 1993,
     "mode": "dark",
     "slug": "linksawakening-dark",
-    "subtitle": "1993 DMG-01 dot-matrix LCD phosphor green ramp — the Wind Fish's dream"
+    "subtitle": "1993 DMG-01 dot-matrix LCD phosphor green ramp — the Wind Fish's dream",
+    "neighbors": [
+      {
+        "slug": "twilight-princess-dark",
+        "de": 31.8
+      },
+      {
+        "slug": "botw-dark",
+        "de": 34
+      },
+      {
+        "slug": "totk-dark",
+        "de": 35.7
+      },
+      {
+        "slug": "oracleseasons-dark",
+        "de": 36.8
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 37.1
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 37.1
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 45.3
+    }
   },
   {
     "label": "Ocarina of Time Light",
     "game": "Ocarina of Time",
+    "era": "N64 & GameCube",
+    "timeline": "Unified",
     "year": 1998,
     "mode": "light",
     "slug": "ocarina-light",
-    "subtitle": "Temple of Time limestone, three Spiritual Stones & royal-blue Ocarina"
+    "subtitle": "Temple of Time limestone, three Spiritual Stones & royal-blue Ocarina",
+    "neighbors": [
+      {
+        "slug": "minishcap-light",
+        "de": 3.8
+      },
+      {
+        "slug": "linksawakening-light",
+        "de": 6.1
+      },
+      {
+        "slug": "alttp-light",
+        "de": 8.8
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 10.2
+      },
+      {
+        "slug": "albw-light",
+        "de": 10.4
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 10.8
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 23.5
+    }
   },
   {
     "label": "Ocarina of Time Dark",
     "game": "Ocarina of Time",
+    "era": "N64 & GameCube",
+    "timeline": "Unified",
     "year": 1998,
     "mode": "dark",
     "slug": "ocarina-dark",
-    "subtitle": "Nocturnal Hyrule Field, Six Medallions & dungeon torchlight"
+    "subtitle": "Nocturnal Hyrule Field, Six Medallions & dungeon torchlight",
+    "neighbors": [
+      {
+        "slug": "alttp-dark",
+        "de": 10.4
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 12.8
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 13.1
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 13.4
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 14
+      },
+      {
+        "slug": "spirittracks-dark",
+        "de": 14.9
+      }
+    ],
+    "farthest": {
+      "slug": "minishcap-dark",
+      "de": 29.5
+    }
   },
   {
     "label": "Majora's Mask Light",
     "game": "Majora's Mask",
+    "era": "N64 & GameCube",
+    "timeline": "Child",
     "year": 2000,
     "mode": "light",
     "slug": "majora-light",
-    "subtitle": "Clock Town Carnival dawn, Majora magenta & Fierce Deity cyan"
+    "subtitle": "Clock Town Carnival dawn, Majora magenta & Fierce Deity cyan",
+    "neighbors": [
+      {
+        "slug": "zelda2-light",
+        "de": 15.5
+      },
+      {
+        "slug": "oracleages-light",
+        "de": 17.3
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 17.8
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 18
+      },
+      {
+        "slug": "botw-light",
+        "de": 18.4
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 19.5
+      }
+    ],
+    "farthest": {
+      "slug": "totk-light",
+      "de": 24.3
+    }
   },
   {
     "label": "Majora's Mask Dark",
     "game": "Majora's Mask",
+    "era": "N64 & GameCube",
+    "timeline": "Child",
     "year": 2000,
     "mode": "dark",
     "slug": "majora-dark",
-    "subtitle": "Final-Night cosmic void, acid-mask neon & Fierce Deity cyan"
+    "subtitle": "Final-Night cosmic void, acid-mask neon & Fierce Deity cyan",
+    "neighbors": [
+      {
+        "slug": "oracleages-dark",
+        "de": 19.5
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 21
+      },
+      {
+        "slug": "oracleseasons-dark",
+        "de": 21.2
+      },
+      {
+        "slug": "zelda2-dark",
+        "de": 22.5
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 22.6
+      },
+      {
+        "slug": "albw-dark",
+        "de": 22.6
+      }
+    ],
+    "farthest": {
+      "slug": "totk-dark",
+      "de": 37.6
+    }
   },
   {
     "label": "Oracle of Seasons Light",
     "game": "Oracle of Seasons",
+    "era": "Handheld",
+    "timeline": "Downfall",
     "year": 2001,
     "mode": "light",
     "slug": "oracleseasons-light",
-    "subtitle": "Holodrum Spring cherry-blossom cream, Four Seasons & Din's flame"
+    "subtitle": "Holodrum Spring cherry-blossom cream, Four Seasons & Din's flame",
+    "neighbors": [
+      {
+        "slug": "skywardsword-light",
+        "de": 4.9
+      },
+      {
+        "slug": "spirittracks-light",
+        "de": 5.1
+      },
+      {
+        "slug": "albw-light",
+        "de": 5.3
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 5.3
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 5.8
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 6.9
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 20.3
+    }
   },
   {
     "label": "Oracle of Seasons Dark",
     "game": "Oracle of Seasons",
+    "era": "Handheld",
+    "timeline": "Downfall",
     "year": 2001,
     "mode": "dark",
     "slug": "oracleseasons-dark",
-    "subtitle": "Woods of Winter frost on Subrosian volcanic obsidian & Autumn ember"
+    "subtitle": "Woods of Winter frost on Subrosian volcanic obsidian & Autumn ember",
+    "neighbors": [
+      {
+        "slug": "zelda1-dark",
+        "de": 8.5
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 8.9
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 9.5
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 9.6
+      },
+      {
+        "slug": "oracleages-dark",
+        "de": 11
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 12.8
+      }
+    ],
+    "farthest": {
+      "slug": "totk-dark",
+      "de": 26.5
+    }
   },
   {
     "label": "Oracle of Ages Light",
     "game": "Oracle of Ages",
+    "era": "Handheld",
+    "timeline": "Downfall",
     "year": 2001,
     "mode": "light",
     "slug": "oracleages-light",
-    "subtitle": "Labrynna's Ancient Past limestone, Nayru's sapphire & Harp of Ages"
+    "subtitle": "Labrynna's Ancient Past limestone, Nayru's sapphire & Harp of Ages",
+    "neighbors": [
+      {
+        "slug": "echoes-light",
+        "de": 5.7
+      },
+      {
+        "slug": "botw-light",
+        "de": 7.5
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 12
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 12.5
+      },
+      {
+        "slug": "albw-light",
+        "de": 12.7
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 13.3
+      }
+    ],
+    "farthest": {
+      "slug": "ocarina-light",
+      "de": 19.6
+    }
   },
   {
     "label": "Oracle of Ages Dark",
     "game": "Oracle of Ages",
+    "era": "Handheld",
+    "timeline": "Downfall",
     "year": 2001,
     "mode": "dark",
     "slug": "oracleages-dark",
-    "subtitle": "Veran's Black Tower graphite stone, Symmetry City & Time Portals"
+    "subtitle": "Veran's Black Tower graphite stone, Symmetry City & Time Portals",
+    "neighbors": [
+      {
+        "slug": "oracleseasons-dark",
+        "de": 11
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 14.2
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 14.3
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 14.4
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 15
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 15
+      }
+    ],
+    "farthest": {
+      "slug": "alttp-dark",
+      "de": 27.2
+    }
   },
   {
     "label": "Wind Waker Light",
     "game": "The Wind Waker",
+    "era": "N64 & GameCube",
+    "timeline": "Adult",
     "year": 2002,
     "mode": "light",
     "slug": "windwaker-light",
-    "subtitle": "Sunlit sea-chart parchment, cel-wake turquoise & King of Red Lions"
+    "subtitle": "Sunlit sea-chart parchment, cel-wake turquoise & King of Red Lions",
+    "neighbors": [
+      {
+        "slug": "skywardsword-light",
+        "de": 2.3
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 3.6
+      },
+      {
+        "slug": "albw-light",
+        "de": 3.9
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 5.4
+      },
+      {
+        "slug": "oracleseasons-light",
+        "de": 5.8
+      },
+      {
+        "slug": "twilight-princess-light",
+        "de": 6.3
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 17.8
+    }
   },
   {
     "label": "Wind Waker Dark",
     "game": "The Wind Waker",
+    "era": "N64 & GameCube",
+    "timeline": "Adult",
     "year": 2002,
     "mode": "dark",
     "slug": "windwaker-dark",
-    "subtitle": "Starlit Great Sea, bioluminescent wake turquoise & Tower of the Gods"
+    "subtitle": "Starlit Great Sea, bioluminescent wake turquoise & Tower of the Gods",
+    "neighbors": [
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 2.3
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 4.3
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 6.1
+      },
+      {
+        "slug": "albw-dark",
+        "de": 7.3
+      },
+      {
+        "slug": "spirittracks-dark",
+        "de": 8.9
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 9
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 28.5
+    }
   },
   {
     "label": "The Minish Cap Light",
     "game": "The Minish Cap",
+    "era": "Handheld",
+    "timeline": "Unified",
     "year": 2004,
     "mode": "light",
     "slug": "minishcap-light",
-    "subtitle": "Oversized morning dewdrop, Ezlo clover-green & the Four Elements"
+    "subtitle": "Oversized morning dewdrop, Ezlo clover-green & the Four Elements",
+    "neighbors": [
+      {
+        "slug": "linksawakening-light",
+        "de": 3.1
+      },
+      {
+        "slug": "ocarina-light",
+        "de": 3.8
+      },
+      {
+        "slug": "alttp-light",
+        "de": 9.6
+      },
+      {
+        "slug": "albw-light",
+        "de": 10.1
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 10.6
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 10.9
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 23.2
+    }
   },
   {
     "label": "The Minish Cap Dark",
     "game": "The Minish Cap",
+    "era": "Handheld",
+    "timeline": "Unified",
     "year": 2004,
     "mode": "dark",
     "slug": "minishcap-dark",
-    "subtitle": "Dark Hyrule Castle plum-obsidian, Light Force gold & Vaati's wrath"
+    "subtitle": "Dark Hyrule Castle plum-obsidian, Light Force gold & Vaati's wrath",
+    "neighbors": [
+      {
+        "slug": "oracleages-dark",
+        "de": 15.7
+      },
+      {
+        "slug": "oracleseasons-dark",
+        "de": 19.8
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 21.8
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 22.5
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 23
+      },
+      {
+        "slug": "majora-dark",
+        "de": 23.2
+      }
+    ],
+    "farthest": {
+      "slug": "alttp-dark",
+      "de": 30.7
+    }
   },
   {
     "label": "Twilight Princess Light",
     "game": "Twilight Princess",
+    "era": "N64 & GameCube",
+    "timeline": "Child",
     "year": 2006,
     "mode": "light",
     "slug": "twilight-princess-light",
-    "subtitle": "Ordon golden-hour oil glaze, weathered bronze & Midna flame-orange"
+    "subtitle": "Ordon golden-hour oil glaze, weathered bronze & Midna flame-orange",
+    "neighbors": [
+      {
+        "slug": "phantomhourglass-light",
+        "de": 4.9
+      },
+      {
+        "slug": "albw-light",
+        "de": 5.2
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 5.7
+      },
+      {
+        "slug": "spirittracks-light",
+        "de": 5.9
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 6.2
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 6.3
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 19.5
+    }
   },
   {
     "label": "Twilight Princess Dark",
     "game": "Twilight Princess",
+    "era": "N64 & GameCube",
+    "timeline": "Child",
     "year": 2006,
     "mode": "dark",
     "slug": "twilight-princess-dark",
-    "subtitle": "Palace of Twilight shale-obsidian, smoky low-chroma & blazing Midna orange"
+    "subtitle": "Palace of Twilight shale-obsidian, smoky low-chroma & blazing Midna orange",
+    "neighbors": [
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 8
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 9
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 9
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 9.4
+      },
+      {
+        "slug": "albw-dark",
+        "de": 10.2
+      },
+      {
+        "slug": "spirittracks-dark",
+        "de": 10.6
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 26.1
+    }
   },
   {
     "label": "Phantom Hourglass Light",
     "game": "Phantom Hourglass",
+    "era": "Nintendo DS",
+    "timeline": "Adult",
     "year": 2007,
     "mode": "light",
     "slug": "phantomhourglass-light",
-    "subtitle": "DS sunlit lagoon chart, stylus route-red & Hourglass sand-gold"
+    "subtitle": "DS sunlit lagoon chart, stylus route-red & Hourglass sand-gold",
+    "neighbors": [
+      {
+        "slug": "albw-light",
+        "de": 2.2
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 3.6
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 4
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 4.1
+      },
+      {
+        "slug": "twilight-princess-light",
+        "de": 4.9
+      },
+      {
+        "slug": "oracleseasons-light",
+        "de": 5.3
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 19.5
+    }
   },
   {
     "label": "Phantom Hourglass Dark",
     "game": "Phantom Hourglass",
+    "era": "Nintendo DS",
+    "timeline": "Adult",
     "year": 2007,
     "mode": "dark",
     "slug": "phantomhourglass-dark",
-    "subtitle": "Temple of the Ocean King gunmetal armor, Safe-Zone cyan & Sand of Hours"
+    "subtitle": "Temple of the Ocean King gunmetal armor, Safe-Zone cyan & Sand of Hours",
+    "neighbors": [
+      {
+        "slug": "windwaker-dark",
+        "de": 2.3
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 4
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 5
+      },
+      {
+        "slug": "albw-dark",
+        "de": 7.2
+      },
+      {
+        "slug": "spirittracks-dark",
+        "de": 7.8
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 8
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 27.6
+    }
   },
   {
     "label": "Spirit Tracks Light",
     "game": "Spirit Tracks",
+    "era": "Nintendo DS",
+    "timeline": "Adult",
     "year": 2009,
     "mode": "light",
     "slug": "spirittracks-light",
-    "subtitle": "New Hyrule meadow, Spirit Train brass, Engineer cobalt & Ghost-Zelda"
+    "subtitle": "New Hyrule meadow, Spirit Train brass, Engineer cobalt & Ghost-Zelda",
+    "neighbors": [
+      {
+        "slug": "oracleseasons-light",
+        "de": 5.1
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 5.5
+      },
+      {
+        "slug": "twilight-princess-light",
+        "de": 5.9
+      },
+      {
+        "slug": "albw-light",
+        "de": 5.9
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 6.7
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 7.1
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 21.9
+    }
   },
   {
     "label": "Spirit Tracks Dark",
     "game": "Spirit Tracks",
+    "era": "Nintendo DS",
+    "timeline": "Adult",
     "year": 2009,
     "mode": "dark",
     "slug": "spirittracks-dark",
-    "subtitle": "Dark Realm coal-maroon, Possessed-Phantom rose & Demon Train Malladus"
+    "subtitle": "Dark Realm coal-maroon, Possessed-Phantom rose & Demon Train Malladus",
+    "neighbors": [
+      {
+        "slug": "albw-dark",
+        "de": 4.5
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 7.8
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 8.8
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 8.9
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 10.5
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 10.6
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 27.7
+    }
   },
   {
     "label": "Skyward Sword Light",
     "game": "Skyward Sword",
+    "era": "Modern",
+    "timeline": "Unified",
     "year": 2011,
     "mode": "light",
     "slug": "skywardsword-light",
-    "subtitle": "Impressionist Skyloft cloud-ivory, Crimson Loftwing & Timeshift cyan"
+    "subtitle": "Impressionist Skyloft cloud-ivory, Crimson Loftwing & Timeshift cyan",
+    "neighbors": [
+      {
+        "slug": "windwaker-light",
+        "de": 2.3
+      },
+      {
+        "slug": "albw-light",
+        "de": 3.1
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 4
+      },
+      {
+        "slug": "oracleseasons-light",
+        "de": 4.9
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 5.1
+      },
+      {
+        "slug": "twilight-princess-light",
+        "de": 5.7
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 18
+    }
   },
   {
     "label": "Skyward Sword Dark",
     "game": "Skyward Sword",
+    "era": "Modern",
+    "timeline": "Unified",
     "year": 2011,
     "mode": "dark",
     "slug": "skywardsword-dark",
-    "subtitle": "Eldin volcanic obsidian, Sacred Flames, Timeshift turquoise & Demise"
+    "subtitle": "Eldin volcanic obsidian, Sacred Flames, Timeshift turquoise & Demise",
+    "neighbors": [
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 4
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 4.3
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 6
+      },
+      {
+        "slug": "albw-dark",
+        "de": 7.8
+      },
+      {
+        "slug": "spirittracks-dark",
+        "de": 8.8
+      },
+      {
+        "slug": "oracleseasons-dark",
+        "de": 8.9
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 29
+    }
   },
   {
     "label": "A Link Between Worlds Light",
     "game": "A Link Between Worlds",
+    "era": "Modern",
+    "timeline": "Downfall",
     "year": 2013,
     "mode": "light",
     "slug": "albw-light",
-    "subtitle": "Sunlit Hyrule chalk-fresco, Yuga's pigments & Ravio's Bracelet violet"
+    "subtitle": "Sunlit Hyrule chalk-fresco, Yuga's pigments & Ravio's Bracelet violet",
+    "neighbors": [
+      {
+        "slug": "phantomhourglass-light",
+        "de": 2.2
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 3.1
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 3.9
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 4.1
+      },
+      {
+        "slug": "twilight-princess-light",
+        "de": 5.2
+      },
+      {
+        "slug": "oracleseasons-light",
+        "de": 5.3
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 19.5
+    }
   },
   {
     "label": "A Link Between Worlds Dark",
     "game": "A Link Between Worlds",
+    "era": "Modern",
+    "timeline": "Downfall",
     "year": 2013,
     "mode": "dark",
     "slug": "albw-dark",
-    "subtitle": "Crumbling Lorule plum-abyss, Hilda rose-magenta & Ravio wall-merge"
+    "subtitle": "Crumbling Lorule plum-abyss, Hilda rose-magenta & Ravio wall-merge",
+    "neighbors": [
+      {
+        "slug": "spirittracks-dark",
+        "de": 4.5
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 7.2
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 7.3
+      },
+      {
+        "slug": "skywardsword-dark",
+        "de": 7.8
+      },
+      {
+        "slug": "zelda1-dark",
+        "de": 10.1
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 10.2
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 28.2
+    }
   },
   {
     "label": "Breath of the Wild Light",
     "game": "Breath of the Wild",
+    "era": "Modern",
+    "timeline": "Era of the Wilds",
     "year": 2017,
     "mode": "light",
     "slug": "botw-light",
-    "subtitle": "Plein-air Great Plateau mist, Champion's Tunic blue & Sheikah Slate"
+    "subtitle": "Plein-air Great Plateau mist, Champion's Tunic blue & Sheikah Slate",
+    "neighbors": [
+      {
+        "slug": "oracleages-light",
+        "de": 7.5
+      },
+      {
+        "slug": "echoes-light",
+        "de": 12
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 12.4
+      },
+      {
+        "slug": "alttp-light",
+        "de": 13
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 13.4
+      },
+      {
+        "slug": "zelda1-light",
+        "de": 14.1
+      }
+    ],
+    "farthest": {
+      "slug": "linksawakening-light",
+      "de": 20.4
+    }
   },
   {
     "label": "Breath of the Wild Dark",
     "game": "Breath of the Wild",
+    "era": "Modern",
+    "timeline": "Era of the Wilds",
     "year": 2017,
     "mode": "dark",
     "slug": "botw-dark",
-    "subtitle": "Blood-Moon crimson sky, Calamity Malice magenta & Sheikah cyan beacon"
+    "subtitle": "Blood-Moon crimson sky, Calamity Malice magenta & Sheikah cyan beacon",
+    "neighbors": [
+      {
+        "slug": "albw-dark",
+        "de": 14.3
+      },
+      {
+        "slug": "spirittracks-dark",
+        "de": 15.2
+      },
+      {
+        "slug": "oracleseasons-dark",
+        "de": 17.5
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 18.2
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 18.4
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 18.8
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 32.7
+    }
   },
   {
     "label": "Tears of the Kingdom Light",
     "game": "Tears of the Kingdom",
+    "era": "Modern",
+    "timeline": "Era of the Wilds",
     "year": 2023,
     "mode": "light",
     "slug": "totk-light",
-    "subtitle": "Great Sky Island cloud-stone, Zonai spiral jade & ginkgo gold"
+    "subtitle": "Great Sky Island cloud-stone, Zonai spiral jade & ginkgo gold",
+    "neighbors": [
+      {
+        "slug": "skywardsword-light",
+        "de": 14.1
+      },
+      {
+        "slug": "albw-light",
+        "de": 14.7
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 14.8
+      },
+      {
+        "slug": "phantomhourglass-light",
+        "de": 15.3
+      },
+      {
+        "slug": "alttp-light",
+        "de": 15.5
+      },
+      {
+        "slug": "oracleseasons-light",
+        "de": 15.9
+      }
+    ],
+    "farthest": {
+      "slug": "majora-light",
+      "de": 24.3
+    }
   },
   {
     "label": "Tears of the Kingdom Dark",
     "game": "Tears of the Kingdom",
+    "era": "Modern",
+    "timeline": "Era of the Wilds",
     "year": 2023,
     "mode": "dark",
     "slug": "totk-dark",
-    "subtitle": "Pitch-black Depths basalt, Zonai Lightroot jade, Poes & crimson Gloom"
+    "subtitle": "Pitch-black Depths basalt, Zonai Lightroot jade, Poes & crimson Gloom",
+    "neighbors": [
+      {
+        "slug": "botw-dark",
+        "de": 19.9
+      },
+      {
+        "slug": "echoes-dark",
+        "de": 22.4
+      },
+      {
+        "slug": "ocarina-dark",
+        "de": 23.8
+      },
+      {
+        "slug": "minishcap-dark",
+        "de": 23.8
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 23.9
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 24.2
+      }
+    ],
+    "farthest": {
+      "slug": "majora-dark",
+      "de": 37.6
+    }
   },
   {
     "label": "Echoes of Wisdom Light",
     "game": "Echoes of Wisdom",
+    "era": "Modern",
+    "timeline": "Downfall",
     "year": 2024,
     "mode": "light",
     "slug": "echoes-light",
-    "subtitle": "Princess Zelda's royal cloak, Tri's golden triangles & Suthorn diorama"
+    "subtitle": "Princess Zelda's royal cloak, Tri's golden triangles & Suthorn diorama",
+    "neighbors": [
+      {
+        "slug": "oracleages-light",
+        "de": 5.7
+      },
+      {
+        "slug": "botw-light",
+        "de": 12
+      },
+      {
+        "slug": "oracleseasons-light",
+        "de": 13.3
+      },
+      {
+        "slug": "albw-light",
+        "de": 13.4
+      },
+      {
+        "slug": "skywardsword-light",
+        "de": 13.5
+      },
+      {
+        "slug": "windwaker-light",
+        "de": 14
+      }
+    ],
+    "farthest": {
+      "slug": "totk-light",
+      "de": 20.8
+    }
   },
   {
     "label": "Echoes of Wisdom Dark",
     "game": "Echoes of Wisdom",
+    "era": "Modern",
+    "timeline": "Downfall",
     "year": 2024,
     "mode": "dark",
     "slug": "echoes-dark",
-    "subtitle": "The Still World's rift-violet void, Tri's golden Echoes & Swordfighter cyan"
+    "subtitle": "The Still World's rift-violet void, Tri's golden Echoes & Swordfighter cyan",
+    "neighbors": [
+      {
+        "slug": "albw-dark",
+        "de": 16.4
+      },
+      {
+        "slug": "spirittracks-dark",
+        "de": 18.5
+      },
+      {
+        "slug": "twilight-princess-dark",
+        "de": 19.7
+      },
+      {
+        "slug": "windwaker-dark",
+        "de": 20.2
+      },
+      {
+        "slug": "phantomhourglass-dark",
+        "de": 20.3
+      },
+      {
+        "slug": "oracleages-dark",
+        "de": 20.6
+      }
+    ],
+    "farthest": {
+      "slug": "zelda2-dark",
+      "de": 33.5
+    }
   }
 ]

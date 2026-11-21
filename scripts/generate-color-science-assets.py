@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
 """
-Dev-only analytical & visualization generator for Hylian Palette v1.0.0.
+Dev-only analytical & visualization generator for Hylian Palette.
 
 Computes exact CIE Lab / OKLCH / CIEDE2000 / Machado-2009 CVD audits, unscaled
-468-token Lab PCA, scaled 39-D per-theme PCA, and Ward's (ward.D2) hierarchical
-clustering across all 36 themes (18 mainline Zelda games), writing:
-  - analysis/data/{audit-results,worst-pair-per-theme,critical-flagged,severe-flagged,computed-fixes,theme-pca}.csv
+468-token Lab PCA, scaled 39-D per-theme PCA, per-mode CIEDE2000 Classical MDS,
+and Ward's (ward.D2) hierarchical clustering across all 36 themes (18 mainline
+Zelda games), writing:
+  - analysis/data/{audit-results,worst-pair-per-theme,critical-flagged,severe-flagged,computed-fixes,theme-pca,theme-mds}.csv
   - assets/timeline/timeline-metro.png
-  - assets/color-science/{theme-colorspace-grid,pca-global,family-fingerprint,theme-pca,theme-dendrogram,cvd-swatch-grid}.png
+  - assets/color-science/{theme-colorspace-grid,pca-global,family-fingerprint,theme-pca,theme-dendrogram,theme-mds,theme-distance-heatmap,cvd-swatch-grid}.png
   - analysis/plots/{pca_global,theme_colorspace_grid}.png
 
 Uses numpy + Pillow with 2x supersampled LANCZOS anti-aliasing and zero external
-plotting-library dependencies.
+plotting-library dependencies. Pass `--mds-only` to generate only theme-mds.csv,
+theme-mds.png, and theme-distance-heatmap.png.
 """
 
 import csv
 import math
 import os
 import shutil
+import sys
 from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -37,23 +40,25 @@ for d in (DATA_DIR, PLOTS_DIR, CS_ASSETS, TIMELINE_ASSETS):
 def load_font(size: int, style: str = "regular") -> ImageFont.FreeTypeFont:
     candidates = {
         "regular": [
-            "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Regular.ttf",
-            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
             "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+            "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Regular.ttf",
         ],
         "medium": [
-            "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Medium.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
             "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+            "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Medium.ttf",
             "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
         ],
         "bold": [
-            "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Bold.ttf",
-            "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
             "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+            "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Bold.ttf",
         ],
         "italic": [
-            "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Italic.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf",
             "/usr/share/fonts/truetype/liberation/LiberationSans-Italic.ttf",
+            "/usr/share/fonts/truetype/roboto/unhinted/RobotoTTF/Roboto-Italic.ttf",
             "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
         ],
     }
@@ -250,6 +255,29 @@ ERA_COLORS = {
     "Modern": "#7B38B8",
 }
 
+MONOCHROME_OUTLIER_SLUG = "linksawakening-dark"
+
+TIMELINE_MAP = {
+    "Skyward Sword": "Unified",
+    "The Minish Cap": "Unified",
+    "Ocarina of Time": "Unified",
+    "Majora's Mask": "Child",
+    "Twilight Princess": "Child",
+    "The Wind Waker": "Adult",
+    "Phantom Hourglass": "Adult",
+    "Spirit Tracks": "Adult",
+    "A Link to the Past": "Downfall",
+    "Link's Awakening": "Downfall",
+    "Oracle of Seasons": "Downfall",
+    "Oracle of Ages": "Downfall",
+    "A Link Between Worlds": "Downfall",
+    "Echoes of Wisdom": "Downfall",
+    "The Legend of Zelda": "Downfall",
+    "Zelda II: The Adventure of Link": "Downfall",
+    "Breath of the Wild": "Era of the Wilds",
+    "Tears of the Kingdom": "Era of the Wilds",
+}
+
 POLYGON_ROLES = [
     "accentKeyword", "accentStorage", "accentString", "accentRegex",
     "accentFunction", "accentType", "accentInterface", "accentNumber",
@@ -399,7 +427,23 @@ def load_data():
         r["b"] = float(b)
         r["year"] = int(r["year"])
         r["era"] = ERA_MAP[r["game"]]
+        r["timeline"] = TIMELINE_MAP[r["game"]]
     return rows
+
+
+def compute_slug_order(rows):
+    first_by_slug = {}
+    for r in rows:
+        if r["role"] in AUDIT_ROLES and r["theme_slug"] not in first_by_slug:
+            first_by_slug[r["theme_slug"]] = r
+    return sorted(
+        first_by_slug.keys(),
+        key=lambda s: (
+            first_by_slug[s]["year"],
+            GAME_ORDER.index(first_by_slug[s]["game"]),
+            0 if first_by_slug[s]["mode"] == "light" else 1,
+        ),
+    )
 
 
 def run_cvd_audit(rows):
@@ -409,14 +453,7 @@ def run_cvd_audit(rows):
         by_slug.setdefault(r["theme_slug"], []).append(r)
 
     # Sort slugs chronologically
-    slug_order = sorted(
-        by_slug.keys(),
-        key=lambda s: (
-            by_slug[s][0]["year"],
-            GAME_ORDER.index(by_slug[s][0]["game"]),
-            0 if by_slug[s][0]["mode"] == "light" else 1,
-        ),
-    )
+    slug_order = compute_slug_order(rows)
 
     audit_records = []
     for slug in slug_order:
@@ -1357,14 +1394,680 @@ def render_cvd_swatch_grid(rows):
     print("Saved assets/color-science/cvd-swatch-grid.png")
 
 
+# ---------- 8. Per-Mode CIEDE2000 Classical MDS & Ward-Ordered Split-Triangle Matrix ----------
+
+def compute_de00_matrix(slugs, by_slug):
+    n = len(slugs)
+    D = np.zeros((n, n), dtype=np.float64)
+    for i in range(n):
+        for j in range(i + 1, n):
+            d = sum(ciede2000_pair(by_slug[slugs[i]][rl], by_slug[slugs[j]][rl]) for rl in AUDIT_ROLES) / len(AUDIT_ROLES)
+            D[i, j] = D[j, i] = d
+    return D
+
+
+def classical_mds_2d(D):
+    n = D.shape[0]
+    J = np.eye(n) - np.ones((n, n)) / n
+    B = -0.5 * J @ (D ** 2) @ J
+    eigvals, eigvecs = np.linalg.eigh(B)
+    idx = np.argsort(eigvals)[::-1]
+    eigvals, eigvecs = eigvals[idx], eigvecs[:, idx]
+    pos_sum = float(np.sum(np.maximum(eigvals, 0.0)))
+    v1 = float(eigvals[0] / pos_sum * 100.0) if pos_sum > 0 else 0.0
+    v2 = float(eigvals[1] / pos_sum * 100.0) if pos_sum > 0 else 0.0
+    coords = eigvecs[:, :2] * np.sqrt(np.maximum(eigvals[:2], 0.0))
+    return coords, (v1, v2)
+
+
+def render_theme_mds_and_heatmap(rows, slug_order):
+    by_slug = {}
+    hex_by_slug = {}
+    meta_by_slug = {}
+    for r in rows:
+        s = r["theme_slug"]
+        meta_by_slug[s] = r
+        hex_by_slug.setdefault(s, {})[r["role"]] = r["hex"]
+        if r["role"] in AUDIT_ROLES:
+            by_slug.setdefault(s, {})[r["role"]] = (r["L"], r["a"], r["b"])
+
+    # Compute per-mode distance matrices & Classical MDS (holding out Link's Awakening Dark)
+    light_slugs = [s for s in slug_order if meta_by_slug[s]["mode"] == "light"]
+    dark_all_slugs = [s for s in slug_order if meta_by_slug[s]["mode"] == "dark"]
+    dark_poly_slugs = [s for s in dark_all_slugs if s != MONOCHROME_OUTLIER_SLUG]
+
+    D_light = compute_de00_matrix(light_slugs, by_slug)
+    D_dark_all = compute_de00_matrix(dark_all_slugs, by_slug)
+    D_dark_poly = compute_de00_matrix(dark_poly_slugs, by_slug)
+
+    coords_l, (v1_l, v2_l) = classical_mds_2d(D_light)
+    coords_d, (v1_d, v2_d) = classical_mds_2d(D_dark_poly)
+
+    # Deterministic orientation across both panels:
+    # majora-* on -X (CRIMSON / MAGENTA), zelda2-* on +Y (CLASSIC / VIOLET)
+    if coords_l[light_slugs.index("majora-light"), 0] > 0:
+        coords_l[:, 0] *= -1
+    if coords_l[light_slugs.index("zelda2-light"), 1] < 0:
+        coords_l[:, 1] *= -1
+    if coords_d[dark_poly_slugs.index("majora-dark"), 0] > 0:
+        coords_d[:, 0] *= -1
+    if coords_d[dark_poly_slugs.index("zelda2-dark"), 1] < 0:
+        coords_d[:, 1] *= -1
+
+    la_idx_all = dark_all_slugs.index(MONOCHROME_OUTLIER_SLUG)
+    la_dists = [D_dark_all[la_idx_all, i] for i, s in enumerate(dark_all_slugs) if s != MONOCHROME_OUTLIER_SLUG]
+    la_mean_de = float(np.mean(la_dists))
+    la_min_de = float(np.min(la_dists))
+    la_max_de = float(np.max(la_dists))
+
+    # Export reproducible theme-mds.csv (exact 12-column schema, 36 rows)
+    mds_rows = []
+    for mode_name, slugs_all, D_mat, poly_slugs, coords_mat in [
+        ("light", light_slugs, D_light, light_slugs, coords_l),
+        ("dark", dark_all_slugs, D_dark_all, dark_poly_slugs, coords_d),
+    ]:
+        coord_map = {s: (coords_mat[i, 0], coords_mat[i, 1]) for i, s in enumerate(poly_slugs)}
+        for i, s in enumerate(slugs_all):
+            m = meta_by_slug[s]
+            near_de, near_slug = min(
+                ((float(D_mat[i, j]), slugs_all[j]) for j in range(len(slugs_all)) if j != i),
+                key=lambda x: (x[0], x[1]),
+            )
+            far_de, far_slug = min(
+                (
+                    (float(D_mat[i, j]), slugs_all[j])
+                    for j in range(len(slugs_all))
+                    if j != i and slugs_all[j] != MONOCHROME_OUTLIER_SLUG
+                ),
+                key=lambda x: (-x[0], x[1]),
+            )
+            is_out = s == MONOCHROME_OUTLIER_SLUG
+            mx, my = coord_map.get(s, (float("nan"), float("nan")))
+            mds_rows.append({
+                "theme_slug": s,
+                "game": m["game"],
+                "era": m["era"],
+                "timeline": m["timeline"],
+                "mode": mode_name,
+                "mds1": "" if is_out else f"{mx:.4f}",
+                "mds2": "" if is_out else f"{my:.4f}",
+                "nearest_slug": near_slug,
+                "nearest_de00": f"{near_de:.3f}",
+                "farthest_poly_slug": far_slug,
+                "farthest_poly_de00": f"{far_de:.3f}",
+                "is_outlier": "true" if is_out else "false",
+            })
+
+    fieldnames = [
+        "theme_slug", "game", "era", "timeline", "mode",
+        "mds1", "mds2", "nearest_slug", "nearest_de00",
+        "farthest_poly_slug", "farthest_poly_de00", "is_outlier",
+    ]
+    with open(DATA_DIR / "theme-mds.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
+        w.writeheader()
+        w.writerows(mds_rows)
+    print("Saved analysis/data/theme-mds.csv")
+
+    # ---------- Render Side-by-Side Perceptual MDS (theme-mds.png) ----------
+    W, H = 2400, 1300
+    img = make_canvas(W, H, "#FAF9F6")
+    draw = ImageDraw.Draw(img)
+
+    f_title = load_font(50, "bold")
+    f_sub = load_font(25, "regular")
+    f_phead = load_font(31, "bold")
+    f_psub = load_font(22, "regular")
+    f_lbl = load_font(20, "bold")
+    f_pole = load_font(19, "bold")
+    f_ax = load_font(23, "medium")
+    f_tick = load_font(19, "regular")
+    f_card_h = load_font(22, "bold")
+    f_card_s = load_font(19, "regular")
+    f_card_i = load_font(17, "italic")
+    f_foot = load_font(22, "regular")
+
+    draw.text((120, 50), "Perceptual Similarity Landscape — Classical MDS on CIEDE2000 (ΔE₀₀)", font=f_title, fill="#181A20")
+    draw.text(
+        (120, 114),
+        "Pairwise mean ΔE₀₀ across all 13 syntax roles, split by polarity so games separate purely by chromatic identity. Inner fill = editor bg · outer ring = signature accent.",
+        font=f_sub,
+        fill="#525866",
+    )
+
+    panels = [
+        {
+            "title": "Light Themes (18 Games)",
+            "subtitle": f"Dim 1 ({v1_l:.1f}%) + Dim 2 ({v2_l:.1f}%) = {v1_l + v2_l:.1f}% of perceptual distance variance",
+            "slugs": light_slugs,
+            "coords": coords_l,
+            "D": D_light,
+            "px0": 135,
+            "py0": 265,
+            "pw": 2160,
+            "ph": 2030,
+            "var": (v1_l, v2_l),
+            "ymin_pad": 2.3,
+            "outlier_box": None,
+        },
+        {
+            "title": "Dark Themes (17 Polychromatic + 1 Monochrome Outlier)",
+            "subtitle": f"Dim 1 ({v1_d:.1f}%) + Dim 2 ({v2_d:.1f}%) = {v1_d + v2_d:.1f}% of polychromatic distance variance",
+            "slugs": dark_poly_slugs,
+            "coords": coords_d,
+            "D": D_dark_poly,
+            "px0": 2505,
+            "py0": 265,
+            "pw": 2160,
+            "ph": 2030,
+            "var": (v1_d, v2_d),
+            "ymin_pad": 4.0,
+            "outlier_box": (2505 + 2160 - 928, 265 + 2030 - 172, 2505 + 2160 - 28, 265 + 2030 - 28),
+        },
+    ]
+
+    for p in panels:
+        px0, py0, pw, ph = p["px0"], p["py0"], p["pw"], p["ph"]
+        draw.text((px0, py0 - 76), p["title"], font=f_phead, fill="#181A20")
+        draw.text((px0, py0 - 38), p["subtitle"], font=f_psub, fill="#5C6372")
+        draw.rounded_rectangle((px0, py0, px0 + pw, py0 + ph), radius=16, fill="#FFFFFF", outline="#DCDAD2", width=2)
+
+        xs = p["coords"][:, 0]
+        ys = p["coords"][:, 1]
+        xmin, xmax = float(xs.min()) - 2.6, float(xs.max()) + 3.2
+        ymin, ymax = float(ys.min()) - p["ymin_pad"], float(ys.max()) + 2.3
+
+        def map_pt(xv, yv):
+            return (
+                px0 + 90 + (xv - xmin) / (xmax - xmin) * (pw - 180),
+                py0 + ph - 90 - (yv - ymin) / (ymax - ymin) * (ph - 180),
+            )
+
+        # Grid lines
+        for gx in range(-20, 20, 5):
+            if xmin <= gx <= xmax:
+                xp, _ = map_pt(gx, 0)
+                draw.line([(xp, py0 + 2), (xp, py0 + ph - 2)], fill="#D7DAE2" if gx == 0 else "#F1F0EB", width=3 if gx == 0 else 2)
+                draw_text_centered(draw, xp, py0 + ph + 24, str(gx), f_tick, fill="#687080")
+        for gy in range(-15, 20, 5):
+            if ymin <= gy <= ymax:
+                _, yp = map_pt(0, gy)
+                draw.line([(px0 + 2, yp), (px0 + pw - 2, yp)], fill="#D7DAE2" if gy == 0 else "#F1F0EB", width=3 if gy == 0 else 2)
+                draw_text_centered(draw, px0 - 30, yp, str(gy), f_tick, fill="#687080")
+
+        # Subtle compass pole hints inside frame edges & exact obstacle rects
+        pole_l = "← CRIMSON / MAGENTA"
+        pole_r = "EMERALD / CYAN →"
+        pole_t = "↑ CLASSIC / VIOLET"
+        pole_b = "↓ SAPPHIRE / GOLD"
+
+        pl_bb = draw.textbbox((px0 + 24, py0 + ph / 2 - 12), pole_l, font=f_pole)
+        draw.text((px0 + 24, py0 + ph / 2 - 12), pole_l, font=f_pole, fill="#9AA0AE")
+
+        eb = draw.textbbox((0, 0), pole_r, font=f_pole)
+        pr_x = px0 + pw - (eb[2] - eb[0]) - 24
+        pr_bb = draw.textbbox((pr_x, py0 + ph / 2 - 12), pole_r, font=f_pole)
+        draw.text((pr_x, py0 + ph / 2 - 12), pole_r, font=f_pole, fill="#9AA0AE")
+
+        tb = draw.textbbox((0, 0), pole_t, font=f_pole)
+        tw_t, th_t = tb[2] - tb[0], tb[3] - tb[1]
+        pt_bb = (px0 + pw / 2 - tw_t / 2, py0 + 24 - th_t / 2, px0 + pw / 2 + tw_t / 2, py0 + 24 + th_t / 2)
+        draw_text_centered(draw, px0 + pw / 2, py0 + 24, pole_t, f_pole, fill="#9AA0AE")
+
+        bb_b = draw.textbbox((0, 0), pole_b, font=f_pole)
+        tw_b, th_b = bb_b[2] - bb_b[0], bb_b[3] - bb_b[1]
+        pb_bb = (px0 + pw / 2 - tw_b / 2, py0 + ph - 26 - th_b / 2, px0 + pw / 2 + tw_b / 2, py0 + ph - 26 + th_b / 2)
+        draw_text_centered(draw, px0 + pw / 2, py0 + ph - 26, pole_b, f_pole, fill="#9AA0AE")
+
+        obstacles = [
+            (pl_bb[0] - 10, pl_bb[1] - 8, pl_bb[2] + 10, pl_bb[3] + 8),
+            (pr_bb[0] - 10, pr_bb[1] - 8, pr_bb[2] + 10, pr_bb[3] + 8),
+            (pt_bb[0] - 10, pt_bb[1] - 8, pt_bb[2] + 10, pt_bb[3] + 8),
+            (pb_bb[0] - 10, pb_bb[1] - 8, pb_bb[2] + 10, pb_bb[3] + 8),
+        ]
+        obox = p["outlier_box"]
+        if obox is not None:
+            obstacles.append((obox[0] - 16, obox[1] - 16, obox[2] + 16, obox[3] + 16))
+
+        pts_px = [map_pt(xs[i], ys[i]) for i in range(len(p["slugs"]))]
+
+        # Subtle dashed connectors for closest chromatic siblings (<= 4.5 ΔE₀₀)
+        D_here = p["D"]
+        for i in range(len(p["slugs"])):
+            for j in range(i + 1, len(p["slugs"])):
+                if D_here[i, j] <= 4.5:
+                    x1, y1 = pts_px[i]
+                    x2, y2 = pts_px[j]
+                    seg_len = math.hypot(x2 - x1, y2 - y1)
+                    if seg_len > 10:
+                        steps = max(6, int(seg_len / 14))
+                        for k in range(0, steps, 2):
+                            xa = x1 + (x2 - x1) * (k / steps)
+                            ya = y1 + (y2 - y1) * (k / steps)
+                            xb = x1 + (x2 - x1) * (min(k + 1, steps) / steps)
+                            yb = y1 + (y2 - y1) * (min(k + 1, steps) / steps)
+                            draw.line([(xa, ya), (xb, yb)], fill="#C6CBD6", width=3)
+
+        # Zero-collision force-directed label placement with local-cluster radial fan
+        labels = []
+        for i, s in enumerate(p["slugs"]):
+            m = meta_by_slug[s]
+            lbl = SHORT_GAME[m["game"]]
+            bb = draw.textbbox((0, 0), lbl, font=f_lbl)
+            lw, lh = (bb[2] - bb[0]) + 16, (bb[3] - bb[1]) + 10
+            ax, ay = pts_px[i]
+            local_pts = [pt for pt in pts_px if math.hypot(pt[0] - ax, pt[1] - ay) <= 240.0]
+            if len(local_pts) >= 2:
+                lcx = sum(pt[0] for pt in local_pts) / len(local_pts)
+                lcy = sum(pt[1] for pt in local_pts) / len(local_pts)
+                if math.hypot(ax - lcx, ay - lcy) > 1e-3:
+                    ang = math.atan2(ay - lcy, ax - lcx)
+                else:
+                    ang = -math.pi / 2 + (i % 8) * (math.pi / 4)
+                r_init = 120.0 if len(local_pts) >= 5 else 72.0
+            else:
+                ang = -math.pi / 2
+                r_init = 56.0
+            labels.append({
+                "idx": i,
+                "slug": s,
+                "text": lbl,
+                "ax": ax,
+                "ay": ay,
+                "x": ax + math.cos(ang) * r_init,
+                "y": ay + math.sin(ang) * r_init,
+                "w": lw,
+                "h": lh,
+            })
+
+        def clamp_label(li):
+            li["x"] = min(px0 + pw - li["w"] / 2 - 22, max(px0 + li["w"] / 2 + 22, li["x"]))
+            li["y"] = min(py0 + ph - li["h"] / 2 - 54, max(py0 + li["h"] / 2 + 54, li["y"]))
+
+        for li in labels:
+            clamp_label(li)
+
+        for _ in range(1600):
+            for i, li in enumerate(labels):
+                fx, fy = 0.0, 0.0
+                dx_a = li["x"] - li["ax"]
+                dy_a = li["y"] - li["ay"]
+                dist_a = math.hypot(dx_a, dy_a) + 1e-4
+                if dist_a > 280.0:
+                    fx -= (dx_a / dist_a) * (dist_a - 280.0) * 0.07
+                    fy -= (dy_a / dist_a) * (dist_a - 280.0) * 0.07
+                elif dist_a < 54.0:
+                    fx += (dx_a / dist_a) * (54.0 - dist_a) * 0.45
+                    fy += (dy_a / dist_a) * (54.0 - dist_a) * 0.45
+
+                # Radial escape from all marker points
+                for m_idx, (ax, ay) in enumerate(pts_px):
+                    ox = abs(li["x"] - ax) - (li["w"] / 2 + 28)
+                    oy = abs(li["y"] - ay) - (li["h"] / 2 + 28)
+                    if ox < 0 and oy < 0:
+                        rx = li["x"] - ax
+                        ry = li["y"] - ay
+                        rn = math.hypot(rx, ry)
+                        if rn < 1e-3:
+                            ang = (i * 1.17 + m_idx * 0.73) % (2.0 * math.pi)
+                            rx, ry, rn = math.cos(ang), math.sin(ang), 1.0
+                        push = min(-ox, -oy) * 0.85 + 2.0
+                        fx += (rx / rn) * push
+                        fy += (ry / rn) * push
+
+                # Repel from other labels
+                for j, lj in enumerate(labels):
+                    if i == j:
+                        continue
+                    ox = abs(li["x"] - lj["x"]) - (li["w"] + lj["w"]) / 2 - 16
+                    oy = abs(li["y"] - lj["y"]) - (li["h"] + lj["h"]) / 2 - 14
+                    if ox < 0 and oy < 0:
+                        sx = 1.0 if (li["x"] > lj["x"] or (li["x"] == lj["x"] and i > j)) else -1.0
+                        sy = 1.0 if (li["y"] > lj["y"] or (li["y"] == lj["y"] and i > j)) else -1.0
+                        if abs(ox) < abs(oy):
+                            fx += sx * (-ox) * 0.58
+                        else:
+                            fy += sy * (-oy) * 0.58
+
+                # Repel from compass poles and outlier callout card
+                for obx0, oby0, obx1, oby1 in obstacles:
+                    ocx, ocy = 0.5 * (obx0 + obx1), 0.5 * (oby0 + oby1)
+                    ohw, ohh = 0.5 * (obx1 - obx0) + 8, 0.5 * (oby1 - oby0) + 8
+                    ox = abs(li["x"] - ocx) - (li["w"] / 2 + ohw)
+                    oy = abs(li["y"] - ocy) - (li["h"] / 2 + ohh)
+                    if ox < 0 and oy < 0:
+                        sx = 1.0 if li["x"] >= ocx else -1.0
+                        sy = 1.0 if li["y"] >= ocy else -1.0
+                        if abs(ox) < abs(oy):
+                            fx += sx * (-ox) * 0.75
+                        else:
+                            fy += sy * (-oy) * 0.75
+
+                li["x"] += fx
+                li["y"] += fy
+                clamp_label(li)
+
+        # Joint strict non-overlap projection pass (label-label, label-marker, label-obstacle, bounds)
+        for _ in range(500):
+            moved = False
+            for i in range(len(labels)):
+                for j in range(i + 1, len(labels)):
+                    li, lj = labels[i], labels[j]
+                    ox = (li["w"] + lj["w"]) / 2 + 12 - abs(li["x"] - lj["x"])
+                    oy = (li["h"] + lj["h"]) / 2 + 10 - abs(li["y"] - lj["y"])
+                    if ox > 0 and oy > 0:
+                        moved = True
+                        if ox < oy:
+                            shift = (ox / 2 + 1.0) * (1.0 if li["x"] >= lj["x"] else -1.0)
+                            li["x"] += shift
+                            lj["x"] -= shift
+                        else:
+                            shift = (oy / 2 + 1.0) * (1.0 if li["y"] >= lj["y"] else -1.0)
+                            li["y"] += shift
+                            lj["y"] -= shift
+            for i, li in enumerate(labels):
+                for m_idx, (ax, ay) in enumerate(pts_px):
+                    ox = (li["w"] / 2 + 26) - abs(li["x"] - ax)
+                    oy = (li["h"] / 2 + 26) - abs(li["y"] - ay)
+                    if ox > 0 and oy > 0:
+                        moved = True
+                        rx, ry = li["x"] - ax, li["y"] - ay
+                        rn = math.hypot(rx, ry)
+                        if rn < 1e-3:
+                            ang = (i * 1.17 + m_idx * 0.73) % (2.0 * math.pi)
+                            rx, ry, rn = math.cos(ang), math.sin(ang), 1.0
+                        step = min(ox, oy) + 2.0
+                        li["x"] += (rx / rn) * step
+                        li["y"] += (ry / rn) * step
+                for obx0, oby0, obx1, oby1 in obstacles:
+                    ocx, ocy = 0.5 * (obx0 + obx1), 0.5 * (oby0 + oby1)
+                    ohw, ohh = 0.5 * (obx1 - obx0) + 6, 0.5 * (oby1 - oby0) + 6
+                    ox = (li["w"] / 2 + ohw) - abs(li["x"] - ocx)
+                    oy = (li["h"] / 2 + ohh) - abs(li["y"] - ocy)
+                    if ox > 0 and oy > 0:
+                        moved = True
+                        if ox < oy:
+                            li["x"] += (ox + 1.5) * (1.0 if li["x"] >= ocx else -1.0)
+                        else:
+                            li["y"] += (oy + 1.5) * (1.0 if li["y"] >= ocy else -1.0)
+                clamp_label(li)
+            if not moved:
+                break
+
+        # Draw leader ticks where nudged
+        for li in labels:
+            if math.hypot(li["x"] - li["ax"], li["y"] - li["ay"]) > 28:
+                draw.line([(li["ax"], li["ay"]), (li["x"], li["y"])], fill="#BCC2D0", width=2)
+
+        # Draw two-tone swatch markers (inner = bg, outer ring = accentKeyword)
+        for li in labels:
+            s = li["slug"]
+            bg_hex = hex_by_slug[s]["bg"]
+            kw_hex = hex_by_slug[s]["accentKeyword"]
+            cx, cy = li["ax"], li["ay"]
+            draw_circle(draw, cx, cy, 20, fill="#FFFFFF")
+            draw_circle(draw, cx, cy, 17, fill=hex_to_rgb_tuple(kw_hex), outline="#222630", width=2)
+            draw_circle(
+                draw,
+                cx,
+                cy,
+                8.5,
+                fill=hex_to_rgb_tuple(bg_hex),
+                outline="#FFFFFF" if meta_by_slug[s]["mode"] == "dark" else "#484F5E",
+                width=1,
+            )
+
+        # Draw crisp label pills
+        for li in labels:
+            draw.rounded_rectangle(
+                (li["x"] - li["w"] / 2 + 1, li["y"] - li["h"] / 2 + 1, li["x"] + li["w"] / 2 - 1, li["y"] + li["h"] / 2 - 1),
+                radius=6,
+                fill="#FFFFFF",
+                outline="#ECEAE2",
+                width=1,
+            )
+            draw_text_centered(draw, li["x"], li["y"], li["text"], f_lbl, fill="#1E222B")
+
+        # Dark-panel Link's Awakening Dark off-chart callout card
+        if obox is not None:
+            ox0, oy0, ox1, oy1 = obox
+            draw.rounded_rectangle(obox, radius=14, fill="#F5F7EC", outline="#7E9B24", width=3)
+            gcx, gcy = ox0 + 54, 0.5 * (oy0 + oy1)
+            draw_circle(draw, gcx, gcy, 23, fill="#9BBC0F", outline="#283A0B", width=3)
+            draw_circle(draw, gcx, gcy, 11.5, fill="#0F380F", outline="#D6EA82", width=2)
+            draw.text((ox0 + 96, oy0 + 24), "Link's Awakening Dark  ·  Off-Chart Monochrome Outlier", font=f_card_h, fill="#1F3008")
+            draw.text(
+                (ox0 + 96, oy0 + 64),
+                f"1993 DMG-01 olive LCD ramp  ·  mean ΔE₀₀ = {la_mean_de:.1f} ({la_min_de:.1f}–{la_max_de:.1f}) vs all 17",
+                font=f_card_s,
+                fill="#445622",
+            )
+            draw.text(
+                (ox0 + 96, oy0 + 100),
+                "Held out of Dark MDS fit so the 17 polychromatic games use the full canvas.",
+                font=f_card_i,
+                fill="#5A6B3A",
+            )
+
+        draw_text_centered(draw, px0 + pw / 2, py0 + ph + 62, f"MDS Dim 1 ({p['var'][0]:.1f}% variance)", f_ax, fill="#222630")
+
+    draw_text_centered(
+        draw,
+        W,
+        H * 2 - 48,
+        "Inner dot = editor background  ·  Outer ring = signature keyword accent  ·  Dashed links connect closest siblings (mean ΔE₀₀ ≤ 4.5)",
+        f_foot,
+        fill="#565E6E",
+    )
+
+    save_downsampled(img, CS_ASSETS / "theme-mds.png", W, H)
+    print(f"Saved assets/color-science/theme-mds.png (Light 2D={v1_l + v2_l:.1f}%, Dark 2D={v1_d + v2_d:.1f}%, Link's Awakening Dark mean ΔE00={la_mean_de:.2f})")
+
+    # ---------- Render Ward-Ordered 18x18 Split-Triangle ΔE₀₀ Matrix (theme-distance-heatmap.png) ----------
+    games = list(GAME_ORDER)
+    l_by_game = {meta_by_slug[s]["game"]: s for s in light_slugs}
+    d_by_game = {meta_by_slug[s]["game"]: s for s in dark_all_slugs}
+    nc = len(games)
+
+    # Order the 18 games by Ward.D2 clustering on combined Light+Dark 78-D CIE Lab profile
+    comb_feats = []
+    for gm in games:
+        vec = []
+        for sl in (l_by_game[gm], d_by_game[gm]):
+            for rl in AUDIT_ROLES:
+                vec.extend(by_slug[sl][rl])
+        comb_feats.append(vec)
+    Xc = np.array(comb_feats, dtype=np.float64)
+    Zc = (Xc - Xc.mean(axis=0, keepdims=True)) / Xc.std(axis=0, ddof=1, keepdims=True)
+    merges_c = ward_d2_clustering(Zc)
+    ch_c = {m[3]: (m[0], m[1], m[2]) for m in merges_c}
+    ord_c = []
+
+    def collect_c(u):
+        if u < nc:
+            ord_c.append(u)
+        else:
+            a, b, _ = ch_c[u]
+            collect_c(a)
+            collect_c(b)
+
+    collect_c(merges_c[-1][3])
+    ordered_games = [games[i] for i in ord_c]
+
+    ord_l_slugs = [l_by_game[g] for g in ordered_games]
+    ord_d_slugs = [d_by_game[g] for g in ordered_games]
+    DL_ord = compute_de00_matrix(ord_l_slugs, by_slug)
+    DD_ord = compute_de00_matrix(ord_d_slugs, by_slug)
+
+    def interp_palette(val, is_dmg=False):
+        if is_dmg:
+            # Distinct DMG-01 olive band explicitly keyed on Link's Awakening Dark identity
+            t = min(1.0, max(0.0, (val - 31.0) / 15.0))
+            c0, c1 = (218, 224, 176), (174, 194, 108)
+            return tuple(int(round(c0[k] + (c1[k] - c0[k]) * t)) for k in range(3))
+        # Perceptually smooth deep-indigo -> sapphire -> teal -> mist -> warm ivory (0..30+)
+        stops = [
+            (0.0,  (20, 36, 94)),
+            (5.0,  (30, 84, 152)),
+            (11.0, (64, 142, 176)),
+            (17.5, (152, 196, 192)),
+            (24.0, (226, 224, 205)),
+            (30.0, (248, 242, 228)),
+        ]
+        v = min(30.0, max(0.0, val))
+        for k in range(len(stops) - 1):
+            v0, c0 = stops[k]
+            v1, c1 = stops[k + 1]
+            if v <= v1:
+                t = (v - v0) / (v1 - v0)
+                return tuple(int(round(c0[i] + (c1[i] - c0[i]) * t)) for i in range(3))
+        return stops[-1][1]
+
+    HW, HH = 1840, 1920
+    himg = make_canvas(HW, HH, "#FAF9F6")
+    hdraw = ImageDraw.Draw(himg)
+
+    hf_title = load_font(48, "bold")
+    hf_sub = load_font(24, "regular")
+    hf_lbl = load_font(26, "bold")
+    hf_tag = load_font(21, "bold")
+    hf_cb = load_font(21, "medium")
+    hf_dmg_s = load_font(19, "regular")
+    hf_foot = load_font(20, "regular")
+
+    hdraw.text((110, 50), "Pairwise Perceptual Distance Matrix — All 18 Games (CIEDE2000 ΔE₀₀)", font=hf_title, fill="#181A20")
+    hdraw.text(
+        (110, 112),
+        "Ward-ordered split-triangle matrix: upper-right = Light mode, lower-left = Dark mode (mean ΔE₀₀ across 13 syntax roles). Diagonal = Light / Dark keyword swatches.",
+        font=hf_sub,
+        fill="#525866",
+    )
+
+    cell = 148
+    grid_w = nc * cell
+    gx0 = 700
+    gy0 = 700
+
+    # Matrix frame
+    hdraw.rectangle((gx0 - 3, gy0 - 3, gx0 + grid_w + 3, gy0 + grid_w + 3), fill="#FFFFFF", outline="#C8C6BE", width=3)
+
+    for r_i in range(nc):
+        y0 = gy0 + r_i * cell
+        for c_i in range(nc):
+            x0 = gx0 + c_i * cell
+            if r_i == c_i:
+                l_col = hex_to_rgb_tuple(hex_by_slug[ord_l_slugs[r_i]]["accentKeyword"])
+                d_col = hex_to_rgb_tuple(hex_by_slug[ord_d_slugs[r_i]]["accentKeyword"])
+                hdraw.polygon([(x0, y0), (x0 + cell, y0), (x0 + cell, y0 + cell)], fill=l_col)
+                hdraw.polygon([(x0, y0), (x0, y0 + cell), (x0 + cell, y0 + cell)], fill=d_col)
+                hdraw.line([(x0, y0), (x0 + cell, y0 + cell)], fill="#FAF9F6", width=4)
+                hdraw.rectangle((x0, y0, x0 + cell, y0 + cell), outline="#FAF9F6", width=2)
+            elif r_i < c_i:
+                col = interp_palette(DL_ord[r_i, c_i], is_dmg=False)
+                hdraw.rectangle((x0 + 1, y0 + 1, x0 + cell - 1, y0 + cell - 1), fill=col)
+            else:
+                is_dmg = (
+                    ord_d_slugs[r_i] == MONOCHROME_OUTLIER_SLUG
+                    or ord_d_slugs[c_i] == MONOCHROME_OUTLIER_SLUG
+                )
+                col = interp_palette(DD_ord[r_i, c_i], is_dmg=is_dmg)
+                hdraw.rectangle((x0 + 1, y0 + 1, x0 + cell - 1, y0 + cell - 1), fill=col)
+
+    # Row labels (left, right-aligned) and tight-cropped 50-deg rotated column labels (top)
+    for idx_g, gm in enumerate(ordered_games):
+        short_name = SHORT_GAME[gm]
+        era_col = hex_to_rgb_tuple(ERA_COLORS[meta_by_slug[ord_l_slugs[idx_g]]["era"]])
+        # Left row label + era pip
+        yc = gy0 + idx_g * cell + cell / 2
+        draw_circle(hdraw, gx0 - 24, yc, 9, fill=era_col)
+        bb = hdraw.textbbox((0, 0), short_name, font=hf_lbl)
+        tw = bb[2] - bb[0]
+        th = bb[3] - bb[1]
+        hdraw.text((gx0 - 44 - tw, yc - th / 2 - bb[1] * 0.5), short_name, font=hf_lbl, fill="#1E222B")
+
+        # Top rotated column label (50 deg counter-clockwise, tight-cropped)
+        xc = gx0 + idx_g * cell + cell / 2
+        draw_circle(hdraw, xc, gy0 - 24, 9, fill=era_col)
+        tmp = Image.new("RGBA", (440, 60), (0, 0, 0, 0))
+        td = ImageDraw.Draw(tmp)
+        td.text((6, 12), short_name, font=hf_lbl, fill="#1E222B")
+        tbbox = tmp.getbbox()
+        cropped = tmp.crop(tbbox) if tbbox else tmp
+        rot = cropped.rotate(50, expand=True, resample=Image.BICUBIC)
+        px_paste = int(xc - 0.5 * cropped.height * math.sin(math.radians(50)))
+        py_paste = int(gy0 - 40 - rot.height)
+        himg.paste(rot, (px_paste, py_paste), rot)
+
+    # Triangle callout badges (dynamically sized cleanly outside all row/column labels)
+    u_text = "UPPER TRIANGLE  ·  LIGHT MODE"
+    u_bb = hdraw.textbbox((0, 0), u_text, font=hf_tag)
+    u_w = max(500, (u_bb[2] - u_bb[0]) + 64)
+    ux0, uy0 = gx0 + grid_w - u_w, 260
+    hdraw.rounded_rectangle((ux0, uy0, ux0 + u_w, uy0 + 62), radius=12, fill="#EEF3FA", outline="#285C9E", width=2)
+    draw_text_centered(hdraw, ux0 + u_w / 2, uy0 + 31, u_text, hf_tag, fill="#1A447C")
+
+    l_text = "LOWER TRIANGLE  ·  DARK MODE"
+    l_bb = hdraw.textbbox((0, 0), l_text, font=hf_tag)
+    l_w = max(460, (l_bb[2] - l_bb[0]) + 64)
+    lx0, ly0 = 110, gy0 + grid_w + 26
+    hdraw.rounded_rectangle((lx0, ly0, lx0 + l_w, ly0 + 62), radius=12, fill="#1D222E", outline="#4B5670", width=2)
+    draw_text_centered(hdraw, lx0 + l_w / 2, ly0 + 31, l_text, hf_tag, fill="#ECEFF6")
+
+    # Horizontal colorbar + Link's Awakening Dark olive swatch at bottom
+    cb_x0, cb_y0, cb_w, cb_h = gx0, gy0 + grid_w + 175, 1860, 44
+    for px in range(cb_w):
+        val = (px / max(1, cb_w - 1)) * 30.0
+        hdraw.line([(cb_x0 + px, cb_y0), (cb_x0 + px, cb_y0 + cb_h)], fill=interp_palette(val, is_dmg=False))
+    hdraw.rectangle((cb_x0, cb_y0, cb_x0 + cb_w, cb_y0 + cb_h), outline="#8E94A2", width=2)
+
+    for tick_v, tick_lbl in [(0, "0 (identical)"), (6, "6"), (12, "12"), (18, "18"), (24, "24"), (30.0, "30+ (distinct)")]:
+        tx = cb_x0 + (tick_v / 30.0) * cb_w
+        hdraw.line([(tx, cb_y0 + cb_h), (tx, cb_y0 + cb_h + 10)], fill="#6E7482", width=2)
+        draw_text_centered(hdraw, tx, cb_y0 + cb_h + 34, tick_lbl, hf_cb, fill="#383E4C")
+
+    # Separate Link's Awakening Dark monochrome outlier key
+    ob_x = cb_x0 + cb_w + 90
+    hdraw.rectangle((ob_x, cb_y0, ob_x + 105, cb_y0 + cb_h), fill=interp_palette(la_mean_de, is_dmg=True), outline="#6A7A32", width=2)
+    hdraw.text((ob_x + 123, cb_y0 - 4), f"{la_min_de:.1f}–{la_max_de:.1f} ΔE₀₀", font=hf_tag, fill="#3B4A14")
+    hdraw.text((ob_x + 123, cb_y0 + 24), "Link's Awakening Dark (1993 DMG-01 LCD)", font=hf_dmg_s, fill="#586438")
+
+    draw_text_centered(
+        hdraw,
+        cb_x0 + cb_w / 2,
+        cb_y0 - 34,
+        "Mean Pairwise CIEDE2000 ΔE₀₀ Across 13 Syntax Roles  (Darker = Closer Chromatic Siblings)",
+        hf_cb,
+        fill="#222630",
+    )
+
+    draw_text_centered(
+        hdraw,
+        HW,
+        HH * 2 - 48,
+        "Row and column order follows Ward.D2 hierarchical clustering on standardized 78-D Light + Dark CIE Lab profiles  ·  Era pips show hardware generation",
+        hf_foot,
+        fill="#565E6E",
+    )
+
+    save_downsampled(himg, CS_ASSETS / "theme-distance-heatmap.png", HW, HH)
+    print("Saved assets/color-science/theme-distance-heatmap.png")
+
+
 def main():
+    mds_only = "--mds-only" in sys.argv[1:]
     rows = load_data()
+    if mds_only:
+        slug_order = compute_slug_order(rows)
+        render_theme_mds_and_heatmap(rows, slug_order)
+        print("Per-mode CIEDE2000 MDS CSV/plot and split-triangle distance heatmap generated successfully.")
+        return
     slug_order, _ = run_cvd_audit(rows)
     render_timeline_metro()
     render_colorspace_grid(rows, slug_order)
     render_global_pca(rows)
     render_family_fingerprint(rows, slug_order)
     render_theme_similarity(rows, slug_order)
+    render_theme_mds_and_heatmap(rows, slug_order)
     render_cvd_swatch_grid(rows)
     print("All color-science CSVs and high-DPI PNG assets generated successfully.")
 

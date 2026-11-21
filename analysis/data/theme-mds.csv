@@ -1,0 +1,37 @@
+theme_slug,game,era,timeline,mode,mds1,mds2,nearest_slug,nearest_de00,farthest_poly_slug,farthest_poly_de00,is_outlier
+zelda1-light,The Legend of Zelda,8-bit & 16-bit,Downfall,light,2.8750,0.7998,alttp-light,4.031,majora-light,19.654,false
+zelda2-light,Zelda II: The Adventure of Link,8-bit & 16-bit,Downfall,light,-4.1596,7.1240,skywardsword-light,11.404,linksawakening-light,20.032,false
+alttp-light,A Link to the Past,8-bit & 16-bit,Downfall,light,3.1079,-0.5352,zelda1-light,4.031,majora-light,20.299,false
+linksawakening-light,Link's Awakening,Handheld,Downfall,light,8.6475,2.6658,minishcap-light,3.113,majora-light,22.512,false
+ocarina-light,Ocarina of Time,N64 & GameCube,Unified,light,9.2994,1.4383,minishcap-light,3.836,majora-light,23.527,false
+majora-light,Majora's Mask,N64 & GameCube,Child,light,-10.7248,12.3361,zelda2-light,15.495,totk-light,24.327,false
+oracleseasons-light,Oracle of Seasons,Handheld,Downfall,light,0.6771,-2.0617,skywardsword-light,4.947,majora-light,20.326,false
+oracleages-light,Oracle of Ages,Handheld,Downfall,light,-8.9887,-3.4802,echoes-light,5.690,ocarina-light,19.592,false
+windwaker-light,The Wind Waker,N64 & GameCube,Adult,light,0.1466,0.2025,skywardsword-light,2.266,majora-light,17.776,false
+minishcap-light,The Minish Cap,Handheld,Unified,light,9.0759,1.5952,linksawakening-light,3.113,majora-light,23.195,false
+twilight-princess-light,Twilight Princess,N64 & GameCube,Child,light,1.8664,-0.2035,phantomhourglass-light,4.911,majora-light,19.523,false
+phantomhourglass-light,Phantom Hourglass,Nintendo DS,Adult,light,2.1499,-0.3011,albw-light,2.234,majora-light,19.453,false
+spirittracks-light,Spirit Tracks,Nintendo DS,Adult,light,2.7914,-1.9005,oracleseasons-light,5.078,majora-light,21.913,false
+skywardsword-light,Skyward Sword,Modern,Unified,light,0.2708,-0.3061,windwaker-light,2.266,majora-light,17.970,false
+albw-light,A Link Between Worlds,Modern,Downfall,light,1.8924,-0.8826,phantomhourglass-light,2.234,majora-light,19.479,false
+botw-light,Breath of the Wild,Modern,Era of the Wilds,light,-8.4460,-3.8750,oracleages-light,7.543,linksawakening-light,20.353,false
+totk-light,Tears of the Kingdom,Modern,Era of the Wilds,light,-2.6389,-8.2833,skywardsword-light,14.102,majora-light,24.327,false
+echoes-light,Echoes of Wisdom,Modern,Downfall,light,-7.8423,-4.3324,oracleages-light,5.690,totk-light,20.833,false
+zelda1-dark,The Legend of Zelda,8-bit & 16-bit,Downfall,dark,1.6556,-2.3776,phantomhourglass-dark,5.017,zelda2-dark,27.553,false
+zelda2-dark,Zelda II: The Adventure of Link,8-bit & 16-bit,Downfall,dark,-17.1471,13.3725,ocarina-dark,19.208,echoes-dark,33.487,false
+alttp-dark,A Link to the Past,8-bit & 16-bit,Downfall,dark,2.3140,14.4085,ocarina-dark,10.390,minishcap-dark,30.675,false
+linksawakening-dark,Link's Awakening,Handheld,Downfall,dark,,,twilight-princess-dark,31.779,zelda2-dark,45.336,true
+ocarina-dark,Ocarina of Time,N64 & GameCube,Unified,dark,0.3974,11.5719,alttp-dark,10.390,minishcap-dark,29.531,false
+majora-dark,Majora's Mask,N64 & GameCube,Child,dark,-17.1365,-3.6697,oracleages-dark,19.489,totk-dark,37.637,false
+oracleseasons-dark,Oracle of Seasons,Handheld,Downfall,dark,-1.3994,-5.3978,zelda1-dark,8.459,totk-dark,26.508,false
+oracleages-dark,Oracle of Ages,Handheld,Downfall,dark,-6.3012,-8.2526,oracleseasons-dark,11.046,alttp-dark,27.204,false
+windwaker-dark,The Wind Waker,N64 & GameCube,Adult,dark,3.0812,-2.4680,phantomhourglass-dark,2.347,zelda2-dark,28.457,false
+minishcap-dark,The Minish Cap,Handheld,Unified,dark,-8.2236,-9.9188,oracleages-dark,15.703,alttp-dark,30.675,false
+twilight-princess-dark,Twilight Princess,N64 & GameCube,Child,dark,0.7205,-2.2797,phantomhourglass-dark,7.990,zelda2-dark,26.124,false
+phantomhourglass-dark,Phantom Hourglass,Nintendo DS,Adult,dark,2.3604,-2.0734,windwaker-dark,2.347,zelda2-dark,27.574,false
+spirittracks-dark,Spirit Tracks,Nintendo DS,Adult,dark,4.9745,0.9086,albw-dark,4.496,zelda2-dark,27.735,false
+skywardsword-dark,Skyward Sword,Modern,Unified,dark,2.6592,-3.0325,phantomhourglass-dark,3.969,zelda2-dark,28.980,false
+albw-dark,A Link Between Worlds,Modern,Downfall,dark,4.4359,-1.0433,spirittracks-dark,4.496,zelda2-dark,28.179,false
+botw-dark,Breath of the Wild,Modern,Era of the Wilds,dark,9.7773,2.1262,albw-dark,14.323,zelda2-dark,32.660,false
+totk-dark,Tears of the Kingdom,Modern,Era of the Wilds,dark,9.9716,3.5747,botw-dark,19.940,majora-dark,37.637,false
+echoes-dark,Echoes of Wisdom,Modern,Downfall,dark,7.8602,-5.4492,albw-dark,16.405,zelda2-dark,33.487,false

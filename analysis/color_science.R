@@ -1,6 +1,6 @@
 # Hylian Palette -- color science analysis
 #
-# Quantifies the 34 themes' palettes: a global PCA of the whole family's
+# Quantifies the 36 themes' palettes: a global PCA of the whole family's
 # color space, per-theme colorspace diagrams (dots + connecting lines in
 # the CIE a*-b* chroma/hue plane), and a color-vision-deficiency (CVD)
 # distinguishability audit -- flagging any theme where two syntax-adjacent
@@ -125,11 +125,11 @@ ggsave("analysis/plots/theme_colorspace_grid.png", p_small_multiples, width = 16
 file.copy("analysis/plots/theme_colorspace_grid.png", "assets/color-science/theme-colorspace-grid.png", overwrite = TRUE)
 cat("Saved analysis/plots/theme_colorspace_grid.png\n")
 
-# One big overlay "family fingerprint" -- all 34 polygons on one set of axes, colored by era.
+# One big overlay "family fingerprint" -- all 36 polygons on one set of axes, colored by era.
 poly_closed_era <- poly_closed %>%
   mutate(era = factor(ERA_LABEL[as.character(game)], levels = names(ERA_COLORS)))
 
-# Faceted by era rather than one giant overlay -- 34 polygons on one set of
+# Faceted by era rather than one giant overlay -- 36 polygons on one set of
 # axes was an unreadable tangle; ~3-7 per panel actually shows the pattern
 # (e.g. Link's Awakening Dark's polygon collapsed near the origin next to
 # its much larger Handheld-era siblings).

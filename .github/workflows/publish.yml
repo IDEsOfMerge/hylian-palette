@@ -32,10 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: '22'
 
@@ -43,13 +43,16 @@ jobs:
         run: |
           node scripts/generate-themes.js
           node scripts/generate-explorer.js
-          git diff --exit-code -- themes/ package.json theme-metadata.json site/index.html assets/explorer/explorer.html || {
+          git diff --exit-code -- themes/ package.json theme-metadata.json site/ assets/explorer/explorer.html || {
             echo "::error::Generated themes or Explorer bundles are out of date."
             exit 1
           }
 
       - name: Validate themes, Explorer CSP & Positron keys
         run: node scripts/validate.js
+
+      - name: Run unit tests (colorimetry & extension logic)
+        run: node --test test/*.test.js
 
       - name: Package extension (.vsix)
         id: pkg
@@ -62,7 +65,7 @@ jobs:
           echo "Packaged ${VSIX} for publisher ${PUBLISHER}"
 
       - name: Upload packaged .vsix artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: published-vsix
           path: ${{ steps.pkg.outputs.vsix }}

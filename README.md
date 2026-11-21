@@ -17,7 +17,7 @@
 ![40th anniversary](https://img.shields.io/badge/40th_anniversary-1986%E2%80%932026-C9A227?style=flat-square)
 [![explorer](https://img.shields.io/badge/live_explorer-interactive_workbench-B08515?style=flat-square)](https://idesofmerge.github.io/hylian-palette/)
 [![build](https://github.com/idesofmerge/hylian-palette/actions/workflows/build.yml/badge.svg)](https://github.com/idesofmerge/hylian-palette/actions/workflows/build.yml)
-![version](https://img.shields.io/badge/version-1.0.0-264EB5?style=flat-square)
+![version](https://img.shields.io/badge/version-1.1.0-264EB5?style=flat-square)
 ![themes](https://img.shields.io/badge/themes-36-7209B7?style=flat-square)
 ![games](https://img.shields.io/badge/games-18-00A896?style=flat-square)
 ![contrast](https://img.shields.io/badge/WCAG_AA-100%25_(720%2F720)-2A5F25?style=flat-square)
@@ -186,9 +186,9 @@ From this repository root:
 
 ```sh
 npx --yes @vscode/vsce package
-code --install-extension hylian-palette-1.0.0.vsix
+code --install-extension hylian-palette-1.1.0.vsix
 # or in Positron:
-positron --install-extension hylian-palette-1.0.0.vsix
+positron --install-extension hylian-palette-1.1.0.vsix
 ```
 
 Or launch an Extension Development Host without packaging:
@@ -200,49 +200,54 @@ code --extensionDevelopmentPath="<full path to this folder>"
 
 ## Selecting & previewing themes
 
-- **Hylian Palette: Open Palette & Colorimetry Explorer** (Command Palette or Welcome walkthrough): opens a 100% offline interactive workbench & colorimetry studio directly inside VS Code / Positron — preview R, Python, TypeScript, and Quarto/SQL buffers across all 36 themes, inspect live OKLCH / WCAG 2.1 / APCA readouts and OKLab chromaticity polygons, simulate Protanopia / Deuteranopia / Tritanopia in real time, and click **Apply to Workbench** (or toggle **Live-sync IDE**) to switch your editor theme on the fly. The exact same explorer is also hosted on the web via **[GitHub Pages](https://idesofmerge.github.io/hylian-palette/)**.
-- **Hylian Palette: Pick Zelda Theme** (Command Palette or click the active theme badge in the bottom-right status bar): opens a release-ordered quick-pick grouped by all 18 games with **live theme preview** as you arrow up/down, subtitle lore notes on every entry, an `Active` indicator on your current theme, and clean `Esc` rollback if you cancel.
+- **Hylian Palette: Open Palette & Colorimetry Explorer** (Command Palette or Welcome walkthrough): opens a 100% offline interactive workbench & colorimetry studio directly inside VS Code / Positron — filter all 18 games by title, Zelda timeline branch (`All · Unified · Child · Adult · Downfall · Era of the Wilds`), release year, hardware era, or fan abbreviation (`/`), open the **Interactive Perceptual Similarity Map** (`M`) to explore all themes in 2D CIEDE2000 MDS space with live `ΔE₀₀` distance inspection and **Theme Swatch / Hardware Era / Timeline Branch** coloring, hop directly between **Nearest Chromatic Neighbors** (`ΔE₀₀`) chips, launch **Side-by-Side Compare** (`C`) with dual OKLab chromaticity polygons and Swap A ↔ B, preview R / Python / TypeScript / Quarto+SQL buffers, inspect live OKLCH / WCAG 2.1 / APCA readouts, simulate Protanopia / Deuteranopia / Tritanopia in real time, export palettes for **VS Code**, **Ghostty**, **WezTerm**, **Alacritty**, **Windows Terminal**, **Kitty**, **iTerm2**, or **CSS variables**, copy stateful shareable URL hash permalinks, and click **Apply to Workbench** (or toggle **Live-sync IDE**) to switch your editor theme on the fly. The exact same explorer is also hosted on the web via **[GitHub Pages](https://idesofmerge.github.io/hylian-palette/)**.
+- **Hylian Palette: Pick Zelda Theme** (Command Palette or click the active theme badge in the bottom-right status bar): opens a release-ordered quick-pick grouped by all 18 games (searchable by game, hardware era, timeline branch, or release year) with **live theme preview** as you arrow up/down, subtitle lore notes on every entry, an `Active` indicator on your current theme, and clean `Esc` rollback if you cancel.
+- **Hylian Palette: Pick Similar Theme (CIEDE2000)**: opens a live-preview quick-pick showing your active theme's nearest chromatic siblings sorted by exact `ΔE₀₀`, its paired Light/Dark variant, and its farthest polychromatic contrast theme (with `Esc` rollback).
 - **Preferences: Color Theme** (`Ctrl+K Ctrl+T` / `Cmd+K Cmd+T`): standard alphabetical VS Code / Positron picker across all 36 themes.
-- **Hylian Palette: Random Theme**: jumps to a random theme across the other 35 themes — great for touring the catalog.
+- **Hylian Palette: Random Theme** & **Hylian Palette: Random Theme (Same Mode)**: jump to a random theme across the catalog, or stay locked to your current Light or Dark polarity.
+- **Hylian Palette: Sync Current Game with OS Light/Dark**: binds your active game's Light & Dark pair (or any game chosen from an 18-game quick-pick) to `workbench.preferredLightColorTheme` and `workbench.preferredDarkColorTheme` and enables `window.autoDetectColorScheme` in one click.
+- **Status Bar Badge Setting** (`hylianPalette.showStatusBarItem`): configure the bottom-right theme badge to show `"always"`, `"whenActive"` (only while a Hylian Palette theme is active), or `"never"`.
 - **Welcome: Open Walkthrough** → **Welcome to Hylian Palette**: interactive first-run walkthrough covering theme picking, per-game Light/Dark toggling, identity accents, and launching the interactive Explorer.
 
 ## Smart Light ↔ Dark per-game toggle
 
-Run **Hylian Palette: Toggle Theme** from the Command Palette or press `Ctrl+K Ctrl+Z` (`Cmd+K Cmd+Z` on macOS). Unlike a generic light/dark switch, it flips between the Light and Dark variant of **whichever game you're currently using** (e.g. *Echoes of Wisdom Light* ↔ *Echoes of Wisdom Dark*, *Ocarina of Time Light* ↔ *Ocarina of Time Dark*). If a non-Hylian theme is active, it starts on *The Wind Waker Light*. Only the standard `workbench.colorTheme` User setting is read or written.
+Run **Hylian Palette: Toggle Theme** from the Command Palette or press `Ctrl+K Ctrl+Z` (`Cmd+K Cmd+Z` on macOS). Unlike a generic light/dark switch, it flips between the Light and Dark variant of **whichever game you're currently using** (e.g. *Echoes of Wisdom Light* ↔ *Echoes of Wisdom Dark*, *Ocarina of Time Light* ↔ *Ocarina of Time Dark*). If a non-Hylian theme is active, it starts on *Wind Waker Light*. Theme switching reads and writes only the standard `workbench.colorTheme` User setting (while **Hylian Palette: Sync Current Game with OS Light/Dark** sets `workbench.preferredLightColorTheme`, `workbench.preferredDarkColorTheme`, and `window.autoDetectColorScheme`, and `hylianPalette.showStatusBarItem` controls status-bar badge visibility).
 
 ## How the themes are built
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/diagrams/build-pipeline-dark.png">
   <source media="(prefers-color-scheme: light)" srcset="assets/diagrams/build-pipeline-light.png">
-  <img alt="Hylian Palette Build, Colorimetry &amp; Validation Pipeline: palettes/*.js (36 bespoke game palettes) and shared scripts/color-science.js (OKLCH, WCAG, APCA, CIEDE2000, Machado CVD) feed scripts/generate-themes.js and scripts/generate-explorer.js to emit theme-metadata.json, package.json, themes/*.json, site/index.html, and assets/explorer/explorer.html; theme-metadata.json is read at runtime by extension.js, while scripts/validate.js audits 720/720 WCAG AA + APCA-W3, CIEDE2000 + Machado CVD, zero-CDN Explorer CSP, and 5,472 verified Positron keys so CI and vsce package succeed" src="assets/diagrams/build-pipeline-dark.png" width="900">
+  <img alt="Hylian Palette Build, Colorimetry &amp; Validation Pipeline: palettes/*.js (36 bespoke game palettes) and shared scripts/color-science.js (OKLCH, WCAG, APCA, CIEDE2000, Machado CVD) feed scripts/generate-themes.js and scripts/generate-explorer.js to emit theme-metadata.json, package.json, themes/*.json, site/index.html, and assets/explorer/explorer.html; theme-metadata.json is read at runtime by extension.js, while scripts/validate.js and 60 unit tests audit 720/720 WCAG AA + APCA-W3, CIEDE2000 + Machado CVD, zero-CDN Explorer CSP, and 5,472 verified Positron keys so CI and vsce package succeed" src="assets/diagrams/build-pipeline-dark.png" width="900">
 </picture>
 
-Hand-authoring ~350 workbench, TextMate, semantic-token, and Positron IDE keys across 36 themes doesn't scale by hand, so `scripts/generate-themes.js` expands each game's ~45-token story palette (`palettes/*.js`) using OKLCH perceptual mixing, `scripts/generate-explorer.js` compiles the self-contained GitHub Pages (`site/index.html`) and VS Code Webview (`assets/explorer/explorer.html`) interactive explorers from those same modules, and `scripts/validate.js` enforces multi-gate colorimetric and zero-CDN CSP verification on every build:
+Hand-authoring **447** workbench keys (including Command Center, AI Chat/Inline Chat, Test Explorer, Terminal Sticky Scroll, and **152** confirmed `positron*` keys — **5,472** verified usages total) alongside TextMate and semantic-token scopes across 36 themes doesn't scale by hand, so `scripts/generate-themes.js` expands each game's ~45-token story palette (`palettes/*.js`) using OKLCH perceptual mixing, `scripts/generate-explorer.js` compiles the self-contained GitHub Pages (`site/index.html`) and VS Code Webview (`assets/explorer/explorer.html`) interactive explorers from those same modules, and `scripts/validate.js` + `test/*.test.js` enforce multi-gate colorimetric, zero-CDN CSP, and unit-test verification on every build (see [CONTRIBUTING.md](CONTRIBUTING.md) for details):
 
 ```sh
-node scripts/generate-themes.js          # regenerate themes/*.json + package.json + theme-metadata.json
-node scripts/generate-explorer.js        # regenerate site/index.html + assets/explorer/explorer.html
-node scripts/generate-swatches.js        # regenerate 345 local swatch PNGs in assets/swatches/
+npm run build                            # regenerate themes/*.json, package.json, theme-metadata.json & Explorer bundles
+npm run validate                         # audit all 36 themes, Explorer CSP & Positron key provenance
+npm test                                 # run 60 zero-dependency unit tests (node --test test/*.test.js)
+npm run swatches                         # regenerate 345 local swatch PNGs in assets/swatches/
+npm run package                          # package lightweight .vsix (README-only media excluded)
+python3 scripts/generate-icon.py         # regenerate 4x supersampled mirrored Hyrule/Lorule icon
 python3 scripts/generate-banner.py       # regenerate Dark/Light 2x Retina README banners
 python3 scripts/generate-diagrams.py     # regenerate Dark/Light 2x Retina timeline & pipeline diagrams
 python3 scripts/generate-showcase-gif.py # regenerate animated VS Code / Positron IDE showcase GIF
-node scripts/validate.js                 # audit all 36 themes, Explorer CSP & Positron key provenance
 ```
 
 ## Accessibility & perceptual contrast
 
 Every single theme must clear strict automated perceptual gates before `generate-themes.js` or `validate.js` will succeed:
 
-- **100% WCAG 2.1 AA compliance (`720 / 720` foreground & syntax tokens)**: all 20 foreground/syntax tokens in all 36 themes clear **≥ 4.5:1** on `editor.background` (actual range across the family: **`4.62:1` to `14.36:1`**) and **≥ 3.8:1** on `editor.lineHighlightBackground`.
+- **100% WCAG 2.1 AA compliance (`720 / 720` foreground & syntax tokens)**: all 20 foreground/syntax tokens in all 36 themes clear **≥ 4.5:1** on `editor.background` (actual range across the family: **`4.62:1` to `15.35:1`**) and **≥ 3.8:1** on `editor.lineHighlightBackground`.
 - **APCA-W3 spatial contrast**: primary body text (`fg` on `bg`) achieves **`|Lc| = 79.4` to `93.7`** (`12.68:1`–`14.36:1` WCAG) across all 35 polychromatic themes, tuned to prevent halation on dark OLED displays while keeping warm paper-like light themes crisp and glare-free.
-- **Figure–ground hierarchy**: comments (`fgComment`) clear AA comfortably (`4.77:1`–`6.05:1`) while remaining perceptually subordinate to active code tokens so documentation never competes with control flow.
+- **Figure–ground hierarchy**: comments (`fgComment`) clear AA comfortably (`4.77:1`–`5.95:1`) while remaining perceptually subordinate to active code tokens so documentation never competes with control flow.
 - **576 / 576 ANSI terminal tokens verified**: all 16 ANSI colors in every integrated terminal / Positron console clear contrast gates while preserving canonical terminal hue bands (so red errors stay red and green diffs stay green even when a theme's syntax keywords are gold or indigo).
 
 | Representative Theme | Editor `fg` / `bg` (WCAG) | Editor `fg` / `bg` (`|Lc|` APCA) | Comment / `bg` | Tightest foreground/syntax role / `bg` |
 |---|---|---|---|---|
 | **Echoes of Wisdom Light** | `14.36:1` | `93.7` | `5.90:1` | `4.68:1` |
-| **The Wind Waker Light** | `13.96:1` | `92.5` | `5.95:1` | `4.70:1` |
+| **Wind Waker Light** | `13.96:1` | `92.5` | `5.95:1` | `4.70:1` |
 | **Tears of the Kingdom Dark** | `13.33:1` | `80.9` | `5.89:1` | `4.64:1` |
 | **Majora's Mask Dark** | `13.21:1` | `80.0` | `5.89:1` | `5.05:1` |
 | **Twilight Princess Dark** *(muted Twilight Realm)* | `12.79:1` | `79.8` | `5.94:1` | `4.70:1` |
@@ -264,17 +269,19 @@ An unscaled global PCA across all **468 syntax tokens** (`PC1 = 50.1%`, `PC2 = 3
 
 ### Which themes look like each other
 
-Converting each theme's 13 syntax roles into a **39-dimensional CIE `L*a*b*` feature vector** (`analysis/theme_similarity.R`) lets us compare entire themes side-by-side via standardized PCA (`PC1 = 40.6%`, `PC2 = 15.4%`) and **Ward's minimum-variance hierarchical clustering**:
+Measuring mean **CIEDE2000 (`ΔE₀₀`)** distance across all 13 syntax roles between every pair of games — factored by Light and Dark polarity so luminance never masks chromatic identity — maps the entire family into a 2D **Classical MDS perceptual landscape** (`58.0%` of Light distance variance [`37.8% + 20.2%`], `52.1%` of polychromatic Dark distance variance [`29.2% + 22.9%`]; `analysis/data/theme-mds.csv`), a **Ward-ordered 18×18 split-triangle distance matrix**, and a full **36-theme Ward's hierarchical dendrogram**:
 
-<img src="assets/color-science/theme-pca.png" alt="Per-theme 39-D standardized CIE Lab PCA across all 36 themes, colored by hardware era and shaped by Light/Dark mode" width="900">
+<img src="assets/color-science/theme-mds.png" alt="Side-by-side Classical MDS perceptual similarity landscape on pairwise mean CIEDE2000 distances across all 18 Light themes (58.0% variance) and 17 polychromatic Dark themes (52.1% variance, with Link's Awakening Dark shown in an off-chart monochrome outlier callout at mean 38.5 ΔE00), drawn with each theme's real editor background and signature keyword accent" width="900">
+
+<img src="assets/color-science/theme-distance-heatmap.png" alt="Ward-ordered 18x18 split-triangle pairwise CIEDE2000 perceptual distance matrix across all 18 Zelda games: upper-right triangle shows Light mode, lower-left triangle shows Dark mode, diagonal shows split Light and Dark keyword swatches, and Link's Awakening Dark renders in a dedicated olive DMG-01 band (31.8-45.3 ΔE00)" width="900">
 
 <img src="assets/color-science/theme-dendrogram.png" alt="Ward's hierarchical clustering dendrogram of all 36 themes on 39-D standardized CIE Lab profiles" width="900">
 
 Three empirical patterns emerge directly from the geometry without any manual grouping:
 
-1. **Clean polarity separation + hardware-monochrome isolation**: Light and Dark themes separate cleanly along `PC1`, while **Link's Awakening Dark** branches off first from the entire Dark supercluster at Ward linkage distance `~19.5` (and sits isolated in the upper-right of `PC1`–`PC2`), quantitatively confirming its unique 1993 DMG-01 LCD profile.
-2. **Art-direction subclusters within Light mode**: the three Light themes that replace traditional green keywords with royal/slate blue — **Echoes of Wisdom Light** (Zelda's indigo cloak), **Oracle of Ages Light** (Nayru's Harp of Ages), and **Breath of the Wild Light** (Sheikah Slate blue) — form their own cohesive branch, while **Zelda II Light** (Palace brick-crimson) and **Majora's Mask Light** (Carnival plum-magenta) pair directly together as the warm-crimson/magenta outliers.
-3. **Direct lore sequels cluster as nearest neighbors**: **The Wind Waker Dark** + **Phantom Hourglass Dark** (cel-shaded nocturnal Great Sea sequels), **The Legend of Zelda Light** + **A Link to the Past Light**, and **Tears of the Kingdom Dark** + **Echoes of Wisdom Dark** (modern Switch subterranean/void dark worlds lit by gold, emerald, and cyan beacons) pair up naturally from color data alone.
+1. **Polarity-factored chromatic topography + DMG-01 hardware isolation**: Splitting Light and Dark MDS across shared semantic poles exposes each mode's chromatic structure — **Crimson/Magenta** outliers on the left (*Majora's Mask* and *Zelda II*), the classic **Emerald/Teal** adventure core through center-right, high-chroma Switch **Cyan/Jade/Gold** Dark worlds (*Tears of the Kingdom*, *Breath of the Wild*, and *Echoes of Wisdom*) on the Dark panel's far right, and *Tears of the Kingdom Light* anchoring the Light panel's bottom gold/teal pole — with **Majora's Mask ↔ Tears of the Kingdom** spanning the widest polychromatic contrast in both modes (**`24.33`** Light / **`37.64`** Dark `ΔE₀₀`). **Link's Awakening Dark** sits off-chart at **mean `38.5 ΔE₀₀`** (`31.8–45.3` across the 17 polychromatic Dark themes; branching off first in the Ward dendrogram at linkage distance `~19.5`), with low-chroma **Twilight Princess Dark** as its closest polychromatic Dark neighbor (**`31.78 ΔE₀₀`**).
+2. **Direct lore sequels & tightest chromatic siblings**: **Wind Waker ↔ Phantom Hourglass** (direct Great Sea sequels) pair as the tightest Dark siblings (**`2.35`** Dark / **`3.58`** Light `ΔE₀₀`), alongside **Phantom Hourglass ↔ A Link Between Worlds** (**`2.23`** Light), **Wind Waker ↔ Skyward Sword** (**`2.27`** Light), and **The Legend of Zelda ↔ A Link to the Past** (**`4.03`** Light), forming the unmistakable deep-indigo block along the split-triangle matrix diagonal.
+3. **Expressive art-direction subclusters**: the three Light themes anchored on royal or slate-blue keywords — **Echoes of Wisdom Light** (Zelda's indigo cloak), **Oracle of Ages Light** (Nayru's Harp of Ages), and **Breath of the Wild Light** (Sheikah Slate blue) — form a tight lower-left cluster in the Light MDS landscape and a distinct upper-triangle block (`5.69 ΔE₀₀` *Echoes of Wisdom* ↔ *Oracle of Ages*, `7.54 ΔE₀₀` *Oracle of Ages* ↔ *Breath of the Wild*), while **Link's Awakening Light**, **The Minish Cap Light**, and **Ocarina of Time Light** (`3.11`–`3.84 ΔE₀₀`) cluster tightly on the Light panel's far right as a storybook emerald-and-indigo trio.
 
 ### Color-vision-deficiency (CVD) resilience via OKLCH lightness staggering
 
@@ -288,8 +295,8 @@ Across all **2,808 role-pairs** (`36 themes × 78 pairs`) and **756 critical adj
 - **Link's Awakening Dark (monochrome hardware tribute)**: accounts for the only **3** critical pairs below `10 ΔE*ab` in the entire 36-theme family (`accentStorage`/`colorError` at `2.04`, `accentKeyword`/`accentType` at `7.63`, and `accentKeyword`/`accentStorage` at `9.67`), preserved intentionally as a documented, faithful tribute to the 1993 Game Boy's single-hue olive LCD ramp while still clearing WCAG AA (`4.66:1`–`8.74:1`) on every token.
 
 ```sh
-node scripts/export-color-data.js                  # export 540 token rows (Lab + OKLCH + WCAG + APCA) to analysis/data/colors.csv
-python3 scripts/generate-color-science-assets.py   # regenerate all high-DPI PNG plots + audit CSVs
+node scripts/export-color-data.js                  # export 540 token rows (OKLCH + WCAG + APCA) to analysis/data/colors.csv
+python3 scripts/generate-color-science-assets.py   # regenerate all high-DPI PNG plots, audit CSVs & metro map
 # Pure-R analytical scripts are also included:
 Rscript --vanilla analysis/color_science.R
 Rscript --vanilla analysis/theme_similarity.R

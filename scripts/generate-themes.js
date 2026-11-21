@@ -209,6 +209,16 @@ function buildColors(p) {
     'titleBar.inactiveForeground': t.fgSecondary,
     'titleBar.border': t.borderSubtle,
 
+    // Command Center
+    'commandCenter.foreground': t.fg,
+    'commandCenter.activeForeground': t.fg,
+    'commandCenter.background': t.bgInput,
+    'commandCenter.activeBackground': t.tintHover,
+    'commandCenter.border': t.borderSubtle,
+    'commandCenter.inactiveForeground': t.fgSecondary,
+    'commandCenter.inactiveBorder': alpha(t.borderSubtle, '99'),
+    'commandCenter.activeBorder': t.accentFocus,
+
     // Panels & integrated terminal
     'panel.background': t.bgPanel,
     'panel.border': t.borderSubtle,
@@ -236,6 +246,12 @@ function buildColors(p) {
     'terminal.ansiBrightMagenta': ansi.brightMagenta,
     'terminal.ansiBrightCyan': ansi.brightCyan,
     'terminal.ansiBrightWhite': ansi.brightWhite,
+    'terminalStickyScroll.background': t.bg,
+    'terminalStickyScrollHover.background': t.bgLine,
+    'terminalStickyScroll.border': t.borderSubtle,
+    'terminalCommandDecoration.defaultBackground': t.fgMuted,
+    'terminalCommandDecoration.successBackground': t.gitAdd,
+    'terminalCommandDecoration.errorBackground': t.colorError,
 
     // Lists & trees
     'list.activeSelectionBackground': t.tintSelect,
@@ -353,6 +369,38 @@ function buildColors(p) {
     'textPreformat.foreground': t.accentType,
     'textBlockQuote.background': t.bgSidebar,
     'textBlockQuote.border': t.accentFocus,
+
+    // AI Chat & Inline Chat
+    'chat.requestBorder': t.borderSubtle,
+    'chat.requestBackground': cs.oklchMix(t.bg, t.bgSidebar, 0.55),
+    'chat.slashCommandBackground': alpha(t.accentFunction, '24'),
+    'chat.slashCommandForeground': t.accentFunction,
+    'chat.avatarBackground': t.accentButton,
+    'chat.avatarForeground': cs.readableTextOn(t.accentButton),
+    'chat.editedFileForeground': t.colorWarning,
+    'inlineChat.background': t.bgWidget,
+    'inlineChat.foreground': t.fg,
+    'inlineChat.border': t.borderStrong,
+    'inlineChat.shadow': isLight ? '#0000001F' : '#00000055',
+    'inlineChatInput.border': t.borderSubtle,
+    'inlineChatInput.focusBorder': t.accentFocus,
+    'inlineChatInput.placeholderForeground': t.fgMuted,
+    'inlineChatInput.background': t.bgInput,
+    'inlineChatDiff.inserted': alpha(t.gitAdd, '26'),
+    'inlineChatDiff.removed': alpha(t.gitDelete, '26'),
+
+    // Test Explorer
+    'testing.iconFailed': t.colorError,
+    'testing.iconErrored': t.colorError,
+    'testing.iconPassed': t.gitAdd,
+    'testing.runAction': t.gitAdd,
+    'testing.iconQueued': t.colorWarning,
+    'testing.iconUnset': t.fgMuted,
+    'testing.iconSkipped': t.fgMuted,
+    'testing.peekBorder': t.colorError,
+    'testing.peekHeaderBackground': alpha(t.colorError, '1A'),
+    'testing.message.error.lineBackground': alpha(t.colorError, '1F'),
+    'testing.message.info.decorationForeground': t.colorInfo,
 
     // Confirmed Positron IDE workbench tokens (validated against posit-dev/positron)
     'positronError.foreground': t.colorError,
@@ -633,11 +681,110 @@ const GAME_CHRONO_ORDER = [
   'Echoes of Wisdom',
 ];
 
+// Canonical 5 Hardware Eras (1-to-1 with all 18 mainline games)
+const ERA_BY_GAME = {
+  'The Legend of Zelda': '8-bit & 16-bit',
+  'Zelda II: The Adventure of Link': '8-bit & 16-bit',
+  'A Link to the Past': '8-bit & 16-bit',
+  "Link's Awakening": 'Handheld',
+  'Oracle of Seasons': 'Handheld',
+  'Oracle of Ages': 'Handheld',
+  'The Minish Cap': 'Handheld',
+  'Ocarina of Time': 'N64 & GameCube',
+  "Majora's Mask": 'N64 & GameCube',
+  'The Wind Waker': 'N64 & GameCube',
+  'Twilight Princess': 'N64 & GameCube',
+  'Phantom Hourglass': 'Nintendo DS',
+  'Spirit Tracks': 'Nintendo DS',
+  'Skyward Sword': 'Modern',
+  'A Link Between Worlds': 'Modern',
+  'Breath of the Wild': 'Modern',
+  'Tears of the Kingdom': 'Modern',
+  'Echoes of Wisdom': 'Modern',
+};
+
+// Canonical 5 Official Zelda Timeline Branches (Hyrule Historia + Echoes of Wisdom)
+const TIMELINE_BY_GAME = {
+  'Skyward Sword': 'Unified',
+  'The Minish Cap': 'Unified',
+  'Ocarina of Time': 'Unified',
+  "Majora's Mask": 'Child',
+  'Twilight Princess': 'Child',
+  'The Wind Waker': 'Adult',
+  'Phantom Hourglass': 'Adult',
+  'Spirit Tracks': 'Adult',
+  'A Link to the Past': 'Downfall',
+  "Link's Awakening": 'Downfall',
+  'Oracle of Seasons': 'Downfall',
+  'Oracle of Ages': 'Downfall',
+  'A Link Between Worlds': 'Downfall',
+  'Echoes of Wisdom': 'Downfall',
+  'The Legend of Zelda': 'Downfall',
+  'Zelda II: The Adventure of Link': 'Downfall',
+  'Breath of the Wild': 'Era of the Wilds',
+  'Tears of the Kingdom': 'Era of the Wilds',
+};
+
+// 13 syntax roles used for per-mode CIEDE2000 theme similarity (identical across JS/Python/R)
+const SIMILARITY_ROLES = [
+  'accentKeyword', 'accentStorage', 'accentString', 'accentRegex',
+  'accentFunction', 'accentFunctionDim', 'accentType', 'accentInterface',
+  'accentNumber', 'accentDecorator', 'accentNamespace', 'colorError', 'colorWarning',
+];
+
+// 1993 Game Boy DMG-01 olive LCD monochrome tribute — excluded from polychromatic farthest slot
+const MONOCHROME_OUTLIER_SLUG = 'linksawakening-dark';
+
 function loadPalettes() {
   return fs.readdirSync(PALETTES_DIR)
     .filter((f) => f.endsWith('.js'))
     .sort()
     .map((f) => require(path.join(PALETTES_DIR, f)));
+}
+
+/**
+ * Computes per-mode 13-role CIEDE2000 chromatic neighbors (top 6 ascending)
+ * and farthest polychromatic theme (excluding MONOCHROME_OUTLIER_SLUG) for
+ * every palette so extension.js can power "Pick Similar Theme" with zero
+ * runtime color math.
+ *
+ * Sorts by exact unrounded mean ΔE₀₀ (with slug tiebreaker) before rounding to
+ * 1 decimal so results are strictly invariant to palette input ordering.
+ */
+function computeThemeSimilarityMetadata(palettes) {
+  const labBySlug = new Map(
+    palettes.map((p) => [p.slug, SIMILARITY_ROLES.map((r) => cs.hexToLab(p.tokens[r]))])
+  );
+  const neighborsBySlug = new Map();
+  const farthestBySlug = new Map();
+
+  for (const mode of ['light', 'dark']) {
+    const pool = palettes.filter((p) => p.tokens.mode === mode);
+    for (let i = 0; i < pool.length; i++) {
+      const a = pool[i];
+      const la = labBySlug.get(a.slug);
+      const dists = [];
+      for (let j = 0; j < pool.length; j++) {
+        if (i === j) continue;
+        const b = pool[j];
+        const lb = labBySlug.get(b.slug);
+        let sum = 0;
+        for (let k = 0; k < la.length; k++) sum += cs.ciede2000(la[k], lb[k]);
+        const rawDe = sum / la.length;
+        dists.push({ slug: b.slug, rawDe, de: Math.round(rawDe * 10) / 10 });
+      }
+      dists.sort((x, y) => x.rawDe - y.rawDe || x.slug.localeCompare(y.slug));
+      neighborsBySlug.set(
+        a.slug,
+        dists.slice(0, 6).map(({ slug, de }) => ({ slug, de }))
+      );
+      const farPool = dists.filter((d) => d.slug !== MONOCHROME_OUTLIER_SLUG);
+      const far = farPool[farPool.length - 1] || dists[dists.length - 1] || null;
+      farthestBySlug.set(a.slug, far ? { slug: far.slug, de: far.de } : null);
+    }
+  }
+
+  return { neighborsBySlug, farthestBySlug };
 }
 
 function main() {
@@ -648,6 +795,15 @@ function main() {
   if (!fs.existsSync(THEMES_DIR)) fs.mkdirSync(THEMES_DIR, { recursive: true });
 
   for (const p of palettes) {
+    const era = ERA_BY_GAME[p.game];
+    const timeline = TIMELINE_BY_GAME[p.game];
+    if (!era) {
+      throw new Error(`Missing ERA_BY_GAME mapping for game "${p.game}" (${p.slug})`);
+    }
+    if (!timeline) {
+      throw new Error(`Missing TIMELINE_BY_GAME mapping for game "${p.game}" (${p.slug})`);
+    }
+
     const audit = cs.auditPalette(p);
     allFailures.push(...audit.errors);
 
@@ -668,6 +824,8 @@ function main() {
       uiTheme: p.tokens.mode === 'light' ? 'vs' : 'vs-dark',
       path: `./themes/${fileName}`,
       game: p.game,
+      era,
+      timeline,
       year: p.year,
       mode: p.tokens.mode,
       slug: p.slug,
@@ -687,7 +845,9 @@ function main() {
     .map(({ label, uiTheme, path: p }) => ({ label, uiTheme, path: p }));
   fs.writeFileSync(PACKAGE_JSON, JSON.stringify(pkg, null, 2) + '\n');
 
-  // Emit theme-list metadata for extension.js (smart toggle + live-preview quick pick).
+  const { neighborsBySlug, farthestBySlug } = computeThemeSimilarityMetadata(palettes);
+
+  // Emit theme-list metadata for extension.js (smart toggle + live-preview quick picks).
   const metaPath = path.join(__dirname, '..', 'theme-metadata.json');
   fs.writeFileSync(
     metaPath,
@@ -702,7 +862,18 @@ function main() {
           if (a.mode !== b.mode) return a.mode === 'light' ? -1 : 1; // Light before Dark
           return a.label.localeCompare(b.label);
         })
-        .map(({ label, game, year, mode, slug, subtitle }) => ({ label, game, year, mode, slug, subtitle })),
+        .map(({ label, game, era, timeline, year, mode, slug, subtitle }) => ({
+          label,
+          game,
+          era,
+          timeline,
+          year,
+          mode,
+          slug,
+          subtitle,
+          neighbors: neighborsBySlug.get(slug) || [],
+          farthest: farthestBySlug.get(slug) || null,
+        })),
       null,
       2
     ) + '\n'
@@ -718,4 +889,20 @@ function main() {
   }
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  ERA_BY_GAME,
+  TIMELINE_BY_GAME,
+  GAME_CHRONO_ORDER,
+  SIMILARITY_ROLES,
+  MONOCHROME_OUTLIER_SLUG,
+  loadPalettes,
+  buildColors,
+  buildTokenColors,
+  buildSemanticTokenColors,
+  computeThemeSimilarityMetadata,
+  main,
+};
